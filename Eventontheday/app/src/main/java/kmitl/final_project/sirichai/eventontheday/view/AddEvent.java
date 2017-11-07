@@ -11,6 +11,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -32,6 +34,8 @@ public class AddEvent extends AppCompatActivity {
     private String strEndDate = "";
     private String strStartTime = "";
     private String strEndTime = "";
+    private RadioGroup radioGroupSetAlertTime;
+    private RadioButton rb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,6 +122,7 @@ public class AddEvent extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     private void updateLabel() {
@@ -166,4 +171,15 @@ public class AddEvent extends AppCompatActivity {
     }
 
 
+    public void onGetAlert(View view) {
+        //get view of radioGroup alert time
+        radioGroupSetAlertTime = findViewById(R.id.setAlertTime);
+        int radioButtonId = radioGroupSetAlertTime.getCheckedRadioButtonId();
+        rb = findViewById(radioButtonId);
+        Toast.makeText(getApplicationContext(), rb.getText(),Toast.LENGTH_SHORT).show();
+    }
+
+    public void onSubmitAddEvent(View view) {
+        Toast.makeText(getApplicationContext(), "Add Event Successfully!!",Toast.LENGTH_SHORT).show();
+    }
 }
