@@ -24,6 +24,11 @@ import android.widget.CalendarView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import kmitl.final_project.sirichai.eventontheday.view.AddEvent;
 import kmitl.final_project.sirichai.eventontheday.view.Calendar_fragment;
 import kmitl.final_project.sirichai.eventontheday.view.Event_fragment;
@@ -66,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
+        String string_date = "22/11/2017";
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
     }
 

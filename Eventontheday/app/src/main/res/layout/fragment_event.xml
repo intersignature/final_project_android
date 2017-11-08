@@ -6,6 +6,21 @@
     android:layout_height="match_parent"
     tools:context="kmitl.final_project.sirichai.eventontheday.view.Event_fragment">
 
+    <TextView
+        android:id="@+id/emptyEvent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text=""
+        android:textSize="100dp" />
+
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"

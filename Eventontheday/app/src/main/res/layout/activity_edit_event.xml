@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.AddEvent">
+    tools:context=".view.EditEvent">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -22,13 +22,13 @@
         app:layout_constraintVertical_bias="0.0">
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/setAllInfoLayout"
+            android:id="@+id/setNewAllInfoLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/setTitle"
+                android:id="@+id/setNewTitle"
                 android:layout_width="399dp"
                 android:layout_height="63dp"
                 android:layout_marginEnd="8dp"
@@ -41,7 +41,7 @@
 
 
             <EditText
-                android:id="@+id/setLocation"
+                android:id="@+id/setNewLocation"
                 android:layout_width="399dp"
                 android:layout_height="63dp"
                 android:layout_marginEnd="8dp"
@@ -49,13 +49,13 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/setTitle"
+                app:layout_constraintTop_toBottomOf="@+id/setNewTitle"
                 android:hint="Location"/>
 
 
 
             <EditText
-                android:id="@+id/setStartDate"
+                android:id="@+id/setNewStartDate"
                 android:layout_width="399dp"
                 android:layout_height="63dp"
                 android:layout_marginStart="8dp"
@@ -66,10 +66,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/setLocation" />
+                app:layout_constraintTop_toBottomOf="@+id/setNewLocation" />
 
             <EditText
-                android:id="@+id/setEndDate"
+                android:id="@+id/setNewEndDate"
                 android:layout_width="399dp"
                 android:layout_height="63dp"
                 android:layout_marginBottom="8dp"
@@ -78,11 +78,11 @@
                 android:inputType="date"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/setStartDate"
+                app:layout_constraintTop_toBottomOf="@+id/setNewStartDate"
                 app:layout_constraintVertical_bias="0.0" />
 
             <EditText
-                android:id="@+id/setStartTime"
+                android:id="@+id/setNewStartTime"
                 android:layout_width="399dp"
                 android:layout_height="63dp"
                 android:layout_marginBottom="8dp"
@@ -91,18 +91,18 @@
                 android:inputType="time"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/setEndDate"
+                app:layout_constraintTop_toBottomOf="@+id/setNewEndDate"
                 app:layout_constraintVertical_bias="0.0" />
 
             <EditText
-                android:id="@+id/setEndTime"
+                android:id="@+id/setNewEndTime"
                 android:layout_width="399dp"
                 android:layout_height="63dp"
                 android:hint="Select event end time"
                 android:inputType="time"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/setStartTime"
+                app:layout_constraintTop_toBottomOf="@+id/setNewStartTime"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
@@ -113,23 +113,23 @@
                 android:text="Alert"
                 android:textSize="25dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/setAlertTime"
-                app:layout_constraintTop_toBottomOf="@+id/setEndTime"
+                app:layout_constraintEnd_toStartOf="@+id/setNewAlertTime"
+                app:layout_constraintTop_toBottomOf="@+id/setNewEndTime"
                 app:layout_constraintVertical_bias="0.100000024" />
 
             <RadioGroup
-                android:id="@+id/setAlertTime"
+                android:id="@+id/setNewAlertTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/setEndTime"
+                app:layout_constraintTop_toBottomOf="@+id/setNewEndTime"
                 app:layout_constraintVertical_bias="0.0">
 
                 <RadioButton
-                    android:id="@+id/rb1"
+                    android:id="@+id/Newrb1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -137,7 +137,7 @@
                     android:text="Before event start date 2 days (09:00)" />
 
                 <RadioButton
-                    android:id="@+id/rb2"
+                    android:id="@+id/Newrb2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -145,7 +145,7 @@
                     android:text="Before event start date 1 day (09:00)" />
 
                 <RadioButton
-                    android:id="@+id/rb3"
+                    android:id="@+id/Newrb3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -153,7 +153,7 @@
                     android:text="Before event start date 1 week" />
 
                 <RadioButton
-                    android:id="@+id/rb4"
+                    android:id="@+id/Newrb4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -163,7 +163,7 @@
             </RadioGroup>
 
             <EditText
-                android:id="@+id/setDetail"
+                android:id="@+id/setNewDetail"
                 android:layout_width="399dp"
                 android:layout_height="87dp"
                 android:layout_weight="1"
@@ -174,11 +174,11 @@
                 android:singleLine="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/setAlertTime"
+                app:layout_constraintTop_toBottomOf="@+id/setNewAlertTime"
                 app:layout_constraintVertical_bias="0.0" />
 
             <Button
-                android:id="@+id/submitAddEvent"
+                android:id="@+id/submitEditEvent"
                 style="@style/Widget.AppCompat.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -187,7 +187,7 @@
                 android:text="Add Event"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/setDetail"
+                app:layout_constraintTop_toBottomOf="@+id/setNewDetail"
                 app:layout_constraintVertical_bias="0.0" />
 
             <Button
@@ -200,7 +200,7 @@
                 android:text="view "
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/setDetail"
+                app:layout_constraintTop_toBottomOf="@+id/setNewDetail"
                 app:layout_constraintVertical_bias="0.0" />
 
 

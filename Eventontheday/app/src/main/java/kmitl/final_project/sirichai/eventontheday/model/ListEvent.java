@@ -7,12 +7,12 @@ package kmitl.final_project.sirichai.eventontheday.model;
 public class ListEvent {
     private String eventTitle;
     private String eventDate;
-    private String eventDescription;
+    private String eventLocation;
 
-    public ListEvent(String eventTitle, String eventDate, String eventDescription) {
+    public ListEvent(String eventTitle, String eventDate, String eventLocation) {
         this.eventTitle = eventTitle;
         this.eventDate = eventDate;
-        this.eventDescription = eventDescription;
+        this.eventLocation = eventLocation;
     }
 
     public String getEventTitle() {
@@ -31,11 +31,12 @@ public class ListEvent {
         this.eventDate = eventDate;
     }
 
-    public String getEventDescription() {
-        return eventDescription;
+    public String getEventLocation() {
+        return eventLocation;
     }
 
-    public void setEventDescription(String eventDescription) {
-        this.eventDescription = eventDescription;
+    public void setEventLocation(String eventLocation) {
+        this.eventLocation = eventLocation;
     }
+
 }
