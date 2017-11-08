@@ -23,6 +23,7 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -93,7 +94,84 @@ public class Calendar_fragment extends Fragment {
         if (listEvents.size()==0){
             textView.setText("Empty Event");
         }
+        else {
+            textView.setText("");
+        }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+//        Calendar calendar = Calendar.getInstance();
+//        String formatter = new SimpleDateFormat("dd/MM/yyyy", new Locale("en", "TH")).format(calendar.getTime());
+//        int currentDay = Integer.parseInt(formatter.split("/")[0]);
+//        int currentMonth = Integer.parseInt(formatter.split("/")[1]);
+//        int currentYear = Integer.parseInt(formatter.split("/")[2]);
+//
+//        databaseAdapter = new DatabaseAdapter(getContext());
+//        final List<List> datas = databaseAdapter.getData();
+//        for (int i=0; i<datas.size();i++){
+//            List<String> eachEvent = datas.get(i);
+//            int eachEventYear = Integer.parseInt(eachEvent.get(2).split("/")[2]);
+//            int eachEventMonth = Integer.parseInt(eachEvent.get(2).split("/")[1]);
+//            int eachEventDay= Integer.parseInt(eachEvent.get(2).split("/")[0]);
+//            if (currentDay == eachEventYear && currentMonth == eachEventMonth && currentYear == eachEventDay){
+//
+//                ListEvent listEvent = new ListEvent(
+//                        "eventTitle: "+eachEvent.get(0),
+//                        "eventDate: "+ eachEvent.get(2),
+//                        "eventLocation: "+eachEvent.get(1)
+//                );
+//                textView.setText("");
+//                listEvents.add(listEvent);
+//            }
+//
+//        }
+//        if (listEvents.size()==0){
+//            textView.setText("Empty Event");
+//        }
+//        else{
+//            textView.setText("");
+//        }
+//        adapter = new RecyclerAdapter(listEvents,getContext());
+//        recyclerView.setAdapter(adapter);
+//        adapter.notifyDataSetChanged();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String selected = sdf.format(new Date(mCalendarView.getDate()));
+        String selectedDay = selected.split("/")[0];
+        String selectedMonth = selected.split("/")[1];
+        String selectedYear = selected.split("/")[2];
+        databaseAdapter = new DatabaseAdapter(getContext());
+        List<List> datas = databaseAdapter.getData();
+        listEvents = new ArrayList<>();
+        for (int i=0; i<datas.size();i++){
+            List<String> eachEvent = datas.get(i);
+            int eachEventYear = Integer.parseInt(eachEvent.get(2).split("/")[2]);
+            int eachEventMonth = Integer.parseInt(eachEvent.get(2).split("/")[1]);
+            int eachEventDay= Integer.parseInt(eachEvent.get(2).split("/")[0]);
+            Log.i("55555", selectedDay+"\n"+selectedMonth+"\n"+selectedYear+"\n"+eachEventDay+"\n"+eachEventMonth+"\n"+eachEventYear);
+            if (Integer.parseInt(selectedDay) == eachEventDay && Integer.parseInt(selectedMonth) == eachEventMonth && Integer.parseInt(selectedYear) == eachEventYear){
+                ListEvent listEvent = new ListEvent(
+                        "Title: "+ eachEvent.get(0),
+                        "Date: "+ eachEvent.get(2),
+                        "Location: "+eachEvent.get(1)
+                );
+                Log.i("6666", selectedDay+"\n"+selectedMonth+"\n"+selectedYear+"\n"+eachEventDay+"\n"+eachEventMonth+"\n"+eachEventYear);
+
+                listEvents.add(listEvent);
+            }
+
+        }
+        //Log.i("b",listAllEvents.toString());
+        if (listEvents.size()==0){
+            textView.setText("Empty Event");
+        }
+        else{
+            textView.setText("");
+        }
+        adapter = new RecyclerAdapter(listEvents,getContext());
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
 
 }

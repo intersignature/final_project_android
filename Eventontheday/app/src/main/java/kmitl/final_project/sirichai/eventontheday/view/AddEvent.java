@@ -96,7 +96,7 @@ public class AddEvent extends AppCompatActivity {
                 }
                 else{
                     String[] parts = strStartDate.split("/");
-                    new DatePickerDialog(AddEvent.this, date, Integer.parseInt(parts[2]), Integer.parseInt(parts[1]), Integer.parseInt(parts[0])).show();
+                    new DatePickerDialog(AddEvent.this, date, Integer.parseInt(parts[2]), Integer.parseInt(parts[1])-1, Integer.parseInt(parts[0])).show();
                 }
 
             }
@@ -110,7 +110,7 @@ public class AddEvent extends AppCompatActivity {
                 }
                 else{
                     String[] parts = strEndDate.split("/");
-                    new DatePickerDialog(AddEvent.this, date, Integer.parseInt(parts[2]), Integer.parseInt(parts[1]), Integer.parseInt(parts[0])).show();
+                    new DatePickerDialog(AddEvent.this, date, Integer.parseInt(parts[2]), Integer.parseInt(parts[1])-1, Integer.parseInt(parts[0])).show();
                 }
             }
         });
@@ -253,8 +253,8 @@ public class AddEvent extends AppCompatActivity {
                 setEndTime.setText("");
                 setDetail.setText("");
                 clearAlert();
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(this, MainActivity.class);
+//                startActivity(intent);
                 finish();
             }
         }

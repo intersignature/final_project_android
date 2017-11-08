@@ -42,7 +42,7 @@ public class Event_fragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.showAllEvent);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
+        textView = rootView.findViewById(R.id.emptyEvent);
         listAllEvents = new ArrayList<>();
         for (int i=0; i<datas.size();i++){
             List<String> eachEvent = datas.get(i);
@@ -56,46 +56,42 @@ public class Event_fragment extends Fragment {
         //Log.i("b",listAllEvents.toString());
         adapter = new RecyclerAdapter(listAllEvents,getContext()); // add list of event to recycler view
         recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
         if (listAllEvents.size()==0){
-            TextView textView;
-            textView = rootView.findViewById(R.id.emptyEvent);
             textView.setText("Empty Event");
         }
         else{
-            TextView textView;
-            textView = rootView.findViewById(R.id.emptyEvent);
             textView.setText("");
         }
         return rootView;
     }
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser){
-            listAllEvents.clear();
-            List<List> datas = databaseAdapter.getData();
-            listAllEvents = new ArrayList<>();
-            for (int i=0; i<datas.size();i++){
-                List<String> eachEvent = datas.get(i);
-                ListEvent listEvent = new ListEvent(
-                        "Title: "+ eachEvent.get(0),
-                        "Date: "+ eachEvent.get(2),
-                        "Location: "+eachEvent.get(1)
-                );
-                listAllEvents.add(listEvent);
-            }
-            //Log.i("b",listAllEvents.toString());
-            adapter = new RecyclerAdapter(listAllEvents,getContext()); // add list of event to recycler view
-            recyclerView.setAdapter(adapter);
-            textView = getView().findViewById(R.id.emptyEvent);
-            if (listAllEvents.size()==0){
-                textView.setText("Empty Event");
-            }
-            else {
-                textView.setText("");
-            }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        databaseAdapter = new DatabaseAdapter(getContext());
+        List<List> datas = databaseAdapter.getData();
+        listAllEvents = new ArrayList<>();
+        for (int i=0; i<datas.size();i++){
+            List<String> eachEvent = datas.get(i);
+            ListEvent listEvent = new ListEvent(
+                    "Title: "+ eachEvent.get(0),
+                    "Date: "+ eachEvent.get(2),
+                    "Location: "+eachEvent.get(1)
+            );
+            listAllEvents.add(listEvent);
         }
+        //Log.i("b",listAllEvents.toString());
+        if (listAllEvents.size()==0){
+            textView.setText("Empty Event");
+        }
+        else{
+            textView.setText("");
+        }
+        adapter = new RecyclerAdapter(listAllEvents,getContext());
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
+
 }
