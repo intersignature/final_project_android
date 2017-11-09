@@ -94,4 +94,12 @@ public class Event_fragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            //เวลากดdeleteแล้วเปลี่ยนแท็บ อีกแท็บจะไม่เปลี่ยน
+            //ให้dbมาใหม่
+        }
+    }
 }

@@ -5,10 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import kmitl.final_project.sirichai.eventontheday.R;
 
 /**
  * Created by atomiz on 8/11/2560.
@@ -16,7 +19,6 @@ import java.util.List;
 
 public class DatabaseAdapter {
     MyDbHelper myDbHelper;
-
     public DatabaseAdapter(Context context) {
         myDbHelper = new MyDbHelper(context);
     }

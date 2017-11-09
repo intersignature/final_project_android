@@ -2,9 +2,10 @@ package kmitl.final_project.sirichai.eventontheday.model;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -15,9 +16,7 @@ import java.util.List;
 import kmitl.final_project.sirichai.eventontheday.MainActivity;
 import kmitl.final_project.sirichai.eventontheday.MessageForDev;
 import kmitl.final_project.sirichai.eventontheday.R;
-import kmitl.final_project.sirichai.eventontheday.view.AddEvent;
-import kmitl.final_project.sirichai.eventontheday.view.EditEvent;
-import kmitl.final_project.sirichai.eventontheday.view.Event_fragment;
+import kmitl.final_project.sirichai.eventontheday.view.EditEventActivity;
 
 /**
  * Created by atomiz on 7/11/2560.
@@ -27,7 +26,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private List<ListEvent> listEvents;
     private Context context;
     private DatabaseAdapter databaseAdapter;
-    private Event_fragment event_fragment;
+
     public RecyclerAdapter(List<ListEvent> listEvents, Context context) {
         this.listEvents = listEvents;
         this.context = context;
@@ -41,6 +40,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         public TextView eventLocation;
         public Button btnDelete;
         public Button btnUpdate;
+        public ConstraintLayout infoLayout;
         public ViewHolder(View itemView) {
             super(itemView);
             context = itemView.getContext();
@@ -49,6 +49,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             eventLocation = itemView.findViewById(R.id.eventLocation);
             btnDelete = itemView.findViewById(R.id.btnDelete);
             btnUpdate = itemView.findViewById(R.id.btnUpdate);
+            infoLayout = itemView.findViewById(R.id.infoLayout);
         }
 
     }
@@ -74,23 +75,30 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 String title = listEvent.getEventTitle().split(": ")[1];
                 int cnt = databaseAdapter.delete(title);
                 messageForDev.Log("POS : "+ cnt);
-                Intent intent;
-                intent =  new Intent(context, MainActivity.class);
-                context.startActivities(new Intent[]{intent});
-                context.stopService(intent);
+                removeAt(position);
+                //notifyDataSetChanged();
+//                Intent intent;
+//                intent =  new Intent(context, MainActivity.class);
+//                context.startActivities(new Intent[]{intent});
+//                context.stopService(intent);
             }
         });
         holder.btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String title = listEvent.getEventTitle().split(": ")[1];
-                OldTitle oldTitle = new OldTitle();
-                oldTitle.setOldTitle(title);
                 Intent intent;
-                intent =  new Intent(context, EditEvent.class);
+                intent =  new Intent(context, EditEventActivity.class);
                 intent.putExtra("oldTitle",title);
                 context.startActivities(new Intent[]{intent});
                 context.stopService(intent);
+
+            }
+        });
+        holder.infoLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("RecyclerAdapeter", listEvent.getEventTitle().split(": ")[1]);
             }
         });
 
@@ -99,5 +107,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public int getItemCount() {
         return listEvents.size();
+    }
+    public void removeAt(int position) {
+        listEvents.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, listEvents.size());
     }
 }
