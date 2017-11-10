@@ -16,6 +16,7 @@ import java.util.List;
 import kmitl.final_project.sirichai.eventontheday.MainActivity;
 import kmitl.final_project.sirichai.eventontheday.MessageForDev;
 import kmitl.final_project.sirichai.eventontheday.R;
+import kmitl.final_project.sirichai.eventontheday.ViewEventActivity;
 import kmitl.final_project.sirichai.eventontheday.view.EditEventActivity;
 
 /**
@@ -23,12 +24,12 @@ import kmitl.final_project.sirichai.eventontheday.view.EditEventActivity;
  */
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
-    private List<ListEvent> listEvents;
+    private List<ListEvent> listAllEvents;
     private Context context;
     private DatabaseAdapter databaseAdapter;
 
-    public RecyclerAdapter(List<ListEvent> listEvents, Context context) {
-        this.listEvents = listEvents;
+    public RecyclerAdapter(List<ListEvent> listAllEvents, Context context) {
+        this.listAllEvents = listAllEvents;
         this.context = context;
 
     }
@@ -63,7 +64,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(RecyclerAdapter.ViewHolder holder, final int position) {
-        final ListEvent listEvent = listEvents.get(position);
+        final ListEvent listEvent = listAllEvents.get(position);
 
         holder.eventTitle.setText(listEvent.getEventTitle());
         holder.eventDate.setText(listEvent.getEventDate());
@@ -99,6 +100,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             @Override
             public void onClick(View view) {
                 Log.i("RecyclerAdapeter", listEvent.getEventTitle().split(": ")[1]);
+                Intent intent;
+                intent = new Intent(context, ViewEventActivity.class);
+                intent.putExtra("title", listEvent.getEventTitle().split(": ")[1]);
+                context.startActivities(new Intent[]{intent});
             }
         });
 
@@ -106,12 +111,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return listEvents.size();
+        return listAllEvents.size();
     }
     public void removeAt(int position) {
-        listEvents.remove(position);
+        listAllEvents.remove(position);
         notifyItemRemoved(position);
-        notifyItemRangeChanged(position, listEvents.size());
+        notifyItemRangeChanged(position, listAllEvents.size());
 
     }
 }

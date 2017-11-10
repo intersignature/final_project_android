@@ -54,28 +54,13 @@ public class EditEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_event);
         //set findViewById to all elements
-
         setTitle = findViewById(R.id.setNewTitle);
-        setTitle.setTextColor(Color.BLACK);
-        setTitle.setTextSize(15);
         setLocation = findViewById(R.id.setNewLocation);
-        setLocation.setTextColor(Color.BLACK);
-        setLocation.setTextSize(15);
         setStartDate = findViewById(R.id.setNewStartDate);
-        setStartDate.setTextColor(Color.BLACK);
-        setStartDate.setTextSize(15);
         setEndDate = findViewById(R.id.setNewEndDate);
-        setEndDate.setTextColor(Color.BLACK);
-        setEndDate.setTextSize(15);
         setStartTime = findViewById(R.id.setNewStartTime);
-        setStartTime.setTextColor(Color.BLACK);
-        setStartTime.setTextSize(15);
         setEndTime = findViewById(R.id.setNewEndTime);
-        setEndTime.setTextColor(Color.BLACK);
-        setEndTime.setTextSize(15);
         setDetail = findViewById(R.id.setNewDetail);
-        setDetail.setTextColor(Color.BLACK);
-        setDetail.setTextSize(15);
         radioGroupSetAlertTime = findViewById(R.id.setNewAlertTime);
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
         List<List> datas = databaseAdapter.getData();
@@ -218,30 +203,18 @@ public class EditEventActivity extends AppCompatActivity {
     private void updateLabel() {
         if (Clickbtn.equals("setStartDate")) {
             setStartDate.setText("start date is : " + formatTh().format(calendar.getTime()));
-            setStartDate.setTextColor(Color.BLACK);
-            setStartDate.setTextSize(15);
-            setStartDate.setGravity(Gravity.CENTER);
             strStartDate = formatTh().format(calendar.getTime());
         }
         else if (Clickbtn.equals("setEndDate")){
             setEndDate.setText("end date is : " + formatTh().format(calendar.getTime()));
-            setEndDate.setTextColor(Color.BLACK);
-            setEndDate.setTextSize(15);
-            setEndDate.setGravity(Gravity.CENTER);
             strEndDate = formatTh().format(calendar.getTime());
         }
         else if (Clickbtn.equals("setStartTime")){
             setStartTime.setText("start time is : " + formatTh().format(calendar.getTime()));
-            setStartTime.setTextColor(Color.BLACK);
-            setStartTime.setTextSize(15);
-            setStartTime.setGravity(Gravity.CENTER);
             strStartTime = formatTh().format(calendar.getTime());
         }
         else if (Clickbtn.equals("setEndTime")){
             setEndTime.setText("end time is : " + formatTh().format(calendar.getTime()));
-            setEndTime.setTextColor(Color.BLACK);
-            setEndTime.setTextSize(15);
-            setEndTime.setGravity(Gravity.CENTER);
             strEndTime = formatTh().format(calendar.getTime());
         }
     }

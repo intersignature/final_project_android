@@ -37,7 +37,7 @@ public class Calendar_fragment extends Fragment {
     CalendarView mCalendarView;
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
-    List<ListEvent> listEvents;
+    List<ListEvent> listAllEvents;
     TextView textView;
     String selectedDay;
     String selectedMonth;
@@ -58,12 +58,12 @@ public class Calendar_fragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         databaseAdapter = new DatabaseAdapter(getContext());
-        Calendar calendar = Calendar.getInstance();
-        String formatter = new SimpleDateFormat("dd/MM/yyyy", new Locale("en", "TH")).format(calendar.getTime());
-        int currentDay = Integer.parseInt(formatter.split("/")[0]);
-        int currentMonth = Integer.parseInt(formatter.split("/")[1]);
-        int currentYear = Integer.parseInt(formatter.split("/")[2]);
-        createRecylerView(currentYear,currentMonth,currentDay);
+//        Calendar calendar = Calendar.getInstance();
+//        String formatter = new SimpleDateFormat("dd/MM/yyyy", new Locale("en", "TH")).format(calendar.getTime());
+//        int currentDay = Integer.parseInt(formatter.split("/")[0]);
+//        int currentMonth = Integer.parseInt(formatter.split("/")[1]);
+//        int currentYear = Integer.parseInt(formatter.split("/")[2]);
+        createRecylerView(Integer.parseInt(selectedYear),Integer.parseInt(selectedMonth),Integer.parseInt(selectedDay));
         mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int dayOfMonth) {
@@ -79,7 +79,7 @@ public class Calendar_fragment extends Fragment {
     }
 
     public void createRecylerView(int year, int month, int dayOfMonth){
-        listEvents = new ArrayList<>();
+        listAllEvents = new ArrayList<>();
         final List<List> datas = databaseAdapter.getData();
         for (int i=0; i<datas.size();i++){
             List<String> eachEvent = datas.get(i);
@@ -95,14 +95,14 @@ public class Calendar_fragment extends Fragment {
                         "eventLocation: "+eachEvent.get(1)
                 );
                 textView.setText("");
-                listEvents.add(listEvent);
+                listAllEvents.add(listEvent);
             }
         }
-        adapter = new RecyclerAdapter(listEvents,getContext()); // add list of event to recycler view
+        adapter = new RecyclerAdapter(listAllEvents,getContext()); // add list of event to recycler view
         recyclerView.setAdapter(adapter);
         MessageForDev m = new MessageForDev();
         //m.Log(year+" "+month+" "+dayOfMonth + );
-        if (listEvents.size()==0){
+        if (listAllEvents.size()==0){
             textView.setText("Empty Event");
         }
         else {
@@ -113,9 +113,9 @@ public class Calendar_fragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.i("b",listEvents.toString());
+        Log.i("b",listAllEvents.toString());
         createRecylerView(Integer.parseInt(selectedYear),Integer.parseInt(selectedMonth),Integer.parseInt(selectedDay));
-        adapter = new RecyclerAdapter(listEvents,getContext());
+        adapter = new RecyclerAdapter(listAllEvents,getContext());
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

@@ -36,7 +36,10 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:hint="Title"/>
+                android:hint="Title"
+                android:textColor="#000000"
+                android:textSize="15dp"
+                android:gravity="center"/>
 
 
 
@@ -50,7 +53,10 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/setTitle"
-                android:hint="Location"/>
+                android:hint="Location"
+                android:textColor="#000000"
+                android:textSize="15dp"
+                android:gravity="center"/>
 
 
 
@@ -66,7 +72,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/setLocation" />
+                app:layout_constraintTop_toBottomOf="@+id/setLocation"
+                android:textColor="#000000"
+                android:textSize="15dp"
+                android:gravity="center"/>
 
             <EditText
                 android:id="@+id/setEndDate"
@@ -79,7 +88,10 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/setStartDate"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                android:textColor="#000000"
+                android:textSize="15dp"
+                android:gravity="center"/>
 
             <EditText
                 android:id="@+id/setStartTime"
@@ -92,7 +104,10 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/setEndDate"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                android:textColor="#000000"
+                android:textSize="15dp"
+                android:gravity="center"/>
 
             <EditText
                 android:id="@+id/setEndTime"
@@ -103,7 +118,10 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/setStartTime"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                android:textColor="#000000"
+                android:textSize="15dp"
+                android:gravity="center"/>
 
             <TextView
                 android:id="@+id/tvAlert"
@@ -115,7 +133,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/setAlertTime"
                 app:layout_constraintTop_toBottomOf="@+id/setEndTime"
-                app:layout_constraintVertical_bias="0.100000024" />
+                app:layout_constraintVertical_bias="0.100000024"
+                />
 
             <RadioGroup
                 android:id="@+id/setAlertTime"
@@ -175,7 +194,10 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/setAlertTime"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                android:textColor="#000000"
+                android:textSize="15dp"
+                android:gravity="center"/>
 
             <Button
                 android:id="@+id/submitAddEvent"

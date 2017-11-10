@@ -38,6 +38,35 @@ public class DatabaseAdapter {
         return id;
     }
 
+    public List<String> getEachData(String selectTitle){
+        SQLiteDatabase db = myDbHelper.getReadableDatabase();
+        List<String> eachData= new ArrayList<String>();
+        String[] columns = {myDbHelper.ID, myDbHelper.TITLE, myDbHelper.LOCATION, myDbHelper.START_DATE, myDbHelper.END_DATE,
+                myDbHelper.START_TIME, myDbHelper.END_TIME, myDbHelper.ALERT_TIME, myDbHelper.DETAIL};
+        String[] whereArgs = {selectTitle};
+        Cursor cursor = db.query(myDbHelper.TABLE_NAME, columns, MyDbHelper.TITLE+"=?", whereArgs, null, null, null);
+        StringBuffer buffer = new StringBuffer();
+        while (cursor.moveToNext()){
+            String title = cursor.getString(cursor.getColumnIndex(myDbHelper.TITLE));
+            String location = cursor.getString(cursor.getColumnIndex(myDbHelper.LOCATION));
+            String start_date = cursor.getString(cursor.getColumnIndex(myDbHelper.START_DATE));
+            String end_date = cursor.getString(cursor.getColumnIndex(myDbHelper.END_DATE));
+            String start_time = cursor.getString(cursor.getColumnIndex(myDbHelper.START_TIME));
+            String end_time = cursor.getString(cursor.getColumnIndex(myDbHelper.END_TIME));
+            String alertTime = cursor.getString(cursor.getColumnIndex(myDbHelper.ALERT_TIME));
+            String detail = cursor.getString(cursor.getColumnIndex(myDbHelper.DETAIL));
+            eachData.add(title);
+            eachData.add(location);
+            eachData.add(start_date);
+            eachData.add(end_date);
+            eachData.add(start_time);
+            eachData.add(end_time);
+            eachData.add(alertTime);
+            eachData.add(detail);
+        }
+        return eachData;
+    }
+
     public List<List> getData(){
         SQLiteDatabase db = myDbHelper.getReadableDatabase();
         List<List> datas = new ArrayList<>();
@@ -47,7 +76,6 @@ public class DatabaseAdapter {
         StringBuffer buffer = new StringBuffer();
         while (cursor.moveToNext()){
             List<String> data = new ArrayList<>();
-            int cid = cursor.getInt(cursor.getColumnIndex(myDbHelper.ID));
             String title = cursor.getString(cursor.getColumnIndex(myDbHelper.TITLE));
             String location = cursor.getString(cursor.getColumnIndex(myDbHelper.LOCATION));
             String start_date = cursor.getString(cursor.getColumnIndex(myDbHelper.START_DATE));
@@ -65,6 +93,7 @@ public class DatabaseAdapter {
             data.add(alertTime);
             data.add(detail);
             datas.add(data);
+            //db.close();
 //            buffer.append(cid+" "+title+" "+location+" "+start_date+" "+end_date+" "+start_time+" "+end_time+" "+alertTime+" "+detail+"\n");
         }
         return datas;
