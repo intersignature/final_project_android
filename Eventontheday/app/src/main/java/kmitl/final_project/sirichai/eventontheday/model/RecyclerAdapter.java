@@ -112,5 +112,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         listEvents.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, listEvents.size());
+
     }
 }

@@ -37,42 +37,37 @@ public class Event_fragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_event, container, false);
 
-        databaseAdapter = new DatabaseAdapter(getContext());
-        List<List> datas = databaseAdapter.getData();
         recyclerView = rootView.findViewById(R.id.showAllEvent);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         textView = rootView.findViewById(R.id.emptyEvent);
-        listAllEvents = new ArrayList<>();
-        for (int i=0; i<datas.size();i++){
-            List<String> eachEvent = datas.get(i);
-            ListEvent listEvent = new ListEvent(
-                    "Title: "+ eachEvent.get(0),
-                    "Date: "+ eachEvent.get(2),
-                    "Location: "+eachEvent.get(1)
-            );
-            listAllEvents.add(listEvent);
-        }
-        //Log.i("b",listAllEvents.toString());
-        adapter = new RecyclerAdapter(listAllEvents,getContext()); // add list of event to recycler view
-        recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-
-        if (listAllEvents.size()==0){
-            textView.setText("Empty Event");
-        }
-        else{
-            textView.setText("");
-        }
+        createRecyclerView();
         return rootView;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        createRecyclerView();
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            //เวลากดdeleteแล้วเปลี่ยนแท็บ อีกแท็บจะไม่เปลี่ยน
+            //ให้dbมาใหม่
+            createRecyclerView();
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    public void createRecyclerView(){
         databaseAdapter = new DatabaseAdapter(getContext());
         List<List> datas = databaseAdapter.getData();
         listAllEvents = new ArrayList<>();
+        Log.i("event",listAllEvents.toString());
         for (int i=0; i<datas.size();i++){
             List<String> eachEvent = datas.get(i);
             ListEvent listEvent = new ListEvent(
@@ -91,15 +86,5 @@ public class Event_fragment extends Fragment {
         }
         adapter = new RecyclerAdapter(listAllEvents,getContext());
         recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser){
-            //เวลากดdeleteแล้วเปลี่ยนแท็บ อีกแท็บจะไม่เปลี่ยน
-            //ให้dbมาใหม่
-        }
     }
 }

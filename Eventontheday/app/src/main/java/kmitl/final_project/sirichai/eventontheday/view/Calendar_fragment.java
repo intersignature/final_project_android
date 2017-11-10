@@ -97,9 +97,9 @@ public class Calendar_fragment extends Fragment {
                 textView.setText("");
                 listEvents.add(listEvent);
             }
-            adapter = new RecyclerAdapter(listEvents,getContext()); // add list of event to recycler view
-            recyclerView.setAdapter(adapter);
         }
+        adapter = new RecyclerAdapter(listEvents,getContext()); // add list of event to recycler view
+        recyclerView.setAdapter(adapter);
         MessageForDev m = new MessageForDev();
         //m.Log(year+" "+month+" "+dayOfMonth + );
         if (listEvents.size()==0){
@@ -113,34 +113,8 @@ public class Calendar_fragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        databaseAdapter = new DatabaseAdapter(getContext());
-        List<List> datas = databaseAdapter.getData();
-        listEvents = new ArrayList<>();
-        for (int i=0; i<datas.size();i++){
-            List<String> eachEvent = datas.get(i);
-            int eachEventYear = Integer.parseInt(eachEvent.get(2).split("/")[2]);
-            int eachEventMonth = Integer.parseInt(eachEvent.get(2).split("/")[1]);
-            int eachEventDay= Integer.parseInt(eachEvent.get(2).split("/")[0]);
-            Log.i("55555", selectedDay+"\n"+selectedMonth+"\n"+selectedYear+"\n"+eachEventDay+"\n"+eachEventMonth+"\n"+eachEventYear);
-            if (Integer.parseInt(selectedDay) == eachEventDay && Integer.parseInt(selectedMonth) == eachEventMonth && Integer.parseInt(selectedYear) == eachEventYear){
-                ListEvent listEvent = new ListEvent(
-                        "Title: "+ eachEvent.get(0),
-                        "Date: "+ eachEvent.get(2),
-                        "Location: "+eachEvent.get(1)
-                );
-                Log.i("6666", selectedDay+"\n"+selectedMonth+"\n"+selectedYear+"\n"+eachEventDay+"\n"+eachEventMonth+"\n"+eachEventYear);
-
-                listEvents.add(listEvent);
-            }
-
-        }
         Log.i("b",listEvents.toString());
-        if (listEvents.size()==0){
-            textView.setText("Empty Event");
-        }
-        else{
-            textView.setText("");
-        }
+        createRecylerView(Integer.parseInt(selectedYear),Integer.parseInt(selectedMonth),Integer.parseInt(selectedDay));
         adapter = new RecyclerAdapter(listEvents,getContext());
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -148,10 +122,13 @@ public class Calendar_fragment extends Fragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser){
-            //เวลากดdeleteแล้วเปลี่ยนแท็บ อีกแท็บจะไม่เปลี่ยน
-            //ให้dbมาใหม่
+
+        if(getView()!=null){
+            createRecylerView(Integer.parseInt(selectedYear),Integer.parseInt(selectedMonth),Integer.parseInt(selectedDay));
+            adapter.notifyDataSetChanged();
+        }
+        else {
+
         }
     }
 }
