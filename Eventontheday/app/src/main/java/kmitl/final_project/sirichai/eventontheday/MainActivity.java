@@ -22,6 +22,9 @@ import java.util.List;
 
 import kmitl.final_project.sirichai.eventontheday.model.DatabaseAdapter;
 import kmitl.final_project.sirichai.eventontheday.model.ListDate;
+import kmitl.final_project.sirichai.eventontheday.notification.Message;
+import kmitl.final_project.sirichai.eventontheday.notification.MessageReceiver;
+import kmitl.final_project.sirichai.eventontheday.notification.TimerService;
 import kmitl.final_project.sirichai.eventontheday.view.AddEventActivity;
 import kmitl.final_project.sirichai.eventontheday.view.Calendar_fragment;
 import kmitl.final_project.sirichai.eventontheday.view.Event_fragment;
@@ -66,7 +69,12 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
+        MessageReceiver receiver = new MessageReceiver(new Message());
 
+        Intent intent = new Intent(this, TimerService.class);
+        intent.putExtra("time", 100);
+        intent.putExtra("receiver", receiver);
+        startService(intent);
 //        databaseAdapter = new DatabaseAdapter(getApplicationContext());
 //        List<List> datas = databaseAdapter.getData();
 //        listAllDates = new ArrayList<>();
@@ -80,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 //        Log.i("eventeieiaaa",listAllDates.toString());
     }
 
- 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

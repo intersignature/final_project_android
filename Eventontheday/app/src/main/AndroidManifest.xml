@@ -15,13 +15,16 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".view.AddEventActivity" />
         <activity android:name=".view.EditEventActivity" />
         <activity android:name=".ViewEventActivity"></activity>
+        <service android:name=".notification.TimerService"
+            android:exported="false"
+            android:enabled="true"
+            />
     </application>
 
 </manifest>
