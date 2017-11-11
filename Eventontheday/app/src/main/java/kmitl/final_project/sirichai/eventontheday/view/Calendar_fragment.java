@@ -88,11 +88,10 @@ public class Calendar_fragment extends Fragment {
             int eachEventDay= Integer.parseInt(eachEvent.get(2).split("/")[0]);
             Log.i("aaaa",year+" "+month+" "+dayOfMonth + " "+eachEventYear+" " +eachEventMonth+" " +eachEventDay );
             if (year == eachEventYear && month == eachEventMonth && dayOfMonth == eachEventDay){
-
                 ListEvent listEvent = new ListEvent(
                         "eventTitle: "+eachEvent.get(0),
                         "eventDate: "+ eachEvent.get(2),
-                        "eventLocation: "+eachEvent.get(1)
+                        "eventLocation: "+eachEvent.get(1), eachEvent.get(8)
                 );
                 textView.setText("");
                 listAllEvents.add(listEvent);

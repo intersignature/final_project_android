@@ -33,9 +33,9 @@ public class ViewEventActivity extends AppCompatActivity {
         viewEndTime = findViewById(R.id.viewEndTime);
         viewAlert = findViewById(R.id.viewAlert);
         viewDetail = findViewById(R.id.viewDetail);
-        viewTitle.setText(getIntent().getStringExtra("title"));
+        //viewTitle.setText(getIntent().getStringExtra("title"));
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
-        List<String> data = databaseAdapter.getEachData(getIntent().getStringExtra("title"));
+        List<String> data = databaseAdapter.getEachData(getIntent().getStringExtra("id"));
         Log.i("viewecent", data.toString());
         viewTitle.setText(data.get(0));
         viewLocation.setText(data.get(1));

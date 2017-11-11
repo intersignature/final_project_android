@@ -8,11 +8,18 @@ public class ListEvent {
     private String eventTitle;
     private String eventDate;
     private String eventLocation;
+    private String eventId;
 
-    public ListEvent(String eventTitle, String eventDate, String eventLocation) {
+    @Override
+    public String toString() {
+        return String.format("%s %s", eventDate.split(": ")[1], eventId);
+    }
+
+    public ListEvent(String eventTitle, String eventDate, String eventLocation, String eventId) {
         this.eventTitle = eventTitle;
         this.eventDate = eventDate;
         this.eventLocation = eventLocation;
+        this.eventId = eventId;
     }
 
     public String getEventTitle() {
@@ -39,4 +46,11 @@ public class ListEvent {
         this.eventLocation = eventLocation;
     }
 
+    public String getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
+    }
 }

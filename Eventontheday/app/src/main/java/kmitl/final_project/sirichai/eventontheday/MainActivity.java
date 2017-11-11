@@ -10,13 +10,18 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import android.widget.CalendarView;
+import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
+import kmitl.final_project.sirichai.eventontheday.model.DatabaseAdapter;
+import kmitl.final_project.sirichai.eventontheday.model.ListDate;
 import kmitl.final_project.sirichai.eventontheday.view.AddEventActivity;
 import kmitl.final_project.sirichai.eventontheday.view.Calendar_fragment;
 import kmitl.final_project.sirichai.eventontheday.view.Event_fragment;
@@ -39,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
     private CalendarView mCalendarView;
+    private DatabaseAdapter databaseAdapter;
+    List<ListDate> listAllDates = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,11 +66,21 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-        String string_date = "22/11/2017";
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
+//        databaseAdapter = new DatabaseAdapter(getApplicationContext());
+//        List<List> datas = databaseAdapter.getData();
+//        listAllDates = new ArrayList<>();
+//        for (int i=0; i<datas.size();i++){
+//            List<String> eachEvent = datas.get(i);
+//            ListDate listDate = new ListDate(
+//                    eachEvent.get(8),eachEvent.get(2)
+//            );
+//            listAllDates.add(listDate);
+//        }
+//        Log.i("eventeieiaaa",listAllDates.toString());
     }
 
+ 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

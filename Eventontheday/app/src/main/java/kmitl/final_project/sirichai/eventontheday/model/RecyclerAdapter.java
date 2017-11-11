@@ -39,8 +39,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         public TextView eventTitle;
         public TextView eventDate;
         public TextView eventLocation;
+        public TextView emptyEventCal;
         public Button btnDelete;
         public Button btnUpdate;
+        public TextView eventId;
         public ConstraintLayout infoLayout;
         public ViewHolder(View itemView) {
             super(itemView);
@@ -48,6 +50,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             eventTitle = itemView.findViewById(R.id.eventTitle);
             eventDate = itemView.findViewById(R.id.eventDate);
             eventLocation = itemView.findViewById(R.id.eventLocation);
+            eventId = itemView.findViewById(R.id.eventId);
+            emptyEventCal = itemView.findViewById(R.id.emptyEventCal);
             btnDelete = itemView.findViewById(R.id.btnDelete);
             btnUpdate = itemView.findViewById(R.id.btnUpdate);
             infoLayout = itemView.findViewById(R.id.infoLayout);
@@ -63,20 +67,28 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(RecyclerAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerAdapter.ViewHolder holder, final int position) {
         final ListEvent listEvent = listAllEvents.get(position);
 
         holder.eventTitle.setText(listEvent.getEventTitle());
         holder.eventDate.setText(listEvent.getEventDate());
         holder.eventLocation.setText(listEvent.getEventLocation());
+        holder.eventId.setText(listEvent.getEventId());
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 MessageForDev  messageForDev = new MessageForDev();
-                String title = listEvent.getEventTitle().split(": ")[1];
-                int cnt = databaseAdapter.delete(title);
+                String id = listEvent.getEventId();
+                int cnt = databaseAdapter.delete(id);
                 messageForDev.Log("POS : "+ cnt);
                 removeAt(position);
+//                if(listAllEvents.size()<=0){
+//                    Log.i(";;;;;;;;;;;;", listAllEvents.toString());
+//                }
+//                else {
+//                    Log.i(";;;;;;;;;;;;", listAllEvents.toString());
+//                }
+
                 //notifyDataSetChanged();
 //                Intent intent;
 //                intent =  new Intent(context, MainActivity.class);
@@ -87,10 +99,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String title = listEvent.getEventTitle().split(": ")[1];
+                String id = listEvent.getEventId();
                 Intent intent;
                 intent =  new Intent(context, EditEventActivity.class);
-                intent.putExtra("oldTitle",title);
+                intent.putExtra("oldId",id);
                 context.startActivities(new Intent[]{intent});
                 context.stopService(intent);
 
@@ -99,10 +111,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.infoLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("RecyclerAdapeter", listEvent.getEventTitle().split(": ")[1]);
+                Log.i("RecyclerAdapeter", listEvent.getEventId());
                 Intent intent;
                 intent = new Intent(context, ViewEventActivity.class);
-                intent.putExtra("title", listEvent.getEventTitle().split(": ")[1]);
+                intent.putExtra("id", listEvent.getEventId());
                 context.startActivities(new Intent[]{intent});
             }
         });
@@ -117,6 +129,5 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         listAllEvents.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, listAllEvents.size());
-
     }
 }

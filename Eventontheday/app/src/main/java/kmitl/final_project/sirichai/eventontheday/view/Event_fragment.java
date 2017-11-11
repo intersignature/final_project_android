@@ -36,12 +36,12 @@ public class Event_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_event, container, false);
-
         recyclerView = rootView.findViewById(R.id.showAllEvent);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         textView = rootView.findViewById(R.id.emptyEvent);
         createRecyclerView();
+
         return rootView;
     }
 
@@ -67,13 +67,12 @@ public class Event_fragment extends Fragment {
         databaseAdapter = new DatabaseAdapter(getContext());
         List<List> datas = databaseAdapter.getData();
         listAllEvents = new ArrayList<>();
-        Log.i("event",listAllEvents.toString());
         for (int i=0; i<datas.size();i++){
             List<String> eachEvent = datas.get(i);
             ListEvent listEvent = new ListEvent(
                     "Title: "+ eachEvent.get(0),
                     "Date: "+ eachEvent.get(2),
-                    "Location: "+eachEvent.get(1)
+                    "Location: "+eachEvent.get(1),eachEvent.get(8)
             );
             listAllEvents.add(listEvent);
         }
@@ -86,5 +85,6 @@ public class Event_fragment extends Fragment {
         }
         adapter = new RecyclerAdapter(listAllEvents,getContext());
         recyclerView.setAdapter(adapter);
+
     }
 }

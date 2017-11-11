@@ -46,7 +46,7 @@ public class EditEventActivity extends AppCompatActivity {
     private DatabaseAdapter databaseAdapter;
     private Button delete;
     List<ListEvent> listAllEvents = new ArrayList<>();
-    private String oldTitle;
+    private String oldId;
     private String checkekId;
 
     @Override
@@ -64,13 +64,13 @@ public class EditEventActivity extends AppCompatActivity {
         radioGroupSetAlertTime = findViewById(R.id.setNewAlertTime);
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
         List<List> datas = databaseAdapter.getData();
-        oldTitle = getIntent().getStringExtra("oldTitle");
+        oldId = getIntent().getStringExtra("oldId");
 
         //Log.i("Drink", oldTitle);
         listAllEvents = new ArrayList<>();
         for (int i=0; i<datas.size();i++){
             List<String> eachEvent = datas.get(i);
-            if (eachEvent.get(0).equals(oldTitle)){
+            if (eachEvent.get(8).equals(oldId)){
                 //Log.i("Drink", eachEvent.toString());
                 setTitle.setText(eachEvent.get(0));
                 setLocation.setText(eachEvent.get(1));
@@ -238,7 +238,7 @@ public class EditEventActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"Enter empty field", Toast.LENGTH_SHORT).show();
         }
         else {
-            int id = databaseAdapter.update(title, location, start_date, end_date, start_time, end_time, alert_time, detail, oldTitle);
+            int id = databaseAdapter.update(title, location, start_date, end_date, start_time, end_time, alert_time, detail, oldId);
             if(id <=0){
 
                 Toast.makeText(getApplicationContext(),"update unsucessfull!",Toast.LENGTH_SHORT).show();

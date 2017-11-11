@@ -35,18 +35,20 @@ public class DatabaseAdapter {
         contentValues.put(MyDbHelper.ALERT_TIME, alertTime);
         contentValues.put(MyDbHelper.DETAIL, detail);
         long id = db.insert(MyDbHelper.TABLE_NAME, null, contentValues);
+        db.close();
         return id;
     }
 
-    public List<String> getEachData(String selectTitle){
+    public List<String> getEachData(String selectId){
         SQLiteDatabase db = myDbHelper.getReadableDatabase();
         List<String> eachData= new ArrayList<String>();
         String[] columns = {myDbHelper.ID, myDbHelper.TITLE, myDbHelper.LOCATION, myDbHelper.START_DATE, myDbHelper.END_DATE,
                 myDbHelper.START_TIME, myDbHelper.END_TIME, myDbHelper.ALERT_TIME, myDbHelper.DETAIL};
-        String[] whereArgs = {selectTitle};
-        Cursor cursor = db.query(myDbHelper.TABLE_NAME, columns, MyDbHelper.TITLE+"=?", whereArgs, null, null, null);
+        String[] whereArgs = {selectId};
+        Cursor cursor = db.query(myDbHelper.TABLE_NAME, columns, MyDbHelper.ID+"=?", whereArgs, null, null, null);
         StringBuffer buffer = new StringBuffer();
         while (cursor.moveToNext()){
+            int id = Integer.parseInt(cursor.getString(cursor.getColumnIndex(myDbHelper.ID)));
             String title = cursor.getString(cursor.getColumnIndex(myDbHelper.TITLE));
             String location = cursor.getString(cursor.getColumnIndex(myDbHelper.LOCATION));
             String start_date = cursor.getString(cursor.getColumnIndex(myDbHelper.START_DATE));
@@ -63,7 +65,9 @@ public class DatabaseAdapter {
             eachData.add(end_time);
             eachData.add(alertTime);
             eachData.add(detail);
+            eachData.add(String.valueOf(id));
         }
+        db.close();
         return eachData;
     }
 
@@ -76,6 +80,7 @@ public class DatabaseAdapter {
         StringBuffer buffer = new StringBuffer();
         while (cursor.moveToNext()){
             List<String> data = new ArrayList<>();
+            int id = Integer.parseInt(cursor.getString(cursor.getColumnIndex(myDbHelper.ID)));
             String title = cursor.getString(cursor.getColumnIndex(myDbHelper.TITLE));
             String location = cursor.getString(cursor.getColumnIndex(myDbHelper.LOCATION));
             String start_date = cursor.getString(cursor.getColumnIndex(myDbHelper.START_DATE));
@@ -93,28 +98,31 @@ public class DatabaseAdapter {
             data.add(alertTime);
             data.add(detail);
             datas.add(data);
-            //db.close();
+            data.add(String.valueOf(id));
 //            buffer.append(cid+" "+title+" "+location+" "+start_date+" "+end_date+" "+start_time+" "+end_time+" "+alertTime+" "+detail+"\n");
         }
+        db.close();
         return datas;
     }
 
-    public int delete(String title){
+    public int delete(String id){
         SQLiteDatabase db = myDbHelper.getWritableDatabase();
-        String[] whereArgs = {title};
-        int count = db.delete(myDbHelper.TABLE_NAME, myDbHelper.TITLE+" = ?", whereArgs);
+        String[] whereArgs = {id};
+        int count = db.delete(myDbHelper.TABLE_NAME, myDbHelper.ID+" = ?", whereArgs);
+        db.close();
         return count;
     }
 
     public int clearDB(){
         SQLiteDatabase db = myDbHelper.getWritableDatabase();
         int count = db.delete(myDbHelper.TABLE_NAME, null,null);
+        db.close();
         return count;
     }
 
     public int update(String newTitle, String newLocation, String newStart_date, String newEnd_date, String newStart_time, String newEnd_time
             , String newAlertTime, String newDetail
-            , String OldTitle){
+            , String OldId){
         SQLiteDatabase db = myDbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(myDbHelper.TITLE, newTitle);
@@ -125,8 +133,9 @@ public class DatabaseAdapter {
         contentValues.put(myDbHelper.END_TIME, newEnd_time);
         contentValues.put(myDbHelper.ALERT_TIME, newAlertTime);
         contentValues.put(myDbHelper.DETAIL, newDetail);
-        String[] whereArgs = {OldTitle};
-        int count = db.update(myDbHelper.TABLE_NAME,contentValues, myDbHelper.TITLE+" = ?",whereArgs);
+        String[] whereArgs = {OldId};
+        int count = db.update(myDbHelper.TABLE_NAME,contentValues, myDbHelper.ID+" = ?",whereArgs);
+        db.close();
         return count;
 
     }
