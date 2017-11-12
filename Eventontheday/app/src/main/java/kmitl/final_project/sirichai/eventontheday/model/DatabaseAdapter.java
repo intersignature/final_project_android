@@ -23,7 +23,7 @@ public class DatabaseAdapter {
         myDbHelper = new MyDbHelper(context);
     }
     public long insertData(String title, String location, String start_date, String end_date, String start_time, String end_time
-            , String alertTime, String detail){
+            , String alertDate, String alertTime, String detail){
         SQLiteDatabase db = myDbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(MyDbHelper.TITLE, title);
@@ -32,6 +32,7 @@ public class DatabaseAdapter {
         contentValues.put(MyDbHelper.END_DATE, end_date);
         contentValues.put(MyDbHelper.START_TIME, start_time);
         contentValues.put(MyDbHelper.END_TIME, end_time);
+        contentValues.put(MyDbHelper.ALERT_DATE, alertDate);
         contentValues.put(MyDbHelper.ALERT_TIME, alertTime);
         contentValues.put(MyDbHelper.DETAIL, detail);
         long id = db.insert(MyDbHelper.TABLE_NAME, null, contentValues);
@@ -43,7 +44,7 @@ public class DatabaseAdapter {
         SQLiteDatabase db = myDbHelper.getReadableDatabase();
         List<String> eachData= new ArrayList<String>();
         String[] columns = {MyDbHelper.ID, MyDbHelper.TITLE, MyDbHelper.LOCATION, MyDbHelper.START_DATE, MyDbHelper.END_DATE,
-                MyDbHelper.START_TIME, MyDbHelper.END_TIME, MyDbHelper.ALERT_TIME, MyDbHelper.DETAIL};
+                MyDbHelper.START_TIME, MyDbHelper.END_TIME, MyDbHelper.ALERT_DATE , MyDbHelper.ALERT_TIME, MyDbHelper.DETAIL};
         String[] whereArgs = {selectId};
         Cursor cursor = db.query(MyDbHelper.TABLE_NAME, columns, MyDbHelper.ID+"=?", whereArgs, null, null, null);
         StringBuffer buffer = new StringBuffer();
@@ -55,7 +56,8 @@ public class DatabaseAdapter {
             String end_date = cursor.getString(cursor.getColumnIndex(MyDbHelper.END_DATE));
             String start_time = cursor.getString(cursor.getColumnIndex(MyDbHelper.START_TIME));
             String end_time = cursor.getString(cursor.getColumnIndex(MyDbHelper.END_TIME));
-            String alertTime = cursor.getString(cursor.getColumnIndex(MyDbHelper.ALERT_TIME));
+            String alert_date = cursor.getString(cursor.getColumnIndex(MyDbHelper.ALERT_DATE));
+            String alert_time = cursor.getString(cursor.getColumnIndex(MyDbHelper.ALERT_TIME));
             String detail = cursor.getString(cursor.getColumnIndex(MyDbHelper.DETAIL));
             eachData.add(title);
             eachData.add(location);
@@ -63,7 +65,8 @@ public class DatabaseAdapter {
             eachData.add(end_date);
             eachData.add(start_time);
             eachData.add(end_time);
-            eachData.add(alertTime);
+            eachData.add(alert_date);
+            eachData.add(alert_time);
             eachData.add(detail);
             eachData.add(String.valueOf(id));
         }
@@ -75,7 +78,7 @@ public class DatabaseAdapter {
         SQLiteDatabase db = myDbHelper.getReadableDatabase();
         List<List> datas = new ArrayList<>();
         String[] columns = {MyDbHelper.ID, MyDbHelper.TITLE, MyDbHelper.LOCATION, MyDbHelper.START_DATE, MyDbHelper.END_DATE,
-                MyDbHelper.START_TIME, MyDbHelper.END_TIME, MyDbHelper.ALERT_TIME, MyDbHelper.DETAIL};
+                MyDbHelper.START_TIME, MyDbHelper.END_TIME, MyDbHelper.ALERT_DATE, MyDbHelper.ALERT_TIME, MyDbHelper.DETAIL};
         Cursor cursor = db.query(MyDbHelper.TABLE_NAME, columns, null, null, null, null, null);
         StringBuffer buffer = new StringBuffer();
         while (cursor.moveToNext()){
@@ -87,7 +90,8 @@ public class DatabaseAdapter {
             String end_date = cursor.getString(cursor.getColumnIndex(MyDbHelper.END_DATE));
             String start_time = cursor.getString(cursor.getColumnIndex(MyDbHelper.START_TIME));
             String end_time = cursor.getString(cursor.getColumnIndex(MyDbHelper.END_TIME));
-            String alertTime = cursor.getString(cursor.getColumnIndex(MyDbHelper.ALERT_TIME));
+            String alert_date = cursor.getString(cursor.getColumnIndex(MyDbHelper.ALERT_DATE));
+            String alert_time = cursor.getString(cursor.getColumnIndex(MyDbHelper.ALERT_TIME));
             String detail = cursor.getString(cursor.getColumnIndex(MyDbHelper.DETAIL));
             data.add(title);
             data.add(location);
@@ -95,7 +99,8 @@ public class DatabaseAdapter {
             data.add(end_date);
             data.add(start_time);
             data.add(end_time);
-            data.add(alertTime);
+            data.add(alert_date);
+            data.add(alert_time);
             data.add(detail);
             datas.add(data);
             data.add(String.valueOf(id));
@@ -121,7 +126,7 @@ public class DatabaseAdapter {
     }
 
     public int update(String newTitle, String newLocation, String newStart_date, String newEnd_date, String newStart_time, String newEnd_time
-            , String newAlertTime, String newDetail
+            , String newAlertDate, String newAlertTime, String newDetail
             , String OldId){
         SQLiteDatabase db = myDbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -131,6 +136,7 @@ public class DatabaseAdapter {
         contentValues.put(MyDbHelper.END_DATE, newEnd_date);
         contentValues.put(MyDbHelper.START_TIME, newStart_time);
         contentValues.put(MyDbHelper.END_TIME, newEnd_time);
+        contentValues.put(MyDbHelper.ALERT_DATE, newAlertDate);
         contentValues.put(MyDbHelper.ALERT_TIME, newAlertTime);
         contentValues.put(MyDbHelper.DETAIL, newDetail);
         String[] whereArgs = {OldId};
@@ -151,8 +157,9 @@ public class DatabaseAdapter {
         private static final String END_DATE = "End_date"; //5th column
         private static final String START_TIME = "Start_time"; //6th column
         private static final String END_TIME = "End_time"; //7th column
-        private static final String ALERT_TIME = "Alert"; //8th column
+        private static final String ALERT_DATE = "Alert_date"; //8th column
         private static final String DETAIL = "Detail"; //9th column
+        public static final String ALERT_TIME = "Alert_time";
         private static final String CREATE_TABLE = "CREATE TABLE "+TABLE_NAME+ " ("+
                 ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
                 TITLE+" VARCHAR(255), "+
@@ -161,8 +168,10 @@ public class DatabaseAdapter {
                 END_DATE+" VARCHAR(225), "+
                 START_TIME+" VARCHAR(225), "+
                 END_TIME+" VARCHAR(225), "+
+                ALERT_DATE+" VARCHAR(225), "+
                 ALERT_TIME+" VARCHAR(225), "+
                 DETAIL+" VARCHAR(255));";
+
         private Context context;
         private static final String DROP_TABLE ="DROP TABLE IF EXISTS "+TABLE_NAME;
 
