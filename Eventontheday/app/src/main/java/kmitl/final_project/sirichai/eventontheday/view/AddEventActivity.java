@@ -2,31 +2,27 @@ package kmitl.final_project.sirichai.eventontheday.view;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.graphics.Color;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import kmitl.final_project.sirichai.eventontheday.GoogleMaps.GoogleMapActivity;
 import kmitl.final_project.sirichai.eventontheday.R;
 import kmitl.final_project.sirichai.eventontheday.model.DatabaseAdapter;
-import kmitl.final_project.sirichai.eventontheday.model.ListEvent;
 
 public class AddEventActivity extends AppCompatActivity {
     private Calendar calendar;
@@ -46,6 +42,7 @@ public class AddEventActivity extends AppCompatActivity {
     private String strEndTime = "";
     private String strAlertTime = "";
     private String strAlertDate = "";
+    private Button setLocationMaps;
     private DatabaseAdapter databaseAdapter;
 
     @Override
@@ -63,6 +60,7 @@ public class AddEventActivity extends AppCompatActivity {
         setDetail = findViewById(R.id.setDetail);
         setAlertDate = findViewById(R.id.setAlertDate);
         setAlertTime = findViewById(R.id.setAlertTime);
+        setLocationMaps = findViewById(R.id.setLocationMapsBtn);
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
 
         calendar = Calendar.getInstance();
@@ -170,6 +168,16 @@ public class AddEventActivity extends AppCompatActivity {
             }
         });
 
+        //set location maps
+        setLocationMaps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent;
+                intent = new Intent(getApplicationContext(), GoogleMapActivity.class);
+                startActivities(new Intent[]{intent});
+
+            }
+        });
     }
     private void updateLabel() {
         if (Clickbtn.equals("setStartDate")) {

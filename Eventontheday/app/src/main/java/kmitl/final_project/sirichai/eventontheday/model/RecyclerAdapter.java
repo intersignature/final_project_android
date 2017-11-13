@@ -13,10 +13,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import kmitl.final_project.sirichai.eventontheday.MainActivity;
 import kmitl.final_project.sirichai.eventontheday.MessageForDev;
 import kmitl.final_project.sirichai.eventontheday.R;
-import kmitl.final_project.sirichai.eventontheday.ViewEventActivity;
+import kmitl.final_project.sirichai.eventontheday.view.ViewEventActivity;
 import kmitl.final_project.sirichai.eventontheday.view.EditEventActivity;
 
 /**

@@ -106,14 +106,13 @@ public class TimerService extends IntentService{
             while (true) {
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 Date date = new Date();
-                //Log.i("timer", "(intent is null) = " + dateFormat.format(date));
+                Log.i("timer", "(intent is null) = " + dateFormat.format(date));
                 String currentYear = dateFormat.format(date).split(" ")[0].split("/")[0];
                 String currentMonth =dateFormat.format(date).split(" ")[0].split("/")[1];
                 String currentDay =dateFormat.format(date).split(" ")[0].split("/")[2];
                 String currentHour = dateFormat.format(date).split(" ")[1].split(":")[0];
                 String currentMin =dateFormat.format(date).split(" ")[1].split(":")[1];
                 String currentSec =dateFormat.format(date).split(" ")[1].split(":")[2];
-                //Log.i("timer", "current = " + currentYear+" "+currentMonth+" "+currentDay+" "+currentHour+" "+currentMin);
 
                 for (int i = 0; i<listAllDates.size(); i++){
                     String selectYear = listAllDates.get(i).get(3).toString().split("/")[2];
@@ -121,7 +120,6 @@ public class TimerService extends IntentService{
                     String selectDay = listAllDates.get(i).get(3).toString().split("/")[0];
                     String selectHour = listAllDates.get(i).get(4).toString().split(":")[0];
                     String selectMin = listAllDates.get(i).get(4).toString().split(":")[1];
-                    Log.i("timer", "select = " + selectYear+" "+selectMonth+" "+selectDay+" "+selectHour+" "+selectMin);
                     if (currentYear.equals(selectYear) && currentMonth.equals(selectMonth) && currentDay.equals(selectDay) &&
                         currentHour.equals(selectHour) && currentMin.equals(selectMin) && currentSec.equals("00"))
                     {
@@ -129,7 +127,8 @@ public class TimerService extends IntentService{
                     }
                 }
                 try {
-                    Thread.sleep(1000);
+                    if (!currentSec.equals("00")){Thread.sleep(1000);}
+                    else{Thread.sleep(60000);}
                 } catch (Exception e) {
                     Log.e("error", e.toString());
                 }
@@ -160,7 +159,8 @@ public class TimerService extends IntentService{
                 }
             }
             try {
-                Thread.sleep(1000);
+                if (!currentSec.equals("00")){Thread.sleep(1000);}
+                else{Thread.sleep(60000);}
             } catch (Exception e) {
                 Log.e("error", e.toString());
             }
