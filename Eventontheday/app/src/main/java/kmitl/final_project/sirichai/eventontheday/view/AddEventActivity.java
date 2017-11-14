@@ -42,7 +42,10 @@ public class AddEventActivity extends AppCompatActivity {
     private String strEndTime = "";
     private RadioGroup radioGroupSetAlertTime;
     private RadioButton rb;
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 7bee15f... change alert time input to user edittext and add alertdate to db and make notification
     private DatabaseAdapter databaseAdapter;
 
     @Override

@@ -112,13 +112,19 @@ public class TimerService extends IntentService{
                 String currentHour = dateFormat.format(date).split(" ")[1].split(":")[0];
                 String currentMin =dateFormat.format(date).split(" ")[1].split(":")[1];
                 String currentSec =dateFormat.format(date).split(" ")[1].split(":")[2];
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 7bee15f... change alert time input to user edittext and add alertdate to db and make notification
                 for (int i = 0; i<listAllDates.size(); i++){
                     String selectYear = listAllDates.get(i).get(0).toString().split("/")[2];
                     String selectMonth = listAllDates.get(i).get(0).toString().split("/")[1];
                     String selectDay = listAllDates.get(i).get(0).toString().split("/")[0];
                     if (currentYear.equals(selectYear) && currentMonth.equals(selectMonth) && currentDay.equals(selectDay)){
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 7bee15f... change alert time input to user edittext and add alertdate to db and make notification
                         createNotification(listAllDates.get(i).get(1).toString(), listAllDates.get(i).get(2).toString());
                     }
                 }
