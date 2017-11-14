@@ -2,6 +2,8 @@ package kmitl.final_project.sirichai.eventontheday.view;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +19,11 @@ import android.widget.RadioGroup;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
+
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,6 +32,7 @@ import java.util.List;
 import java.util.Locale;
 
 import kmitl.final_project.sirichai.eventontheday.R;
+import kmitl.final_project.sirichai.eventontheday.google_place_picker.GooglePlacePickerActivity;
 import kmitl.final_project.sirichai.eventontheday.model.DatabaseAdapter;
 import kmitl.final_project.sirichai.eventontheday.model.ListEvent;
 
@@ -46,7 +54,10 @@ public class AddEventActivity extends AppCompatActivity {
     private String strEndTime = "";
     private String strAlertTime = "";
     private String strAlertDate = "";
+    private Button PlacePickerBTN;
+    private String locationToDb = "";
     private DatabaseAdapter databaseAdapter;
+    private final int PLACE_PICKER_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +74,7 @@ public class AddEventActivity extends AppCompatActivity {
         setDetail = findViewById(R.id.setDetail);
         setAlertDate = findViewById(R.id.setAlertDate);
         setAlertTime = findViewById(R.id.setAlertTime);
+        PlacePickerBTN = findViewById(R.id.PlacePickerBTN);
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
 
         calendar = Calendar.getInstance();
@@ -267,5 +279,27 @@ public class AddEventActivity extends AppCompatActivity {
         Log.i("b", datas.toString());
         //Log.i("a",data);
         //Toast.makeText(getApplicationContext(),data,Toast.LENGTH_SHORT).show();
+    }
+
+    public void onPlacePicker(View view) {
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+        Intent intent;
+        try {
+            intent = builder.build(this);
+            startActivityForResult(intent, PLACE_PICKER_REQUEST);
+        } catch (GooglePlayServicesRepairableException e) {
+            e.printStackTrace();
+        } catch (GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (requestCode==PLACE_PICKER_REQUEST){
+            if (resultCode==RESULT_OK){
+                Place place = PlacePicker.getPlace(data, this);
+                setLocation.setText(place.getName() + " : " + place.getAddress());
+            }
+        }
     }
 }

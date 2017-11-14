@@ -10,6 +10,8 @@ import android.os.ResultReceiver;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.google.android.gms.common.api.GoogleApi;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -129,7 +131,12 @@ public class TimerService extends IntentService{
                     }
                 }
                 try {
-                    Thread.sleep(1000);
+                    if (currentSec.equals("00")){
+                        Thread.sleep(60000);
+                    }
+                    else{
+                        Thread.sleep(1000);
+                    }
                 } catch (Exception e) {
                     Log.e("error", e.toString());
                 }
@@ -160,7 +167,12 @@ public class TimerService extends IntentService{
                 }
             }
             try {
-                Thread.sleep(1000);
+                if (currentSec.equals("00")){
+                    Thread.sleep(60000);
+                }
+                else{
+                    Thread.sleep(1000);
+                }
             } catch (Exception e) {
                 Log.e("error", e.toString());
             }

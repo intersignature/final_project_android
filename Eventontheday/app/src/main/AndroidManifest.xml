@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="kmitl.final_project.sirichai.eventontheday">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,16 +18,24 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".view.AddEventActivity" />
         <activity android:name=".view.EditEventActivity" />
-        <activity android:name=".ViewEventActivity"></activity>
-        <service android:name=".notification.TimerService"
-            android:exported="false"
+        <activity android:name=".ViewEventActivity" />
+
+        <service
+            android:name=".notification.TimerService"
             android:enabled="true"
-            />
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDJe05M5xOccbvmBdoYaK1J8vEh8F-sWRw" />
+
+        <activity android:name=".google_place_picker.GooglePlacePickerActivity"></activity>
     </application>
 
 </manifest>

@@ -2,6 +2,7 @@ package kmitl.final_project.sirichai.eventontheday.view;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -50,6 +56,8 @@ public class EditEventActivity extends AppCompatActivity {
     private Button delete;
     List<ListEvent> listAllEvents = new ArrayList<>();
     private String oldId;
+    private final int PLACE_PICKER_REQUEST = 1;
+    Button PlacePickerUPDATEBTN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +73,7 @@ public class EditEventActivity extends AppCompatActivity {
         setDetail = findViewById(R.id.setNewDetail);
         setAlertDate = findViewById(R.id.setNewAlertDate);
         setAlertTime = findViewById(R.id.setNewAlertTime);
+        PlacePickerUPDATEBTN = findViewById(R.id.PlacePickerUPDATEBTN);
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
         List<List> datas = databaseAdapter.getData();
         oldId = getIntent().getStringExtra("oldId");
@@ -274,6 +283,28 @@ public class EditEventActivity extends AppCompatActivity {
             }else {
                 Toast.makeText(getApplicationContext(),"update success!1!",Toast.LENGTH_SHORT).show();
                 finish();
+            }
+        }
+    }
+
+    public void onPlacePicker(View view) {
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+        Intent intent;
+        try {
+            intent = builder.build(this);
+            startActivityForResult(intent, PLACE_PICKER_REQUEST);
+        } catch (GooglePlayServicesRepairableException e) {
+            e.printStackTrace();
+        } catch (GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (requestCode==PLACE_PICKER_REQUEST){
+            if (resultCode==RESULT_OK){
+                Place place = PlacePicker.getPlace(data, this);
+                setLocation.setText(place.getName() + " : " + place.getAddress());
             }
         }
     }
