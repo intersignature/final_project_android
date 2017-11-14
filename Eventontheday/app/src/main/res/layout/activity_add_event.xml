@@ -113,61 +113,91 @@
                 android:id="@+id/setEndTime"
                 android:layout_width="399dp"
                 android:layout_height="63dp"
-                android:gravity="center"
                 android:hint="Select event end time"
                 android:inputType="time"
-                android:textColor="#000000"
-                android:textSize="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/setStartTime"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <EditText
-                android:id="@+id/setAlertDate"
-                android:layout_width="399dp"
-                android:layout_height="63dp"
-                android:gravity="center"
-                android:hint="Select event alert date"
-                android:inputType="time"
+                app:layout_constraintVertical_bias="0.0"
                 android:textColor="#000000"
                 android:textSize="15dp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tvAlert"
+                android:layout_width="80dp"
+                android:layout_height="43dp"
+                android:layout_marginEnd="12dp"
+                android:text="Alert"
+                android:textSize="25dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/setAlertTime"
                 app:layout_constraintTop_toBottomOf="@+id/setEndTime"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.100000024"
+                />
 
-            <EditText
+            <RadioGroup
                 android:id="@+id/setAlertTime"
-                android:layout_width="399dp"
-                android:layout_height="63dp"
-                android:gravity="center"
-                android:hint="Select event alert time"
-                android:inputType="time"
-                android:textColor="#000000"
-                android:textSize="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/setAlertDate"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/setEndTime"
+                app:layout_constraintVertical_bias="0.0">
 
+                <RadioButton
+                    android:id="@+id/rb1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onGetAlert"
+                    android:text="Before event start date 2 days (09:00)" />
+
+                <RadioButton
+                    android:id="@+id/rb2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onGetAlert"
+                    android:text="Before event start date 1 day (09:00)" />
+
+                <RadioButton
+                    android:id="@+id/rb3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onGetAlert"
+                    android:text="Before event start date 1 week" />
+
+                <RadioButton
+                    android:id="@+id/rb4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onGetAlert"
+                    android:text="At event start date" />
+
+            </RadioGroup>
 
             <EditText
                 android:id="@+id/setDetail"
                 android:layout_width="399dp"
                 android:layout_height="87dp"
-                android:layout_marginBottom="172dp"
                 android:layout_weight="1"
                 android:ems="10"
-                android:gravity="center"
                 android:hint="Detail"
                 android:inputType="textMultiLine"
                 android:selectAllOnFocus="false"
                 android:singleLine="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/setAlertTime"
+                app:layout_constraintVertical_bias="0.0"
                 android:textColor="#000000"
                 android:textSize="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                android:gravity="center"/>
 
             <Button
                 android:id="@+id/submitAddEvent"

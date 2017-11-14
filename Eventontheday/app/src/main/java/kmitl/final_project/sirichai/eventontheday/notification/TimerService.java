@@ -50,13 +50,12 @@ public class TimerService extends IntentService{
 
         for (int i=0; i<datas.size();i++){
             listAllDate = new ArrayList<>();
-            List<String> eachEvent = datas.get(i);
-            listAllDate.add(eachEvent.get(2));//start date
-            listAllDate.add(eachEvent.get(9));//id
-            listAllDate.add(eachEvent.get(0));//title
-            listAllDate.add(eachEvent.get(6));//alertdate
-            listAllDate.add(eachEvent.get(7));//alerttime
-            listAllDates.add(listAllDate);
+        List<String> eachEvent = datas.get(i);
+        listAllDate.add(eachEvent.get(2));
+        listAllDate.add(eachEvent.get(8));
+        listAllDate.add(eachEvent.get(0));
+        listAllDate.add(eachEvent.get(6));
+        listAllDates.add(listAllDate);
     }
         Log.i("listAllDates", listAllDates.toString());
     }
@@ -113,6 +112,7 @@ public class TimerService extends IntentService{
                 String currentHour = dateFormat.format(date).split(" ")[1].split(":")[0];
                 String currentMin =dateFormat.format(date).split(" ")[1].split(":")[1];
                 String currentSec =dateFormat.format(date).split(" ")[1].split(":")[2];
+<<<<<<< HEAD
 
                 for (int i = 0; i<listAllDates.size(); i++){
                     String selectYear = listAllDates.get(i).get(3).toString().split("/")[2];
@@ -123,6 +123,13 @@ public class TimerService extends IntentService{
                     if (currentYear.equals(selectYear) && currentMonth.equals(selectMonth) && currentDay.equals(selectDay) &&
                         currentHour.equals(selectHour) && currentMin.equals(selectMin) && currentSec.equals("00"))
                     {
+=======
+                for (int i = 0; i<listAllDates.size(); i++){
+                    String selectYear = listAllDates.get(i).get(0).toString().split("/")[2];
+                    String selectMonth = listAllDates.get(i).get(0).toString().split("/")[1];
+                    String selectDay = listAllDates.get(i).get(0).toString().split("/")[0];
+                    if (currentYear.equals(selectYear) && currentMonth.equals(selectMonth) && currentDay.equals(selectDay)){
+>>>>>>> parent of 7bee15f... change alert time input to user edittext and add alertdate to db and make notification
                         createNotification(listAllDates.get(i).get(1).toString(), listAllDates.get(i).get(2).toString());
                     }
                 }
@@ -141,20 +148,17 @@ public class TimerService extends IntentService{
             Date date = new Date();
             Log.i("timer", "(intent is not null) = " + dateFormat.format(date));
             String currentYear = dateFormat.format(date).split(" ")[0].split("/")[0];
-            String currentMonth =dateFormat.format(date).split(" ")[0].split("/")[1];
-            String currentDay =dateFormat.format(date).split(" ")[0].split("/")[2];
+            String currentMonth = dateFormat.format(date).split(" ")[0].split("/")[1];
+            String currentDay = dateFormat.format(date).split(" ")[0].split("/")[2];
             String currentHour = dateFormat.format(date).split(" ")[1].split(":")[0];
-            String currentMin =dateFormat.format(date).split(" ")[1].split(":")[1];
-            String currentSec =dateFormat.format(date).split(" ")[1].split(":")[2];
+            String currentMin = dateFormat.format(date).split(" ")[1].split(":")[1];
+            String currentSec = dateFormat.format(date).split(" ")[1].split(":")[2];
             for (int i = 0; i<listAllDates.size(); i++){
-                String selectYear = listAllDates.get(i).get(3).toString().split("/")[2];
-                String selectMonth = listAllDates.get(i).get(3).toString().split("/")[1];
-                String selectDay = listAllDates.get(i).get(3).toString().split("/")[0];
-                String selectHour = listAllDates.get(i).get(4).toString().split(":")[0];
-                String selectMin = listAllDates.get(i).get(4).toString().split(":")[1];
+                String selectYear = listAllDates.get(i).get(0).toString().split("/")[2];
+                String selectMonth = listAllDates.get(i).get(0).toString().split("/")[1];
+                String selectDay = listAllDates.get(i).get(0).toString().split("/")[0];
                 if (currentYear.equals(selectYear) && currentMonth.equals(selectMonth) && currentDay.equals(selectDay) &&
-                        currentHour.equals(selectHour) && currentMin.equals(selectMin) && currentSec.equals("00"))
-                {
+                        currentHour.equals("14") && currentMin.equals("48") && currentSec.equals("30")){
                     createNotification(listAllDates.get(i).get(1).toString(), listAllDates.get(i).get(2).toString());
                 }
             }

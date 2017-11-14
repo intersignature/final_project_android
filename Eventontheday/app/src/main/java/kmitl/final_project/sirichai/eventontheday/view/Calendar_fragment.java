@@ -88,7 +88,7 @@ public class Calendar_fragment extends Fragment {
                 ListEvent listEvent = new ListEvent(
                         "eventTitle: "+eachEvent.get(0),
                         "eventDate: "+ eachEvent.get(2),
-                        "eventLocation: "+eachEvent.get(1), eachEvent.get(9)
+                        "eventLocation: "+eachEvent.get(1), eachEvent.get(8)
                 );
                 textView.setText("");
                 listAllEvents.add(listEvent);

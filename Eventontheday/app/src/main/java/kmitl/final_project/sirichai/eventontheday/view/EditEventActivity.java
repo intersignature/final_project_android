@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -37,19 +36,18 @@ public class EditEventActivity extends AppCompatActivity {
     private EditText setDetail;
     private EditText setTitle;
     private EditText setLocation;
-    private EditText setAlertDate;
-    private EditText setAlertTime;
     private String Clickbtn = "";
     private String strStartDate = "";
     private String strEndDate = "";
     private String strStartTime = "";
     private String strEndTime = "";
-    private String strAlertDate = "";
-    private String strAlertTime = "";
+    private RadioGroup radioGroupSetAlertTime;
+    private RadioButton rb;
     private DatabaseAdapter databaseAdapter;
     private Button delete;
     List<ListEvent> listAllEvents = new ArrayList<>();
     private String oldId;
+    private String checkekId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +61,7 @@ public class EditEventActivity extends AppCompatActivity {
         setStartTime = findViewById(R.id.setNewStartTime);
         setEndTime = findViewById(R.id.setNewEndTime);
         setDetail = findViewById(R.id.setNewDetail);
-        setAlertDate = findViewById(R.id.setNewAlertDate);
-        setAlertTime = findViewById(R.id.setNewAlertTime);
+        radioGroupSetAlertTime = findViewById(R.id.setNewAlertTime);
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
         List<List> datas = databaseAdapter.getData();
         oldId = getIntent().getStringExtra("oldId");
@@ -73,7 +70,7 @@ public class EditEventActivity extends AppCompatActivity {
         listAllEvents = new ArrayList<>();
         for (int i=0; i<datas.size();i++){
             List<String> eachEvent = datas.get(i);
-            if (eachEvent.get(9).equals(oldId)){
+            if (eachEvent.get(8).equals(oldId)){
                 //Log.i("Drink", eachEvent.toString());
                 setTitle.setText(eachEvent.get(0));
                 setLocation.setText(eachEvent.get(1));
@@ -81,15 +78,14 @@ public class EditEventActivity extends AppCompatActivity {
                 setEndDate.setText("end date is : " + eachEvent.get(3));
                 setStartTime.setText("start time is : " + eachEvent.get(4));
                 setEndTime.setText("end time is : " + eachEvent.get(5));
-                setDetail.setText(eachEvent.get(8));
-                setAlertDate.setText("alert date is : "+eachEvent.get(6));
-                setAlertTime.setText("alert time is : "+eachEvent.get(7));
+                setDetail.setText(eachEvent.get(7));
+                checkekId = eachEvent.get(6);
+                radioGroupSetAlertTime = findViewById(R.id.setNewAlertTime);
+                radioGroupSetAlertTime.getChildAt(Integer.parseInt(checkekId)).setPressed(true);
                 strStartDate = eachEvent.get(2);
                 strEndDate = eachEvent.get(3);
                 strStartTime = eachEvent.get(4);
                 strEndTime = eachEvent.get(5);
-                strAlertDate = eachEvent.get(6);
-                strAlertTime = eachEvent.get(7);
 //                radioGroupSetAlertTime.getChildAt(Integer.parseInt(checkekId)).;
 //                radioGroupSetAlertTime.check(Integer.parseInt(checkekId));
 
@@ -137,20 +133,6 @@ public class EditEventActivity extends AppCompatActivity {
             }
         });
 
-        setAlertDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Clickbtn = "setAlertDate";
-                if(strAlertDate.equals("")){
-                    new DatePickerDialog(EditEventActivity.this, date, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
-                }
-                else{
-                    String[] parts = strAlertDate.split("/");
-                    new DatePickerDialog(EditEventActivity.this, date, Integer.parseInt(parts[2]), Integer.parseInt(parts[1])-1, Integer.parseInt(parts[0])).show();
-                }
-            }
-        });
-
         //set time start and end
 
         final TimePickerDialog.OnTimeSetListener time = new TimePickerDialog.OnTimeSetListener() {
@@ -187,30 +169,31 @@ public class EditEventActivity extends AppCompatActivity {
                 }
             }
         });
-        setAlertTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Clickbtn = "setAlertTime";
-                if(strAlertTime.equals("")){
-                    new TimePickerDialog(EditEventActivity.this, time, calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),true).show();
-                }
-                else{
-                    String[] parts = strAlertTime.split(":");
-                    new TimePickerDialog(EditEventActivity.this, time, Integer.parseInt(parts[0]),  Integer.parseInt(parts[1]),true).show();
-                }
-            }
-        });
     }
-
+    public String getAlert(){
+        radioGroupSetAlertTime = findViewById(R.id.setNewAlertTime);
+        int radioButtonID = radioGroupSetAlertTime.getCheckedRadioButtonId();
+        View radioButton = radioGroupSetAlertTime.findViewById(radioButtonID);
+        int idx = radioGroupSetAlertTime.indexOfChild(radioButton);
+        Toast.makeText(getApplicationContext(), String.valueOf(idx),Toast.LENGTH_SHORT).show();
+        return String.valueOf(idx);
+    }
+    public void onGetAlert(View view) {
+        radioGroupSetAlertTime = findViewById(R.id.setNewAlertTime);
+        int radioButtonID = radioGroupSetAlertTime.getCheckedRadioButtonId();
+        View radioButton = radioGroupSetAlertTime.findViewById(radioButtonID);
+        int idx = radioGroupSetAlertTime.indexOfChild(radioButton);
+        Toast.makeText(getApplicationContext(), String.valueOf(idx),Toast.LENGTH_SHORT).show();
+    }
 
     @Nullable
     private Format formatTh(){
         Format formatter;
-        if(Clickbtn.equals("setStartDate") || Clickbtn.equals("setEndDate") || Clickbtn.equals("setAlertDate")){
+        if(Clickbtn.equals("setStartDate") || Clickbtn.equals("setEndDate")){
             formatter = new SimpleDateFormat("dd/MM/yyyy", new Locale("en", "TH"));
             return formatter;
         }
-        else if(Clickbtn.equals("setStartTime") || Clickbtn.equals("setEndTime") || Clickbtn.equals("setAlertTime")){
+        else if(Clickbtn.equals("setStartTime") || Clickbtn.equals("setEndTime")){
             formatter = new SimpleDateFormat("HH:mm", new Locale("en", "TH"));
             return formatter;
         }
@@ -226,10 +209,6 @@ public class EditEventActivity extends AppCompatActivity {
             setEndDate.setText("end date is : " + formatTh().format(calendar.getTime()));
             strEndDate = formatTh().format(calendar.getTime());
         }
-        else if (Clickbtn.equals("setAlertDate")){
-            setAlertDate.setText("alert date is : " + formatTh().format(calendar.getTime()));
-            strAlertDate = formatTh().format(calendar.getTime());
-        }
         else if (Clickbtn.equals("setStartTime")){
             setStartTime.setText("start time is : " + formatTh().format(calendar.getTime()));
             strStartTime = formatTh().format(calendar.getTime());
@@ -238,16 +217,11 @@ public class EditEventActivity extends AppCompatActivity {
             setEndTime.setText("end time is : " + formatTh().format(calendar.getTime()));
             strEndTime = formatTh().format(calendar.getTime());
         }
-        else if (Clickbtn.equals("setAlertTime")){
-            setAlertTime.setText("alert time is : " + formatTh().format(calendar.getTime()));
-            strAlertTime = formatTh().format(calendar.getTime());
-        }
     }
 
     public void viewdata(View view) {
-        //int data = databaseAdapter.clearDB();
-        List<List> datas = databaseAdapter.getData();
-        Log.i("b", datas.toString());
+        int data = databaseAdapter.clearDB();
+        //Log.i("b", Integer.toString(data));
     }
     public void onSubmitEditEvent(View view) {
         String title = setTitle.getText().toString();
@@ -256,18 +230,15 @@ public class EditEventActivity extends AppCompatActivity {
         String end_date = strEndDate;
         String start_time = strStartTime;
         String end_time = strEndTime;
-        String alert_time = strAlertTime;
-        String alert_date = strAlertDate;
+        String alert_time = getAlert();
         String detail = setDetail.getText().toString();
-        Log.i("add",title+" "+location+" "+start_date+" "+end_date+" "+start_time+" "+ end_time+ " "+alert_date+" "+alert_time+" "+detail);
-
+        //Log.i("Drink", oldTitle+"\n"+title+"\n"+location+"\n"+start_date+"\n"+end_date+"\n"+start_time+"\n"+end_time+"\n"+alert_time+"\n"+detail+"\n");
         if(title.equals("") || location.equals("")  || start_date.equals("") || end_date.equals("") ||
-                start_time.equals("") || end_time.equals("") || alert_date.equals("") || alert_time.equals("") || detail.equals("") ){
-
+                start_time.equals("") || end_time.equals("") || alert_time.equals("-1") || detail.equals("") ){
             Toast.makeText(getApplicationContext(),"Enter empty field", Toast.LENGTH_SHORT).show();
         }
         else {
-            int id = databaseAdapter.update(title, location, start_date, end_date, start_time, end_time,alert_date ,alert_time, detail, oldId);
+            int id = databaseAdapter.update(title, location, start_date, end_date, start_time, end_time, alert_time, detail, oldId);
             if(id <=0){
 
                 Toast.makeText(getApplicationContext(),"update unsucessfull!",Toast.LENGTH_SHORT).show();

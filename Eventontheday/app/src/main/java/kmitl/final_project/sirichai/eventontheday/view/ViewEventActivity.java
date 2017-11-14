@@ -17,8 +17,7 @@ public class ViewEventActivity extends AppCompatActivity {
     private TextView viewEndDate;
     private TextView viewStartTime;
     private TextView viewEndTime;
-    private TextView viewAlertDate;
-    private TextView viewAlertTime;
+    private TextView viewAlert;
     private TextView viewDetail;
     private DatabaseAdapter databaseAdapter;
 
@@ -33,8 +32,7 @@ public class ViewEventActivity extends AppCompatActivity {
         viewEndDate = findViewById(R.id.viewEndDate);
         viewStartTime = findViewById(R.id.viewStartTime);
         viewEndTime = findViewById(R.id.viewEndTime);
-        viewAlertDate = findViewById(R.id.viewAlertDate);
-        viewAlertTime = findViewById(R.id.viewAlertTime);
+        viewAlert = findViewById(R.id.viewAlert);
         viewDetail = findViewById(R.id.viewDetail);
         //viewTitle.setText(getIntent().getStringExtra("title"));
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
@@ -46,8 +44,18 @@ public class ViewEventActivity extends AppCompatActivity {
         viewEndDate.setText("End date is : "+data.get(3));
         viewStartTime.setText("Start time is : "+data.get(4));
         viewEndTime.setText("End time is : "+data.get(5));
-        viewAlertDate.setText("Alert date is : " + data.get(6));
-        viewAlertTime.setText("Alert time is : "+data.get(7));
-        viewDetail.setText(data.get(8));
+        if (data.get(6).equals("0")){
+            viewAlert.setText("Before event start date 2 days (09:00)");
+        }
+        else if (data.get(6).equals("1")){
+            viewAlert.setText("Before event start date 1 day (09:00)");
+        }
+        else if (data.get(6).equals("2")){
+            viewAlert.setText("Before event start date 1 week");
+        }
+        else if (data.get(6).equals("3")){
+            viewAlert.setText("At event start date");
+        }
+        viewDetail.setText(data.get(7));
     }
 }

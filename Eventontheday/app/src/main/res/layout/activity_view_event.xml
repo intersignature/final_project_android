@@ -17,68 +17,20 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/viewTitle"
+                android:id="@+id/viewAlert"
                 android:layout_width="399dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:gravity="center"
                 android:minHeight="63dp"
-                android:text="Title"
-                android:textColor="#000000"
-                android:textSize="15dp"
+                android:text="Alert"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/viewLocation"
-                android:layout_width="399dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="4dp"
-                android:gravity="center"
-                android:minHeight="63dp"
-                android:text="Location"
+                app:layout_constraintTop_toBottomOf="@+id/viewEndTime"
                 android:textColor="#000000"
                 android:textSize="15dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/viewTitle" />
-
-            <TextView
-                android:id="@+id/viewStartDate"
-                android:layout_width="399dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:minHeight="63dp"
-                android:text="StartDate"
-                android:textColor="#000000"
-                android:textSize="15dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/viewLocation" />
-
-            <TextView
-                android:id="@+id/viewEndDate"
-                android:layout_width="399dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:minHeight="63dp"
-                android:text="EndDate"
-                android:textColor="#000000"
-                android:textSize="15dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/viewStartDate" />
+                android:gravity="center"/>
 
             <TextView
                 android:id="@+id/viewStartTime"
@@ -92,6 +44,22 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/viewEndDate"
+                android:textColor="#000000"
+                android:textSize="15dp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/viewTitle"
+                android:layout_width="399dp"
+                android:layout_height="wrap_content"
+                android:minHeight="63dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 android:textColor="#000000"
                 android:textSize="15dp"
                 android:gravity="center"/>
@@ -113,36 +81,36 @@
                 android:gravity="center"/>
 
             <TextView
-            android:id="@+id/viewAlertDate"
-            android:layout_width="399dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:minHeight="63dp"
-            android:text="AlertDate"
-            android:textColor="#000000"
-            android:textSize="15dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/viewEndTime" />
-
-            <TextView
-                android:id="@+id/viewAlertTime"
+                android:id="@+id/viewEndDate"
                 android:layout_width="399dp"
                 android:layout_height="wrap_content"
+                android:minHeight="63dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:minHeight="63dp"
-                android:text="AlertTime"
-                android:textColor="#000000"
-                android:textSize="15dp"
+                android:text="EndDate"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/viewAlertDate" />
+                app:layout_constraintTop_toBottomOf="@+id/viewStartDate"
+                android:textColor="#000000"
+                android:textSize="15dp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/viewStartDate"
+                android:layout_width="399dp"
+                android:layout_height="wrap_content"
+                android:minHeight="63dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="StartDate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewLocation"
+                android:textColor="#000000"
+                android:textSize="15dp"
+                android:gravity="center"/>
 
             <TextView
                 android:id="@+id/viewDetail"
@@ -157,12 +125,27 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/viewAlertTime"
+                app:layout_constraintTop_toBottomOf="@+id/viewAlert"
                 app:layout_constraintVertical_bias="0.0"
                 android:textColor="#000000"
                 android:textSize="15dp"
                 android:gravity="center"/>
 
+            <TextView
+                android:id="@+id/viewLocation"
+                android:layout_width="399dp"
+                android:layout_height="wrap_content"
+                android:minHeight="63dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:text="Location"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewTitle"
+                android:textColor="#000000"
+                android:textSize="15dp"
+                android:gravity="center"/>
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 
