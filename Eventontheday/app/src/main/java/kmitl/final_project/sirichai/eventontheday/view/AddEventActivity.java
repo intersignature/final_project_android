@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -38,14 +40,9 @@ public class AddEventActivity extends AppCompatActivity {
     private String strEndDate = "";
     private String strStartTime = "";
     private String strEndTime = "";
-<<<<<<< HEAD
-    private String strAlertTime = "";
-    private String strAlertDate = "";
-    private Button setLocationMaps;
-=======
     private RadioGroup radioGroupSetAlertTime;
     private RadioButton rb;
->>>>>>> parent of 7bee15f... change alert time input to user edittext and add alertdate to db and make notification
+
     private DatabaseAdapter databaseAdapter;
 
     @Override
@@ -61,13 +58,7 @@ public class AddEventActivity extends AppCompatActivity {
         setStartTime = findViewById(R.id.setStartTime);
         setEndTime = findViewById(R.id.setEndTime);
         setDetail = findViewById(R.id.setDetail);
-<<<<<<< HEAD
-        setAlertDate = findViewById(R.id.setAlertDate);
-        setAlertTime = findViewById(R.id.setAlertTime);
-        setLocationMaps = findViewById(R.id.setLocationMapsBtn);
-=======
         radioGroupSetAlertTime = findViewById(R.id.setAlertTime);
->>>>>>> parent of 7bee15f... change alert time input to user edittext and add alertdate to db and make notification
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
 
         calendar = Calendar.getInstance();
@@ -149,15 +140,6 @@ public class AddEventActivity extends AppCompatActivity {
         });
 
         //set location maps
-        setLocationMaps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent;
-                intent = new Intent(getApplicationContext(), GoogleMapActivity.class);
-                startActivities(new Intent[]{intent});
-
-            }
-        });
     }
     private void updateLabel() {
         if (Clickbtn.equals("setStartDate")) {
