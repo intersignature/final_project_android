@@ -246,12 +246,12 @@ public class AddEventActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"Enter empty field", Toast.LENGTH_SHORT).show();
         }
         else {
-            long id = databaseAdapter.insertData(title,location,start_date,end_date,start_time,end_time,alert_date,alert_time,detail);
-            if((int)id <=0){
-                Toast.makeText(getApplicationContext(),"Insertion unsucessfull!",Toast.LENGTH_SHORT).show();
+            String result = databaseAdapter.insertDataEvent(title,location,start_date,end_date,start_time,end_time,alert_date,alert_time,detail);
+            if(!result.equals("success")){
+                Toast.makeText(getApplicationContext(),"Insertion unsucessfull!"+result,Toast.LENGTH_SHORT).show();
             }
             else {
-                Toast.makeText(getApplicationContext(),"Insertion success!1!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Insertion success!!",Toast.LENGTH_SHORT).show();
                 setTitle.setText("");
                 setLocation.setText("");
                 setStartDate.setText("");
@@ -275,7 +275,7 @@ public class AddEventActivity extends AppCompatActivity {
     public void viewdata(View view) {
 //        int data = databaseAdapter.clearDB();
 //        Log.i("b", Integer.toString(data));
-        List<List> datas = databaseAdapter.getData();
+        List<List> datas = databaseAdapter.getDataEvent();
         Log.i("b", datas.toString());
         //Log.i("a",data);
         //Toast.makeText(getApplicationContext(),data,Toast.LENGTH_SHORT).show();

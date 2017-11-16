@@ -10,12 +10,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import android.widget.CalendarView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +24,7 @@ import kmitl.final_project.sirichai.eventontheday.notification.Message;
 import kmitl.final_project.sirichai.eventontheday.notification.MessageReceiver;
 import kmitl.final_project.sirichai.eventontheday.notification.TimerService;
 import kmitl.final_project.sirichai.eventontheday.view.AddEventActivity;
+import kmitl.final_project.sirichai.eventontheday.view.AddPresetActivity;
 import kmitl.final_project.sirichai.eventontheday.view.Calendar_fragment;
 import kmitl.final_project.sirichai.eventontheday.view.Event_fragment;
 import kmitl.final_project.sirichai.eventontheday.view.Preset_fragment;
@@ -108,12 +107,20 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.addEvent) {
             return true;
         }
+        if(id==R.id.addPreset){
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
 
     public void onClickAddEventListenet(MenuItem item) {
         Intent intent = new Intent(this, AddEventActivity.class);
+        startActivity(intent);
+    }
+
+    public void onClickAddPresetListenet(MenuItem item) {
+        Intent intent = new Intent(this, AddPresetActivity.class);
         startActivity(intent);
     }
 

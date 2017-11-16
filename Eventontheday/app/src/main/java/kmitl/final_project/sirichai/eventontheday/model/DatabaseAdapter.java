@@ -4,10 +4,16 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,185 +24,391 @@ import kmitl.final_project.sirichai.eventontheday.R;
  */
 
 public class DatabaseAdapter {
-    MyDbHelper myDbHelper;
     public DatabaseAdapter(Context context) {
-        myDbHelper = new MyDbHelper(context);
-    }
-    public long insertData(String title, String location, String start_date, String end_date, String start_time, String end_time
-            , String alertDate, String alertTime, String detail){
-        SQLiteDatabase db = myDbHelper.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(MyDbHelper.TITLE, title);
-        contentValues.put(MyDbHelper.LOCATION, location);
-        contentValues.put(MyDbHelper.START_DATE, start_date);
-        contentValues.put(MyDbHelper.END_DATE, end_date);
-        contentValues.put(MyDbHelper.START_TIME, start_time);
-        contentValues.put(MyDbHelper.END_TIME, end_time);
-        contentValues.put(MyDbHelper.ALERT_DATE, alertDate);
-        contentValues.put(MyDbHelper.ALERT_TIME, alertTime);
-        contentValues.put(MyDbHelper.DETAIL, detail);
-        long id = db.insert(MyDbHelper.TABLE_NAME, null, contentValues);
-        db.close();
-        return id;
+        EventOnTheDayDB.getInstance(context, DB_NAME);
     }
 
-    public List<String> getEachData(String selectId){
-        SQLiteDatabase db = myDbHelper.getReadableDatabase();
-        List<String> eachData= new ArrayList<String>();
-        String[] columns = {MyDbHelper.ID, MyDbHelper.TITLE, MyDbHelper.LOCATION, MyDbHelper.START_DATE, MyDbHelper.END_DATE,
-                MyDbHelper.START_TIME, MyDbHelper.END_TIME, MyDbHelper.ALERT_DATE , MyDbHelper.ALERT_TIME, MyDbHelper.DETAIL};
-        String[] whereArgs = {selectId};
-        Cursor cursor = db.query(MyDbHelper.TABLE_NAME, columns, MyDbHelper.ID+"=?", whereArgs, null, null, null);
-        StringBuffer buffer = new StringBuffer();
-        while (cursor.moveToNext()){
-            int id = Integer.parseInt(cursor.getString(cursor.getColumnIndex(MyDbHelper.ID)));
-            String title = cursor.getString(cursor.getColumnIndex(MyDbHelper.TITLE));
-            String location = cursor.getString(cursor.getColumnIndex(MyDbHelper.LOCATION));
-            String start_date = cursor.getString(cursor.getColumnIndex(MyDbHelper.START_DATE));
-            String end_date = cursor.getString(cursor.getColumnIndex(MyDbHelper.END_DATE));
-            String start_time = cursor.getString(cursor.getColumnIndex(MyDbHelper.START_TIME));
-            String end_time = cursor.getString(cursor.getColumnIndex(MyDbHelper.END_TIME));
-            String alert_date = cursor.getString(cursor.getColumnIndex(MyDbHelper.ALERT_DATE));
-            String alert_time = cursor.getString(cursor.getColumnIndex(MyDbHelper.ALERT_TIME));
-            String detail = cursor.getString(cursor.getColumnIndex(MyDbHelper.DETAIL));
-            eachData.add(title);
-            eachData.add(location);
-            eachData.add(start_date);
-            eachData.add(end_date);
-            eachData.add(start_time);
-            eachData.add(end_time);
-            eachData.add(alert_date);
-            eachData.add(alert_time);
-            eachData.add(detail);
-            eachData.add(String.valueOf(id));
+    /*
+    Event database zone
+     */
+    public String deleteDataEvent(String id){
+        String result = "success";
+
+        String DeleteQuery = "DELETE FROM EVENT " + "WHERE ID = '" + id + "';";
+        try {
+            EventOnTheDayDB.execute(DeleteQuery);
+            return result;
+        }catch (Exception e){
+            return e.toString();
         }
-        db.close();
+
+    }
+
+    public String updateDataEvent(String newTitle, String newLocation, String newStart_date, String newEnd_date, String newStart_time, String newEnd_time
+            , String newAlertDate, String newAlertTime, String newDetail
+            , String OldId){
+        String result = "success";
+        String UpdateQuery = " UPDATE EVENT set "
+                + "TITLE='" + newTitle + "', "
+                + "LOCATION='" + newLocation + "', "
+                + "START_DATE='" + newStart_date + "', "
+                + "END_DATE='" + newEnd_date + "', "
+                + "START_TIME='" + newStart_time + "', "
+                + "END_TIME='" + newEnd_time + "', "
+                + "ALERT_DATE='" + newAlertDate + "', "
+                + "ALERT_TIME='" + newAlertTime+ "', "
+                + "DETAIL='" + newDetail + "' "
+                + "where ID ='" + OldId+ "' ";
+        try {
+            EventOnTheDayDB.execute(UpdateQuery);
+            return result;
+        }catch (Exception e){
+            return e.toString();
+        }
+    }
+
+    public String insertDataEvent(String title, String location, String start_date, String end_date, String start_time, String end_time
+            , String alertDate, String alertTime, String detail){
+        String result = "success";
+        String insertQuery = "INSERT INTO EVENT VALUES('"
+                + (getLastIdEvent()+2) + "'," + "'"
+                + title + "'," + "'"
+                + location + "','"
+                + start_date + "','"
+                + end_date + "','"
+                + start_time + "','"
+                + end_time + "','"
+                + alertDate + "','"
+                + alertTime + "','"
+                + detail + "');";
+
+        try {
+            EventOnTheDayDB.execute(insertQuery);
+            return result;
+        }catch (Exception e){
+            return e.toString();
+        }
+
+    }
+
+    public int getLastIdEvent(){
+        String query = "SELECT * FROM EVENT";
+        Cursor c1 = EventOnTheDayDB.rawQuery(query);
+        c1.moveToLast();
+        if (c1.getCount()==0){
+            return -1;
+        }
+        else {
+            c1.moveToLast();
+            return  Integer.parseInt(c1.getString(c1.getColumnIndex("ID")));
+        }
+    }
+
+    public List<String> getEachDataEvent(String selectId) {
+        String query = "SELECT * FROM EVENT WHERE ID = "+selectId;
+        Cursor c1 = EventOnTheDayDB.rawQuery(query);
+        List<String> eachData= new ArrayList<String>();
+        if (c1 != null && c1.getCount() != 0) {
+            while (c1.moveToNext()){
+                int id = Integer.parseInt(c1.getString(c1.getColumnIndex("ID")));
+                String title = c1.getString(c1.getColumnIndex("TITLE"));
+                String location = c1.getString(c1.getColumnIndex("LOCATION"));
+                String start_date = c1.getString(c1.getColumnIndex("START_DATE"));
+                String end_date = c1.getString(c1.getColumnIndex("END_DATE"));
+                String start_time = c1.getString(c1.getColumnIndex("START_TIME"));
+                String end_time = c1.getString(c1.getColumnIndex("END_TIME"));
+                String alert_date = c1.getString(c1.getColumnIndex("ALERT_DATE"));
+                String alert_time = c1.getString(c1.getColumnIndex("ALERT_TIME"));
+                String detail = c1.getString(c1.getColumnIndex("DETAIL"));
+                eachData.add(title);
+                eachData.add(location);
+                eachData.add(start_date);
+                eachData.add(end_date);
+                eachData.add(start_time);
+                eachData.add(end_time);
+                eachData.add(alert_date);
+                eachData.add(alert_time);
+                eachData.add(detail);
+                eachData.add(String.valueOf(id));
+            }
+        }
+        c1.close();
+
         return eachData;
     }
 
-    public List<List> getData(){
-        SQLiteDatabase db = myDbHelper.getReadableDatabase();
+    public List<List> getDataEvent() {
+        String query = "SELECT * FROM EVENT";
+        Cursor c1 = EventOnTheDayDB.rawQuery(query);
         List<List> datas = new ArrayList<>();
-        String[] columns = {MyDbHelper.ID, MyDbHelper.TITLE, MyDbHelper.LOCATION, MyDbHelper.START_DATE, MyDbHelper.END_DATE,
-                MyDbHelper.START_TIME, MyDbHelper.END_TIME, MyDbHelper.ALERT_DATE, MyDbHelper.ALERT_TIME, MyDbHelper.DETAIL};
-        Cursor cursor = db.query(MyDbHelper.TABLE_NAME, columns, null, null, null, null, null);
-        StringBuffer buffer = new StringBuffer();
-        while (cursor.moveToNext()){
-            List<String> data = new ArrayList<>();
-            int id = Integer.parseInt(cursor.getString(cursor.getColumnIndex(MyDbHelper.ID)));
-            String title = cursor.getString(cursor.getColumnIndex(MyDbHelper.TITLE));
-            String location = cursor.getString(cursor.getColumnIndex(MyDbHelper.LOCATION));
-            String start_date = cursor.getString(cursor.getColumnIndex(MyDbHelper.START_DATE));
-            String end_date = cursor.getString(cursor.getColumnIndex(MyDbHelper.END_DATE));
-            String start_time = cursor.getString(cursor.getColumnIndex(MyDbHelper.START_TIME));
-            String end_time = cursor.getString(cursor.getColumnIndex(MyDbHelper.END_TIME));
-            String alert_date = cursor.getString(cursor.getColumnIndex(MyDbHelper.ALERT_DATE));
-            String alert_time = cursor.getString(cursor.getColumnIndex(MyDbHelper.ALERT_TIME));
-            String detail = cursor.getString(cursor.getColumnIndex(MyDbHelper.DETAIL));
-            data.add(title);
-            data.add(location);
-            data.add(start_date);
-            data.add(end_date);
-            data.add(start_time);
-            data.add(end_time);
-            data.add(alert_date);
-            data.add(alert_time);
-            data.add(detail);
-            datas.add(data);
-            data.add(String.valueOf(id));
-//            buffer.append(cid+" "+title+" "+location+" "+start_date+" "+end_date+" "+start_time+" "+end_time+" "+alertTime+" "+detail+"\n");
+        if (c1 != null && c1.getCount() != 0) {
+            while (c1.moveToNext()){
+                List<String> data = new ArrayList<>();
+                int id = Integer.parseInt(c1.getString(c1.getColumnIndex("ID")));
+                String title = c1.getString(c1.getColumnIndex("TITLE"));
+                String location = c1.getString(c1.getColumnIndex("LOCATION"));
+                String start_date = c1.getString(c1.getColumnIndex("START_DATE"));
+                String end_date = c1.getString(c1.getColumnIndex("END_DATE"));
+                String start_time = c1.getString(c1.getColumnIndex("START_TIME"));
+                String end_time = c1.getString(c1.getColumnIndex("END_TIME"));
+                String alert_date = c1.getString(c1.getColumnIndex("ALERT_DATE"));
+                String alert_time = c1.getString(c1.getColumnIndex("ALERT_TIME"));
+                String detail = c1.getString(c1.getColumnIndex("DETAIL"));
+                data.add(title);
+                data.add(location);
+                data.add(start_date);
+                data.add(end_date);
+                data.add(start_time);
+                data.add(end_time);
+                data.add(alert_date);
+                data.add(alert_time);
+                data.add(detail);
+                datas.add(data);
+                data.add(String.valueOf(id));
+            }
         }
-        db.close();
+        c1.close();
         return datas;
     }
 
-    public int delete(String id){
-        SQLiteDatabase db = myDbHelper.getWritableDatabase();
-        String[] whereArgs = {id};
-        int count = db.delete(MyDbHelper.TABLE_NAME, MyDbHelper.ID +" = ?", whereArgs);
-        db.close();
-        return count;
-    }
+    /*
+    Preset database zone
+     */
 
-    public int clearDB(){
-        SQLiteDatabase db = myDbHelper.getWritableDatabase();
-        int count = db.delete(MyDbHelper.TABLE_NAME, null,null);
-        db.close();
-        return count;
-    }
+    public String deleteDataPreset(String id){
+        String result = "success";
 
-    public int update(String newTitle, String newLocation, String newStart_date, String newEnd_date, String newStart_time, String newEnd_time
-            , String newAlertDate, String newAlertTime, String newDetail
-            , String OldId){
-        SQLiteDatabase db = myDbHelper.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(MyDbHelper.TITLE, newTitle);
-        contentValues.put(MyDbHelper.LOCATION, newLocation);
-        contentValues.put(MyDbHelper.START_DATE, newStart_date);
-        contentValues.put(MyDbHelper.END_DATE, newEnd_date);
-        contentValues.put(MyDbHelper.START_TIME, newStart_time);
-        contentValues.put(MyDbHelper.END_TIME, newEnd_time);
-        contentValues.put(MyDbHelper.ALERT_DATE, newAlertDate);
-        contentValues.put(MyDbHelper.ALERT_TIME, newAlertTime);
-        contentValues.put(MyDbHelper.DETAIL, newDetail);
-        String[] whereArgs = {OldId};
-        int count = db.update(MyDbHelper.TABLE_NAME,contentValues, MyDbHelper.ID +" = ?",whereArgs);
-        db.close();
-        return count;
-
-    }
-
-    static class MyDbHelper extends SQLiteOpenHelper{
-        private static final String DATABASE_NAME = "EventDB"; //Database name
-        private static final String TABLE_NAME = "EventTable"; //Table name
-        private static final int DATABASE_VERSION = 1; //Database version
-        private static final String ID = "_id"; //1st column (primary key)
-        private static final String TITLE = "Title"; //2nd column
-        private static final String LOCATION = "Location"; //3rd column
-        private static final String START_DATE = "Start_date"; //4th column
-        private static final String END_DATE = "End_date"; //5th column
-        private static final String START_TIME = "Start_time"; //6th column
-        private static final String END_TIME = "End_time"; //7th column
-        private static final String ALERT_DATE = "Alert_date"; //8th column
-        private static final String DETAIL = "Detail"; //9th column
-        public static final String ALERT_TIME = "Alert_time";
-        private static final String CREATE_TABLE = "CREATE TABLE "+TABLE_NAME+ " ("+
-                ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
-                TITLE+" VARCHAR(255), "+
-                LOCATION+" VARCHAR(225), "+
-                START_DATE+" VARCHAR(225), "+
-                END_DATE+" VARCHAR(225), "+
-                START_TIME+" VARCHAR(225), "+
-                END_TIME+" VARCHAR(225), "+
-                ALERT_DATE+" VARCHAR(225), "+
-                ALERT_TIME+" VARCHAR(225), "+
-                DETAIL+" VARCHAR(255));";
-
-        private Context context;
-        private static final String DROP_TABLE ="DROP TABLE IF EXISTS "+TABLE_NAME;
-
-        public MyDbHelper(Context context) {
-            super(context, DATABASE_NAME, null, DATABASE_VERSION);
-            this.context = context;
+        String DeleteQuery = "DELETE FROM PRESET " + "WHERE ID = '" + id + "';";
+        try {
+            EventOnTheDayDB.execute(DeleteQuery);
+            return result;
+        }catch (Exception e){
+            return e.toString();
         }
 
-        @Override
-        public void onCreate(SQLiteDatabase sqLiteDatabase) {
-            try {
-                sqLiteDatabase.execSQL(CREATE_TABLE);
-            }catch (Exception e){
-                Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
+    }
+
+    public String updateDataPreset(String newTitle, String newLocation, String newDetail, String OldId){
+        String result = "success";
+        String UpdateQuery = " UPDATE PRESET set "
+                + "TITLE='" + newTitle + "', "
+                + "LOCATION='" + newLocation + "', "
+                + "DETAIL='" + newDetail + "' "
+                + "where ID ='" + OldId+ "' ";
+        try {
+            EventOnTheDayDB.execute(UpdateQuery);
+            return result;
+        }catch (Exception e){
+            return e.toString();
+        }
+    }
+
+    public String insertDataPreset(String title, String location, String detail){
+        String result = "success";
+        String insertQuery = "INSERT INTO PRESET VALUES('"
+                + (getLastIdPreset()+2) + "'," + "'"
+                + title + "'," + "'"
+                + location + "','"
+                + detail + "');";
+
+        try {
+            EventOnTheDayDB.execute(insertQuery);
+            return result;
+        }catch (Exception e){
+            return e.toString();
+        }
+
+    }
+
+    public int getLastIdPreset(){
+        String query = "SELECT * FROM PRESET";
+        Cursor c1 = EventOnTheDayDB.rawQuery(query);
+        c1.moveToLast();
+        if (c1.getCount()==0){
+            return -1;
+        }
+        else {
+            c1.moveToLast();
+            return  Integer.parseInt(c1.getString(c1.getColumnIndex("ID")));
+        }
+    }
+
+    public List<String> getEachDataPreset(String selectId) {
+        String query = "SELECT * FROM PRESET WHERE ID = "+selectId;
+        Cursor c1 = EventOnTheDayDB.rawQuery(query);
+        List<String> eachData= new ArrayList<String>();
+        if (c1 != null && c1.getCount() != 0) {
+            while (c1.moveToNext()){
+                int id = Integer.parseInt(c1.getString(c1.getColumnIndex("ID")));
+                String title = c1.getString(c1.getColumnIndex("TITLE"));
+                String location = c1.getString(c1.getColumnIndex("LOCATION"));
+                String detail = c1.getString(c1.getColumnIndex("DETAIL"));
+                eachData.add(title);
+                eachData.add(location);
+                eachData.add(detail);
+                eachData.add(String.valueOf(id));
+            }
+        }
+        c1.close();
+
+        return eachData;
+    }
+
+    public List<List> getDataPreset() {
+        String query = "SELECT * FROM PRESET";
+        Cursor c1 = EventOnTheDayDB.rawQuery(query);
+        List<List> datas = new ArrayList<>();
+        if (c1 != null && c1.getCount() != 0) {
+            while (c1.moveToNext()){
+                List<String> data = new ArrayList<>();
+                int id = Integer.parseInt(c1.getString(c1.getColumnIndex("ID")));
+                String title = c1.getString(c1.getColumnIndex("TITLE"));
+                String location = c1.getString(c1.getColumnIndex("LOCATION"));
+                String detail = c1.getString(c1.getColumnIndex("DETAIL"));
+                data.add(title);
+                data.add(location);
+                data.add(detail);
+                data.add(String.valueOf(id));
+                datas.add(data);
+            }
+        }
+        c1.close();
+        return datas;
+    }
+
+
+    private static final String DB_NAME = "DB_EVENTONTHEDAY.db";
+    static class EventOnTheDayDB extends SQLiteOpenHelper {
+
+        private static SQLiteDatabase sqliteDb;
+        private static EventOnTheDayDB instance;
+        private static final int DATABASE_VERSION = 1;
+
+        static Cursor cursor = null;
+
+        EventOnTheDayDB(Context context, String name, SQLiteDatabase.CursorFactory factory,
+               int version) {
+            super(context, name, factory, version);
+        }
+
+        private static void initialize(Context context, String databaseName) {
+            if (instance == null) {
+
+                if (!checkDatabase(context, databaseName)) {
+
+                    try {
+                        copyDataBase(context, databaseName);
+                    } catch (IOException e) {
+
+                        System.out.println(databaseName
+                                + " does not exists ");
+                    }
+                }
+
+                instance = new EventOnTheDayDB(context, databaseName, null,
+                        DATABASE_VERSION);
+                sqliteDb = instance.getWritableDatabase();
+
+                System.out.println("instance of  " + databaseName + " created ");
             }
         }
 
+        public static final EventOnTheDayDB getInstance(Context context,
+                                               String databaseName) {
+            initialize(context, databaseName);
+            return instance;
+        }
+
+        public SQLiteDatabase getDatabase() {
+            return sqliteDb;
+        }
+
         @Override
-        public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+        public void onCreate(SQLiteDatabase db) {
+
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+        }
+
+        private static void copyDataBase(Context aContext, String databaseName)
+                throws IOException {
+
+            InputStream myInput = aContext.getAssets().open(databaseName);
+
+            String outFileName = getDatabasePath(aContext, databaseName);
+
+            File f = new File("/data/data/" + aContext.getPackageName()
+                    + "/databases/");
+            if (!f.exists())
+                f.mkdir();
+
+            OutputStream myOutput = new FileOutputStream(outFileName);
+
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = myInput.read(buffer)) > 0) {
+                myOutput.write(buffer, 0, length);
+            }
+
+            myOutput.flush();
+            myOutput.close();
+            myInput.close();
+
+            System.out.println(databaseName + " copied");
+        }
+
+        public static boolean checkDatabase(Context aContext, String databaseName) {
+            SQLiteDatabase checkDB = null;
+
             try {
-                Toast.makeText(context, "OnUpgrade", Toast.LENGTH_LONG).show();
-                sqLiteDatabase.execSQL(DROP_TABLE);
-                onCreate(sqLiteDatabase);
-            }catch (Exception e){
-                Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
+                String myPath = getDatabasePath(aContext, databaseName);
+
+                checkDB = SQLiteDatabase.openDatabase(myPath, null,
+                        SQLiteDatabase.OPEN_READONLY);
+
+                checkDB.close();
+            } catch (SQLiteException e) {
+
+                System.out.println(databaseName + " does not exists");
+            }
+
+            return checkDB != null ? true : false;
+        }
+
+        private static String getDatabasePath(Context aContext, String databaseName) {
+            return "/data/data/" + aContext.getPackageName() + "/databases/"
+                    + databaseName;
+        }
+
+        public static Cursor rawQuery(String query) {
+            try {
+                if (sqliteDb.isOpen()) {
+                    sqliteDb.close();
+                }
+                sqliteDb = instance.getWritableDatabase();
+
+                cursor = null;
+                cursor = sqliteDb.rawQuery(query, null);
+            } catch (Exception e) {
+                System.out.println("DB ERROR  " + e.getMessage());
+                e.printStackTrace();
+            }
+            return cursor;
+        }
+
+        public static void execute(String query) {
+            try {
+                if (sqliteDb.isOpen()) {
+                    sqliteDb.close();
+                }
+                sqliteDb = instance.getWritableDatabase();
+                sqliteDb.execSQL(query);
+            } catch (Exception e) {
+                System.out.println("DB ERROR  " + e.getMessage());
+                e.printStackTrace();
             }
         }
     }

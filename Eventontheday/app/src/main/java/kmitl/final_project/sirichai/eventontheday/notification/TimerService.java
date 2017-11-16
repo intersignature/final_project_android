@@ -48,7 +48,7 @@ public class TimerService extends IntentService{
 
     public  void addDbForNotification(){
         listAllDates.clear();
-        final List<List> datas = databaseAdapter.getData();
+        final List<List> datas = databaseAdapter.getDataEvent();
 
         for (int i=0; i<datas.size();i++){
             listAllDate = new ArrayList<>();

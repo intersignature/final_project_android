@@ -1,4 +1,4 @@
-package kmitl.final_project.sirichai.eventontheday;
+package kmitl.final_project.sirichai.eventontheday.view;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import kmitl.final_project.sirichai.eventontheday.R;
 import kmitl.final_project.sirichai.eventontheday.model.DatabaseAdapter;
 
 public class ViewEventActivity extends AppCompatActivity {
@@ -37,7 +38,7 @@ public class ViewEventActivity extends AppCompatActivity {
         viewDetail = findViewById(R.id.viewDetail);
         //viewTitle.setText(getIntent().getStringExtra("title"));
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
-        List<String> data = databaseAdapter.getEachData(getIntent().getStringExtra("id"));
+        List<String> data = databaseAdapter.getEachDataEvent(getIntent().getStringExtra("id"));
         Log.i("viewecent", data.toString());
         viewTitle.setText(data.get(0));
         viewLocation.setText(data.get(1));

@@ -13,25 +13,23 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import kmitl.final_project.sirichai.eventontheday.MainActivity;
-import kmitl.final_project.sirichai.eventontheday.MessageForDev;
 import kmitl.final_project.sirichai.eventontheday.R;
-import kmitl.final_project.sirichai.eventontheday.ViewEventActivity;
+import kmitl.final_project.sirichai.eventontheday.view.ViewEventActivity;
 import kmitl.final_project.sirichai.eventontheday.view.EditEventActivity;
 
 /**
  * Created by atomiz on 7/11/2560.
  */
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
+public class RecyclerEventAdapter extends RecyclerView.Adapter<RecyclerEventAdapter.ViewHolder>{
+
     private List<ListEvent> listAllEvents;
     private Context context;
     private DatabaseAdapter databaseAdapter;
 
-    public RecyclerAdapter(List<ListEvent> listAllEvents, Context context) {
+    public RecyclerEventAdapter(List<ListEvent> listAllEvents, Context context) {
         this.listAllEvents = listAllEvents;
         this.context = context;
-
     }
 
 
@@ -39,7 +37,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         public TextView eventTitle;
         public TextView eventDate;
         public TextView eventLocation;
-        public TextView emptyEventCal;
         public Button btnDelete;
         public Button btnUpdate;
         public TextView eventId;
@@ -51,7 +48,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             eventDate = itemView.findViewById(R.id.eventDate);
             eventLocation = itemView.findViewById(R.id.eventLocation);
             eventId = itemView.findViewById(R.id.eventId);
-            emptyEventCal = itemView.findViewById(R.id.emptyEventCal);
             btnDelete = itemView.findViewById(R.id.btnDelete);
             btnUpdate = itemView.findViewById(R.id.btnUpdate);
             infoLayout = itemView.findViewById(R.id.infoLayout);
@@ -59,7 +55,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     }
     @Override
-    public RecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerEventAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_event, parent, false);
         databaseAdapter = new DatabaseAdapter(parent.getContext());
         return new ViewHolder(view);
@@ -67,7 +63,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerEventAdapter.ViewHolder holder, final int position) {
         final ListEvent listEvent = listAllEvents.get(position);
 
         holder.eventTitle.setText(listEvent.getEventTitle());
@@ -77,25 +73,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MessageForDev  messageForDev = new MessageForDev();
                 String id = listEvent.getEventId();
-                int cnt = databaseAdapter.delete(id);
-                messageForDev.Log("POS : "+ cnt);
+                String result = databaseAdapter.deleteDataEvent(id);
                 removeAt(position);
-//                if(listAllEvents.size()<=0){
-//                    Log.i(";;;;;;;;;;;;", listAllEvents.toString());
-//                }
-//                else {
-//                    Log.i(";;;;;;;;;;;;", listAllEvents.toString());
-//                }
-
-                //notifyDataSetChanged();
-//                Intent intent;
-//                intent =  new Intent(context, MainActivity.class);
-//                context.startActivities(new Intent[]{intent});
-//                context.stopService(intent);
             }
         });
+
         holder.btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,6 +91,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
             }
         });
+
         holder.infoLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

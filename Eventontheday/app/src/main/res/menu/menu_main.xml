@@ -9,4 +9,10 @@
         android:title="ADDEVENT"
         app:showAsAction="never"
         android:onClick="onClickAddEventListenet"/>
+    <item
+        android:id="@+id/addPreset"
+        android:orderInCategory="100"
+        android:title="ADDPRESET"
+        app:showAsAction="never"
+        android:onClick="onClickAddPresetListenet"/>
 </menu>

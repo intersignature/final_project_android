@@ -75,36 +75,24 @@ public class EditEventActivity extends AppCompatActivity {
         setAlertTime = findViewById(R.id.setNewAlertTime);
         PlacePickerUPDATEBTN = findViewById(R.id.PlacePickerUPDATEBTN);
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
-        List<List> datas = databaseAdapter.getData();
         oldId = getIntent().getStringExtra("oldId");
+        List<String> data = databaseAdapter.getEachDataEvent(oldId);
+        setTitle.setText(data.get(0));
+        setLocation.setText(data.get(1));
+        setStartDate.setText("start date is : " + data.get(2));
+        setEndDate.setText("end date is : " + data.get(3));
+        setStartTime.setText("start time is : " + data.get(4));
+        setEndTime.setText("end time is : " + data.get(5));
+        setDetail.setText(data.get(8));
+        setAlertDate.setText("alert date is : "+data.get(6));
+        setAlertTime.setText("alert time is : "+data.get(7));
+        strStartDate = data.get(2);
+        strEndDate = data.get(3);
+        strStartTime = data.get(4);
+        strEndTime = data.get(5);
+        strAlertDate = data.get(6);
+        strAlertTime = data.get(7);
 
-        //Log.i("Drink", oldTitle);
-        listAllEvents = new ArrayList<>();
-        for (int i=0; i<datas.size();i++){
-            List<String> eachEvent = datas.get(i);
-            if (eachEvent.get(9).equals(oldId)){
-                //Log.i("Drink", eachEvent.toString());
-                setTitle.setText(eachEvent.get(0));
-                setLocation.setText(eachEvent.get(1));
-                setStartDate.setText("start date is : " + eachEvent.get(2));
-                setEndDate.setText("end date is : " + eachEvent.get(3));
-                setStartTime.setText("start time is : " + eachEvent.get(4));
-                setEndTime.setText("end time is : " + eachEvent.get(5));
-                setDetail.setText(eachEvent.get(8));
-                setAlertDate.setText("alert date is : "+eachEvent.get(6));
-                setAlertTime.setText("alert time is : "+eachEvent.get(7));
-                strStartDate = eachEvent.get(2);
-                strEndDate = eachEvent.get(3);
-                strStartTime = eachEvent.get(4);
-                strEndTime = eachEvent.get(5);
-                strAlertDate = eachEvent.get(6);
-                strAlertTime = eachEvent.get(7);
-//                radioGroupSetAlertTime.getChildAt(Integer.parseInt(checkekId)).;
-//                radioGroupSetAlertTime.check(Integer.parseInt(checkekId));
-
-            }
-
-        }
         calendar = Calendar.getInstance();
         //set date start and end
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -255,7 +243,7 @@ public class EditEventActivity extends AppCompatActivity {
 
     public void viewdata(View view) {
         //int data = databaseAdapter.clearDB();
-        List<List> datas = databaseAdapter.getData();
+        List<List> datas = databaseAdapter.getDataEvent();
         Log.i("b", datas.toString());
     }
     public void onSubmitEditEvent(View view) {
@@ -276,12 +264,11 @@ public class EditEventActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"Enter empty field", Toast.LENGTH_SHORT).show();
         }
         else {
-            int id = databaseAdapter.update(title, location, start_date, end_date, start_time, end_time,alert_date ,alert_time, detail, oldId);
-            if(id <=0){
-
-                Toast.makeText(getApplicationContext(),"update unsucessfull!",Toast.LENGTH_SHORT).show();
+            String result = databaseAdapter.updateDataEvent(title, location, start_date, end_date, start_time, end_time,alert_date ,alert_time, detail, oldId);
+            if(!result.equals("success")){
+                Toast.makeText(getApplicationContext(),"update unsucessfull!"+result,Toast.LENGTH_SHORT).show();
             }else {
-                Toast.makeText(getApplicationContext(),"update success!1!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"update success!!",Toast.LENGTH_SHORT).show();
                 finish();
             }
         }
