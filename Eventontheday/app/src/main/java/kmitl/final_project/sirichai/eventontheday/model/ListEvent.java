@@ -10,10 +10,10 @@ public class ListEvent {
     private String eventLocation;
     private String eventId;
 
-    @Override
-    public String toString() {
-        return String.format("%s %s", eventDate.split(": ")[1], eventId);
-    }
+//    @Override
+//    public String toString() {
+//        return String.format("%s %s", eventDate.split(": ")[1], eventId);
+//    }
 
     public ListEvent(String eventTitle, String eventDate, String eventLocation, String eventId) {
         this.eventTitle = eventTitle;

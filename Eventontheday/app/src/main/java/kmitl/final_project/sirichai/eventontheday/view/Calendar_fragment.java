@@ -5,6 +5,7 @@ package kmitl.final_project.sirichai.eventontheday.view;
  */
 
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
@@ -24,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import kmitl.final_project.sirichai.eventontheday.MessageForDev;
 import kmitl.final_project.sirichai.eventontheday.R;
 import kmitl.final_project.sirichai.eventontheday.model.DatabaseAdapter;
 import kmitl.final_project.sirichai.eventontheday.model.ListEvent;
@@ -38,6 +39,7 @@ public class Calendar_fragment extends Fragment {
     String selectedDay;
     String selectedMonth;
     String selectedYear;
+    TextView empTv;
     private DatabaseAdapter databaseAdapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,6 +55,7 @@ public class Calendar_fragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         databaseAdapter = new DatabaseAdapter(getContext());
+        empTv = rootView.findViewById(R.id.empTvCalendar);
 //        Calendar calendar = Calendar.getInstance();
 //        String formatter = new SimpleDateFormat("dd/MM/yyyy", new Locale("en", "TH")).format(calendar.getTime());
 //        int currentDay = Integer.parseInt(formatter.split("/")[0]);
@@ -73,9 +76,58 @@ public class Calendar_fragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case 0:
+                int position = item.getGroupId();
+                ListEvent listEvent = listAllEvents.get(position);
+                String id = listEvent.getEventId();
+                String result = databaseAdapter.deleteDataEvent(id);
+                removeAt(position);
+                Log.i("e1","e2");
+                break;
+            case 1:
+                int position1 = item.getGroupId();
+                ListEvent listEvent1 = listAllEvents.get(position1);
+                String id1 = listEvent1.getEventId();
+                Intent intent1;
+                intent1 = new Intent(getContext(), EditEventActivity.class);
+                intent1.putExtra("oldId",id1);
+                getContext().startActivities(new Intent[]{intent1});
+                getContext().stopService(intent1);
+                break;
+            case 2:
+                int position2 = item.getGroupId();
+                ListEvent listEvent2 = listAllEvents.get(position2);
+                String id2 = listEvent2.getEventId();
+                Intent intent2;
+                intent2 = new Intent(getContext(), ViewEventActivity.class);
+                intent2.putExtra("id", id2);
+                getContext().startActivities(new Intent[]{intent2});
+                break;
+            case 3:
+                break;
+        }
+        return super.onContextItemSelected(item);
+    }
+
+    public void removeAt(int position) {
+        listAllEvents.remove(position);
+        if (listAllEvents.size()>0){
+            empTv.setVisibility(View.INVISIBLE);
+        }
+        else {
+            empTv.setVisibility(View.VISIBLE);
+        }
+        adapter.notifyItemRemoved(position);
+        adapter.notifyItemRangeChanged(position, listAllEvents.size());
+    }
+
     public void createRecylerView(int year, int month, int dayOfMonth){
         listAllEvents = new ArrayList<>();
-        final List<List> datas = databaseAdapter.getDataEvent();
+        List<List> datas = databaseAdapter.getDataEvent();
         for (int i=0; i<datas.size();i++){
             List<String> eachEvent = datas.get(i);
             int eachEventYear = Integer.parseInt(eachEvent.get(2).split("/")[2]);
@@ -91,17 +143,23 @@ public class Calendar_fragment extends Fragment {
                 listAllEvents.add(listEvent);
             }
         }
-        adapter = new RecyclerEventAdapter(listAllEvents,getContext()); // add list of event to recycler view
+        if (listAllEvents.size()>0){
+            empTv.setVisibility(View.INVISIBLE);
+        }
+        else {
+            empTv.setVisibility(View.VISIBLE);
+        }
+        adapter = new RecyclerEventAdapter(listAllEvents,getContext(),"Cal"); // add list of event to recycler view
         recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.i("b",listAllEvents.toString());
+//        Log.i("b",listAllEvents.toString());
         createRecylerView(Integer.parseInt(selectedYear),Integer.parseInt(selectedMonth),Integer.parseInt(selectedDay));
-        adapter = new RecyclerEventAdapter(listAllEvents,getContext());
-        recyclerView.setAdapter(adapter);
+//        adapter = new RecyclerEventAdapter(listAllEvents,getContext(),"Cal");
+//        recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
 

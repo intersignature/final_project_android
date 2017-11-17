@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,8 +63,6 @@ public class RecyclerPresetAdapter extends RecyclerView.Adapter<RecyclerPresetAd
             presetDetail = itemView.findViewById(R.id.eventDate);
             presetLocation = itemView.findViewById(R.id.eventLocation);
             presetId = itemView.findViewById(R.id.eventId);
-            PresetbtnDelete = itemView.findViewById(R.id.btnDelete);
-            PresetbtnUpdate = itemView.findViewById(R.id.btnUpdate);
             infoLayout = itemView.findViewById(R.id.infoLayout);
         }
 
@@ -85,34 +84,43 @@ public class RecyclerPresetAdapter extends RecyclerView.Adapter<RecyclerPresetAd
         holder.presetDetail.setText(listPreset.getPresetDetail());
         holder.presetLocation.setText(listPreset.getPresetLocation());
         holder.presetId.setText(listPreset.getPresetId());
-        holder.PresetbtnDelete.setOnClickListener(new View.OnClickListener() {
+//        holder.PresetbtnDelete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String id = listPreset.getPresetId();
+//                String result = databaseAdapter.deleteDataPreset(id);
+//                removeAt(position);
+//            }
+//        });
+//        holder.PresetbtnUpdate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String id = listPreset.getPresetId();
+//                Intent intent;
+//                intent = new Intent(context, EditPresetActivity.class);
+//                intent.putExtra("oldIdPreset",id);
+//                context.startActivities(new Intent[]{intent});
+//                context.stopService(intent);
+//
+//            }
+//        });
+//        holder.infoLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Log.i("RecyclerAdapeter", listPreset.getPresetId());
+//                Intent intent;
+//                intent = new Intent(context, ViewPresetActivity.class);
+//                intent.putExtra("idPreset", listPreset.getPresetId());
+//                context.startActivities(new Intent[]{intent});
+//            }
+//        });
+        holder.itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
             @Override
-            public void onClick(View view) {
-                String id = listPreset.getPresetId();
-                String result = databaseAdapter.deleteDataPreset(id);
-                removeAt(position);
-            }
-        });
-        holder.PresetbtnUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String id = listPreset.getPresetId();
-                Intent intent;
-                intent = new Intent(context, EditPresetActivity.class);
-                intent.putExtra("oldIdPreset",id);
-                context.startActivities(new Intent[]{intent});
-                context.stopService(intent);
+            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+                menu.add(holder.getAdapterPosition(), 8, 0, "DELETE");
+                menu.add(holder.getAdapterPosition(), 9, 0, "UPDATE");
+                menu.add(holder.getAdapterPosition(), 10, 0, "VIEW");
 
-            }
-        });
-        holder.infoLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i("RecyclerAdapeter", listPreset.getPresetId());
-                Intent intent;
-                intent = new Intent(context, ViewPresetActivity.class);
-                intent.putExtra("idPreset", listPreset.getPresetId());
-                context.startActivities(new Intent[]{intent});
             }
         });
     }

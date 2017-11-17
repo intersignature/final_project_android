@@ -7,6 +7,24 @@
     tools:context="kmitl.final_project.sirichai.eventontheday.view.Calendar_fragment">
 
 
+    <TextView
+        android:id="@+id/empTvCalendar"
+        android:layout_width="395dp"
+        android:layout_height="189dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="Empty Event"
+        android:textSize="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.846" />
+
     <CalendarView
         android:id="@+id/calendarView"
         android:layout_width="395dp"

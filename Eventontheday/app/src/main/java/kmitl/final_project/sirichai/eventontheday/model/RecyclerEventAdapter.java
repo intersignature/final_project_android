@@ -1,10 +1,9 @@
 package kmitl.final_project.sirichai.eventontheday.model;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +13,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import kmitl.final_project.sirichai.eventontheday.R;
-import kmitl.final_project.sirichai.eventontheday.view.ViewEventActivity;
-import kmitl.final_project.sirichai.eventontheday.view.EditEventActivity;
 
 /**
  * Created by atomiz on 7/11/2560.
@@ -26,10 +23,12 @@ public class RecyclerEventAdapter extends RecyclerView.Adapter<RecyclerEventAdap
     private List<ListEvent> listAllEvents;
     private Context context;
     private DatabaseAdapter databaseAdapter;
+    private String page;
 
-    public RecyclerEventAdapter(List<ListEvent> listAllEvents, Context context) {
+    public RecyclerEventAdapter(List<ListEvent> listAllEvents, Context context, String page) {
         this.listAllEvents = listAllEvents;
         this.context = context;
+        this.page = page;
     }
 
 
@@ -48,8 +47,6 @@ public class RecyclerEventAdapter extends RecyclerView.Adapter<RecyclerEventAdap
             eventDate = itemView.findViewById(R.id.eventDate);
             eventLocation = itemView.findViewById(R.id.eventLocation);
             eventId = itemView.findViewById(R.id.eventId);
-            btnDelete = itemView.findViewById(R.id.btnDelete);
-            btnUpdate = itemView.findViewById(R.id.btnUpdate);
             infoLayout = itemView.findViewById(R.id.infoLayout);
         }
 
@@ -70,38 +67,60 @@ public class RecyclerEventAdapter extends RecyclerView.Adapter<RecyclerEventAdap
         holder.eventDate.setText(listEvent.getEventDate());
         holder.eventLocation.setText(listEvent.getEventLocation());
         holder.eventId.setText(listEvent.getEventId());
-        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String id = listEvent.getEventId();
-                String result = databaseAdapter.deleteDataEvent(id);
-                removeAt(position);
-            }
-        });
-
-        holder.btnUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String id = listEvent.getEventId();
-                Intent intent;
-                intent =  new Intent(context, EditEventActivity.class);
-                intent.putExtra("oldId",id);
-                context.startActivities(new Intent[]{intent});
-                context.stopService(intent);
-
-            }
-        });
-
-        holder.infoLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i("RecyclerAdapeter", listEvent.getEventId());
-                Intent intent;
-                intent = new Intent(context, ViewEventActivity.class);
-                intent.putExtra("id", listEvent.getEventId());
-                context.startActivities(new Intent[]{intent});
-            }
-        });
+//        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String id = listEvent.getEventId();
+//                String result = databaseAdapter.deleteDataEvent(id);
+//                removeAt(position);
+//            }
+//        });
+//
+//        holder.btnUpdate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String id = listEvent.getEventId();
+//                Intent intent;
+//                intent =  new Intent(context, EditEventActivity.class);
+//                intent.putExtra("oldId",id);
+//                context.startActivities(new Intent[]{intent});
+//                context.stopService(intent);
+//
+//            }
+//        });
+//
+//        holder.infoLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Log.i("RecyclerAdapeter", listEvent.getEventId());
+//                Intent intent;
+//                intent = new Intent(context, ViewEventActivity.class);
+//                intent.putExtra("id", listEvent.getEventId());
+//                context.startActivities(new Intent[]{intent});
+//            }
+//        });
+        if (page.equals("Cal")) {
+            holder.itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+                @Override
+                public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+                    menu.add(holder.getAdapterPosition(), 0, 0, "DELETE");
+                    menu.add(holder.getAdapterPosition(), 1, 0, "UPDATE");
+                    menu.add(holder.getAdapterPosition(), 2, 0, "VIEW");
+                    menu.add(holder.getAdapterPosition(), 3, 0, "SHARE");
+                }
+            });
+        }
+        else {
+            holder.itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+                @Override
+                public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+                    menu.add(holder.getAdapterPosition(), 4, 0, "DELETE");
+                    menu.add(holder.getAdapterPosition(), 5, 0, "UPDATE");
+                    menu.add(holder.getAdapterPosition(), 6, 0, "VIEW");
+                    menu.add(holder.getAdapterPosition(), 7, 0, "SHARE");
+                }
+            });
+        }
 
     }
 
