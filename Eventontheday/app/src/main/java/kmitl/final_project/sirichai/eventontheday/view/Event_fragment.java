@@ -77,6 +77,12 @@ public class Event_fragment extends Fragment {
                 getContext().startActivities(new Intent[]{intent6});
                 break;
             case 7:
+                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                String shareBody = "Here is the share content body";
+                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here");
+                sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(sharingIntent, "Share via"));
                 break;
         }
         return super.onContextItemSelected(item);
