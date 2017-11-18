@@ -84,42 +84,13 @@ public class RecyclerPresetAdapter extends RecyclerView.Adapter<RecyclerPresetAd
         holder.presetDetail.setText(listPreset.getPresetDetail());
         holder.presetLocation.setText(listPreset.getPresetLocation());
         holder.presetId.setText(listPreset.getPresetId());
-//        holder.PresetbtnDelete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String id = listPreset.getPresetId();
-//                String result = databaseAdapter.deleteDataPreset(id);
-//                removeAt(position);
-//            }
-//        });
-//        holder.PresetbtnUpdate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String id = listPreset.getPresetId();
-//                Intent intent;
-//                intent = new Intent(context, EditPresetActivity.class);
-//                intent.putExtra("oldIdPreset",id);
-//                context.startActivities(new Intent[]{intent});
-//                context.stopService(intent);
-//
-//            }
-//        });
-//        holder.infoLayout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Log.i("RecyclerAdapeter", listPreset.getPresetId());
-//                Intent intent;
-//                intent = new Intent(context, ViewPresetActivity.class);
-//                intent.putExtra("idPreset", listPreset.getPresetId());
-//                context.startActivities(new Intent[]{intent});
-//            }
-//        });
         holder.itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
             @Override
             public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
                 menu.add(holder.getAdapterPosition(), 8, 0, "DELETE");
                 menu.add(holder.getAdapterPosition(), 9, 0, "UPDATE");
                 menu.add(holder.getAdapterPosition(), 10, 0, "VIEW");
+                menu.add(holder.getAdapterPosition(), 11, 0, "USE THIS PRESET");
 
             }
         });

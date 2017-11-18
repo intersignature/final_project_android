@@ -76,7 +76,11 @@ public class AddEventActivity extends AppCompatActivity {
         setAlertTime = findViewById(R.id.setAlertTime);
         PlacePickerBTN = findViewById(R.id.PlacePickerBTN);
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
-
+        if(getIntent().getStringExtra("titlePreset") != null && !getIntent().getStringExtra("titlePreset").isEmpty()){
+            setTitle.setText(getIntent().getStringExtra("titlePreset"));
+            setDetail.setText(getIntent().getStringExtra("detailPreset"));
+            setLocation.setText(getIntent().getStringExtra("locationPreset"));
+        }
         calendar = Calendar.getInstance();
         //set date start and end
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {

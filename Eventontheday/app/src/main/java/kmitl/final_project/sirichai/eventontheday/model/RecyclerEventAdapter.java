@@ -67,38 +67,6 @@ public class RecyclerEventAdapter extends RecyclerView.Adapter<RecyclerEventAdap
         holder.eventDate.setText(listEvent.getEventDate());
         holder.eventLocation.setText(listEvent.getEventLocation());
         holder.eventId.setText(listEvent.getEventId());
-//        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String id = listEvent.getEventId();
-//                String result = databaseAdapter.deleteDataEvent(id);
-//                removeAt(position);
-//            }
-//        });
-//
-//        holder.btnUpdate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String id = listEvent.getEventId();
-//                Intent intent;
-//                intent =  new Intent(context, EditEventActivity.class);
-//                intent.putExtra("oldId",id);
-//                context.startActivities(new Intent[]{intent});
-//                context.stopService(intent);
-//
-//            }
-//        });
-//
-//        holder.infoLayout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Log.i("RecyclerAdapeter", listEvent.getEventId());
-//                Intent intent;
-//                intent = new Intent(context, ViewEventActivity.class);
-//                intent.putExtra("id", listEvent.getEventId());
-//                context.startActivities(new Intent[]{intent});
-//            }
-//        });
         if (page.equals("Cal")) {
             holder.itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
                 @Override
@@ -127,10 +95,5 @@ public class RecyclerEventAdapter extends RecyclerView.Adapter<RecyclerEventAdap
     @Override
     public int getItemCount() {
         return listAllEvents.size();
-    }
-    public void removeAt(int position) {
-        listAllEvents.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, listAllEvents.size());
     }
 }
