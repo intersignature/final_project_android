@@ -28,7 +28,7 @@ public class GooglePlacePickerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_google_place_picker);
-        textGetPlace = findViewById(R.id.textGetPlace);
+        textGetPlace = (TextView) findViewById(R.id.textGetPlace);
     }
 
     public void ontextGetPlace(View view) {

@@ -59,11 +59,11 @@ public class RecyclerPresetAdapter extends RecyclerView.Adapter<RecyclerPresetAd
 //            PresetbtnDelete = itemView.findViewById(R.id.PresetDeleteBtn);
 //            PresetbtnUpdate = itemView.findViewById(R.id.PresetUpdateBtn);
 //            infoLayout = itemView.findViewById(R.id.PresetinfoLayout);
-            presetTitle = itemView.findViewById(R.id.eventTitle);
-            presetDetail = itemView.findViewById(R.id.eventDate);
-            presetLocation = itemView.findViewById(R.id.eventLocation);
-            presetId = itemView.findViewById(R.id.eventId);
-            infoLayout = itemView.findViewById(R.id.infoLayout);
+            presetTitle = (TextView) itemView.findViewById(R.id.eventTitle);
+            presetDetail = (TextView) itemView.findViewById(R.id.eventDate);
+            presetLocation = (TextView) itemView.findViewById(R.id.eventLocation);
+            presetId = (TextView) itemView.findViewById(R.id.eventId);
+            infoLayout = (ConstraintLayout) itemView.findViewById(R.id.infoLayout);
         }
 
     }

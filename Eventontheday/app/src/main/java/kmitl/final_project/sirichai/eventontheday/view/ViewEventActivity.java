@@ -27,15 +27,15 @@ public class ViewEventActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_event);
-        viewTitle = findViewById(R.id.viewTitle);
-        viewLocation = findViewById(R.id.viewLocation);
-        viewStartDate = findViewById(R.id.viewStartDate);
-        viewEndDate = findViewById(R.id.viewEndDate);
-        viewStartTime = findViewById(R.id.viewStartTime);
-        viewEndTime = findViewById(R.id.viewEndTime);
-        viewAlertDate = findViewById(R.id.viewAlertDate);
-        viewAlertTime = findViewById(R.id.viewAlertTime);
-        viewDetail = findViewById(R.id.viewDetail);
+        viewTitle = (TextView) findViewById(R.id.viewTitle);
+        viewLocation = (TextView) findViewById(R.id.viewLocation);
+        viewStartDate = (TextView) findViewById(R.id.viewStartDate);
+        viewEndDate = (TextView) findViewById(R.id.viewEndDate);
+        viewStartTime = (TextView) findViewById(R.id.viewStartTime);
+        viewEndTime = (TextView) findViewById(R.id.viewEndTime);
+        viewAlertDate = (TextView) findViewById(R.id.viewAlertDate);
+        viewAlertTime = (TextView) findViewById(R.id.viewAlertTime);
+        viewDetail = (TextView) findViewById(R.id.viewDetail);
         //viewTitle.setText(getIntent().getStringExtra("title"));
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
         List<String> data = databaseAdapter.getEachDataEvent(getIntent().getStringExtra("id"));

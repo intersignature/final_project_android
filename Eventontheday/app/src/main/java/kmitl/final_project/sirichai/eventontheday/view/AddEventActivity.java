@@ -65,16 +65,16 @@ public class AddEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_event);
 
         //set findViewById to all elements
-        setTitle = findViewById(R.id.setTitle);
-        setLocation = findViewById(R.id.setLocation);
-        setStartDate = findViewById(R.id.setStartDate);
-        setEndDate = findViewById(R.id.setEndDate);
-        setStartTime = findViewById(R.id.setStartTime);
-        setEndTime = findViewById(R.id.setEndTime);
-        setDetail = findViewById(R.id.setDetail);
-        setAlertDate = findViewById(R.id.setAlertDate);
-        setAlertTime = findViewById(R.id.setAlertTime);
-        PlacePickerBTN = findViewById(R.id.PlacePickerBTN);
+        setTitle = (EditText) findViewById(R.id.setTitle);
+        setLocation = (EditText) findViewById(R.id.setLocation);
+        setStartDate = (EditText) findViewById(R.id.setStartDate);
+        setEndDate = (EditText) findViewById(R.id.setEndDate);
+        setStartTime = (EditText) findViewById(R.id.setStartTime);
+        setEndTime = (EditText) findViewById(R.id.setEndTime);
+        setDetail = (EditText) findViewById(R.id.setDetail);
+        setAlertDate = (EditText) findViewById(R.id.setAlertDate);
+        setAlertTime = (EditText) findViewById(R.id.setAlertTime);
+        PlacePickerBTN = (Button) findViewById(R.id.PlacePickerBTN);
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
         if(getIntent().getStringExtra("titlePreset") != null && !getIntent().getStringExtra("titlePreset").isEmpty()){
             setTitle.setText(getIntent().getStringExtra("titlePreset"));
@@ -302,7 +302,8 @@ public class AddEventActivity extends AppCompatActivity {
         if (requestCode==PLACE_PICKER_REQUEST){
             if (resultCode==RESULT_OK){
                 Place place = PlacePicker.getPlace(data, this);
-                setLocation.setText(place.getName() + " : " + place.getAddress());
+                setLocation.setText(place.getName() + " : " + place.getAddress() + " : " + place.getId());
+                Log.i("map", place.getName() + " : " + place.getAddress() + " : " + place.getId());
             }
         }
     }

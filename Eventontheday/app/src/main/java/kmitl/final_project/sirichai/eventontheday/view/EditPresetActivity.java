@@ -30,9 +30,9 @@ public class EditPresetActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_preset);
-        setTitle = findViewById(R.id.setNewTitlePreset);
-        setLocation = findViewById(R.id.setNewLocationPreset);
-        setDetail = findViewById(R.id.setNewDetailPreset);
+        setTitle = (EditText) findViewById(R.id.setNewTitlePreset);
+        setLocation = (EditText) findViewById(R.id.setNewLocationPreset);
+        setDetail = (EditText) findViewById(R.id.setNewDetailPreset);
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
         oldId = getIntent().getStringExtra("oldIdPreset");
         List<String> datas = databaseAdapter.getEachDataPreset(oldId);

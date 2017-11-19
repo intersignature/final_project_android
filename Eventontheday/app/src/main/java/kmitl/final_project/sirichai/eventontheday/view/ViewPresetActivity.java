@@ -19,9 +19,9 @@ public class ViewPresetActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_preset);
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
-        viewTitle = findViewById(R.id.viewTitlePreset);
-        viewLocation = findViewById(R.id.viewLocationPreset);
-        viewDetail = findViewById(R.id.viewDetailPreset);
+        viewTitle = (TextView) findViewById(R.id.viewTitlePreset);
+        viewLocation = (TextView) findViewById(R.id.viewLocationPreset);
+        viewDetail = (TextView) findViewById(R.id.viewDetailPreset);
         List<String> data = databaseAdapter.getEachDataPreset(getIntent().getStringExtra("idPreset"));
         viewTitle.setText(data.get(0));
         viewLocation.setText(data.get(1));

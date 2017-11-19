@@ -64,16 +64,16 @@ public class EditEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_event);
         //set findViewById to all elements
-        setTitle = findViewById(R.id.setNewTitle);
-        setLocation = findViewById(R.id.setNewLocation);
-        setStartDate = findViewById(R.id.setNewStartDate);
-        setEndDate = findViewById(R.id.setNewEndDate);
-        setStartTime = findViewById(R.id.setNewStartTime);
-        setEndTime = findViewById(R.id.setNewEndTime);
-        setDetail = findViewById(R.id.setNewDetail);
-        setAlertDate = findViewById(R.id.setNewAlertDate);
-        setAlertTime = findViewById(R.id.setNewAlertTime);
-        PlacePickerUPDATEBTN = findViewById(R.id.PlacePickerUPDATEBTN);
+        setTitle = (EditText) findViewById(R.id.setNewTitle);
+        setLocation = (EditText) findViewById(R.id.setNewLocation);
+        setStartDate = (EditText) findViewById(R.id.setNewStartDate);
+        setEndDate = (EditText) findViewById(R.id.setNewEndDate);
+        setStartTime = (EditText) findViewById(R.id.setNewStartTime);
+        setEndTime = (EditText) findViewById(R.id.setNewEndTime);
+        setDetail = (EditText) findViewById(R.id.setNewDetail);
+        setAlertDate = (EditText) findViewById(R.id.setNewAlertDate);
+        setAlertTime = (EditText) findViewById(R.id.setNewAlertTime);
+        PlacePickerUPDATEBTN = (Button) findViewById(R.id.PlacePickerUPDATEBTN);
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
         oldId = getIntent().getStringExtra("oldId");
         List<String> data = databaseAdapter.getEachDataEvent(oldId);

@@ -54,17 +54,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = findViewById(R.id.container);
+        mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = findViewById(R.id.tabs);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
@@ -75,17 +75,6 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("time", true);
         intent.putExtra("receiver", receiver);
         startService(intent);
-//        databaseAdapter = new DatabaseAdapter(getApplicationContext());
-//        List<List> datas = databaseAdapter.getData();
-//        listAllDates = new ArrayList<>();
-//        for (int i=0; i<datas.size();i++){
-//            List<String> eachEvent = datas.get(i);
-//            ListDate listDate = new ListDate(
-//                    eachEvent.get(8),eachEvent.get(2)
-//            );
-//            listAllDates.add(listDate);
-//        }
-//        Log.i("eventeieiaaa",listAllDates.toString());
     }
 
 

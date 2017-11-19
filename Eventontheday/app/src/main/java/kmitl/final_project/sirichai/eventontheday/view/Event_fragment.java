@@ -12,8 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import kmitl.final_project.sirichai.eventontheday.R;
 import kmitl.final_project.sirichai.eventontheday.model.DatabaseAdapter;
@@ -36,11 +40,12 @@ public class Event_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_event, container, false);
-        recyclerView = rootView.findViewById(R.id.showAllEvent);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.showAllEvent);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        empTv = rootView.findViewById(R.id.empTvEvent);
+        empTv = (TextView) rootView.findViewById(R.id.empTvEvent);
         createRecyclerView();
+
 
         return rootView;
     }
@@ -77,12 +82,15 @@ public class Event_fragment extends Fragment {
                 getContext().startActivities(new Intent[]{intent6});
                 break;
             case 7:
+                int position7 = item.getGroupId();
+                ListEvent listEvent7 = listAllEvents.get(position7);
                 Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                String shareBody = "Here is the share content body";
-                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here");
+                String shareBody = "I have event : "+listEvent7.getEventTitle() + " , " +listEvent7.getEventLocation();
+                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, listEvent7.getEventTitle());
                 sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share via"));
+
                 break;
         }
         return super.onContextItemSelected(item);

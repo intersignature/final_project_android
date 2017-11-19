@@ -45,8 +45,8 @@ public class Calendar_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_calendar, container, false);
-        mCalendarView = rootView.findViewById(R.id.calendarView);
-        recyclerView = rootView.findViewById(R.id.showEvent);
+        mCalendarView = (CalendarView) rootView.findViewById(R.id.calendarView);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.showEvent);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String selected = sdf.format(new Date(mCalendarView.getDate()));
         selectedDay = selected.split("/")[0];
@@ -55,7 +55,7 @@ public class Calendar_fragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         databaseAdapter = new DatabaseAdapter(getContext());
-        empTv = rootView.findViewById(R.id.empTvCalendar);
+        empTv = (TextView) rootView.findViewById(R.id.empTvCalendar);
 //        Calendar calendar = Calendar.getInstance();
 //        String formatter = new SimpleDateFormat("dd/MM/yyyy", new Locale("en", "TH")).format(calendar.getTime());
 //        int currentDay = Integer.parseInt(formatter.split("/")[0]);
@@ -136,9 +136,9 @@ public class Calendar_fragment extends Fragment {
             Log.i("aaaa",year+" "+month+" "+dayOfMonth + " "+eachEventYear+" " +eachEventMonth+" " +eachEventDay );
             if (year == eachEventYear && month == eachEventMonth && dayOfMonth == eachEventDay){
                 ListEvent listEvent = new ListEvent(
-                        "eventTitle: "+eachEvent.get(0),
-                        "eventDate: "+ eachEvent.get(2),
-                        "eventLocation: "+eachEvent.get(1), eachEvent.get(9)
+                        "Title: "+eachEvent.get(0),
+                        "Date: "+ eachEvent.get(2),
+                        "Location: "+eachEvent.get(1), eachEvent.get(9)
                 );
                 listAllEvents.add(listEvent);
             }

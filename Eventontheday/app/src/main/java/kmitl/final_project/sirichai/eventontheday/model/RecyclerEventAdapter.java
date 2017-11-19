@@ -1,8 +1,10 @@
 package kmitl.final_project.sirichai.eventontheday.model;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import kmitl.final_project.sirichai.eventontheday.R;
@@ -43,11 +49,11 @@ public class RecyclerEventAdapter extends RecyclerView.Adapter<RecyclerEventAdap
         public ViewHolder(View itemView) {
             super(itemView);
             context = itemView.getContext();
-            eventTitle = itemView.findViewById(R.id.eventTitle);
-            eventDate = itemView.findViewById(R.id.eventDate);
-            eventLocation = itemView.findViewById(R.id.eventLocation);
-            eventId = itemView.findViewById(R.id.eventId);
-            infoLayout = itemView.findViewById(R.id.infoLayout);
+            eventTitle = (TextView) itemView.findViewById(R.id.eventTitle);
+            eventDate = (TextView) itemView.findViewById(R.id.eventDate);
+            eventLocation = (TextView) itemView.findViewById(R.id.eventLocation);
+            eventId = (TextView) itemView.findViewById(R.id.eventId);
+            infoLayout = (ConstraintLayout) itemView.findViewById(R.id.infoLayout);
         }
 
     }
@@ -66,6 +72,29 @@ public class RecyclerEventAdapter extends RecyclerView.Adapter<RecyclerEventAdap
         holder.eventTitle.setText(listEvent.getEventTitle());
         holder.eventDate.setText(listEvent.getEventDate());
         holder.eventLocation.setText(listEvent.getEventLocation());
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        try {
+            Date dateFromDb = sdf1.parse(listEvent.getEventDate().split(": ")[1]);
+            Date currentDate = sdf1.parse(sdf1.format(date));
+            if (dateFromDb.compareTo(currentDate) > 0) {
+//                System.out.println("red");
+//                Log.i("rorg", "red");
+                holder.eventTitle.setTextColor(Color.GREEN);
+                holder.eventDate.setTextColor(Color.GREEN);
+                holder.eventLocation.setTextColor(Color.GREEN);
+
+            } else if (dateFromDb.compareTo(currentDate) < 0) {
+//                System.out.println("green");
+//                Log.i("rorg", "green");
+                holder.eventTitle.setTextColor(Color.RED);
+                holder.eventDate.setTextColor(Color.RED);
+                holder.eventLocation.setTextColor(Color.RED);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         holder.eventId.setText(listEvent.getEventId());
         if (page.equals("Cal")) {
             holder.itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
@@ -78,7 +107,7 @@ public class RecyclerEventAdapter extends RecyclerView.Adapter<RecyclerEventAdap
                 }
             });
         }
-        else {
+        else if(page.equals("event")){
             holder.itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
                 @Override
                 public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {

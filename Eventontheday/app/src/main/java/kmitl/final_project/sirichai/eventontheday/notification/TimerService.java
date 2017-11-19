@@ -2,7 +2,7 @@ package kmitl.final_project.sirichai.eventontheday.notification;
 
 import android.app.IntentService;
 import android.app.Notification;
-import android.app.NotificationChannel;
+//import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
@@ -68,25 +68,34 @@ public class TimerService extends IntentService{
                 String CHANNEL_ID = "my_channel_01";// The id of the channel.
                 CharSequence name = "name";// The user-visible name of the channel.
                 int importance = NotificationManager.IMPORTANCE_HIGH;
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                    try {
-                        NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
-                        Notification notification = new Notification.Builder(getApplicationContext(), CHANNEL_ID)
-                                .setContentTitle("New Message")
-                                .setContentText("You've received new messages.")
-                                .setSmallIcon(R.mipmap.ic_launcher_round)
-                                .setChannelId(CHANNEL_ID)
-                                .build();
-
-                        NotificationManager mNotificationManager =
-                                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                        mNotificationManager.createNotificationChannel(mChannel);
-
-                        mNotificationManager.notify(notifyID, notification);
-                    } catch (Exception e) {
-                        Log.e("errmes", e.toString());
-                    }
-                } else {
+//                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+//                    try {
+//                        NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+//                        Notification notification = new Notification.Builder(getApplicationContext(), CHANNEL_ID)
+//                                .setContentTitle("New Message")
+//                                .setContentText("You've received new messages.")
+//                                .setSmallIcon(R.mipmap.ic_launcher_round)
+//                                .setChannelId(CHANNEL_ID)
+//                                .build();
+//
+//                        NotificationManager mNotificationManager =
+//                                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//                        mNotificationManager.createNotificationChannel(mChannel);
+//
+//                        mNotificationManager.notify(notifyID, notification);
+//                    } catch (Exception e) {
+//                        Log.e("errmes", e.toString());
+//                    }
+//                } else {
+//                    NotificationCompat.Builder nb = new NotificationCompat.Builder(getApplicationContext());
+//                    nb.setDefaults(NotificationCompat.DEFAULT_ALL);
+//                    nb.setContentText("You have event : " + title);
+//                    nb.setContentTitle("Hi");
+//                    nb.setSmallIcon(R.mipmap.ic_launcher);
+//
+//                    NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//                    nm.notify(Integer.parseInt(id), nb.build());
+//                }
                     NotificationCompat.Builder nb = new NotificationCompat.Builder(getApplicationContext());
                     nb.setDefaults(NotificationCompat.DEFAULT_ALL);
                     nb.setContentText("You have event : " + title);
@@ -95,7 +104,6 @@ public class TimerService extends IntentService{
 
                     NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                     nm.notify(Integer.parseInt(id), nb.build());
-                }
                 return;
     }
 

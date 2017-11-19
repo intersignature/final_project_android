@@ -1,6 +1,7 @@
 package kmitl.final_project.sirichai.eventontheday.view;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.facebook.share.ShareApi;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,10 +41,10 @@ public class Preset_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_preset, container, false);
-        recyclerView = rootView.findViewById(R.id.showAllPreset);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.showAllPreset);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        empTv = rootView.findViewById(R.id.empTvPreset);
+        empTv = (TextView) rootView.findViewById(R.id.empTvPreset);
         createRecyclerView();
 
         return rootView;
@@ -55,32 +60,49 @@ public class Preset_fragment extends Fragment {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        int position = item.getGroupId();
-        ListPreset listPreset = listAllPresets.get(position);
-        String id = listPreset.getPresetId();
-        Intent intent;
-        switch (item.getItemId()){
-            case 8:
-                String result = databaseAdapter.deleteDataPreset(id);
-                removeAt(position);
-                break;
-            case 9:
-                intent = new Intent(getContext(), EditPresetActivity.class);
-                intent.putExtra("oldIdPreset",id);
-                getContext().startActivities(new Intent[]{intent});
-                getContext().stopService(intent);
-                break;
-            case 10:
-                intent = new Intent(getContext(), ViewPresetActivity.class);
-                intent.putExtra("idPreset", listPreset.getPresetId());
-                getContext().startActivities(new Intent[]{intent});
-                break;
-            case 11:
-                intent = new Intent(getContext(), AddEventActivity.class);
-                intent.putExtra("titlePreset", listPreset.getPresetTitle().split(": ")[1]);
-                intent.putExtra("detailPreset", listPreset.getPresetDetail().split(": ")[1]);
-                intent.putExtra("locationPreset", listPreset.getPresetLocation().split(": ")[1]);
-                getContext().startActivities(new Intent[]{intent});
+        if (item.getItemId()>=8 && item.getItemId()<=11) {
+            int position = item.getGroupId();
+            Log.i("groupid", String.valueOf(position));
+            ListPreset listPreset = listAllPresets.get(position);
+            String id = listPreset.getPresetId();
+            Intent intent;
+            switch (item.getItemId()) {
+                case 8:
+                    String result = databaseAdapter.deleteDataPreset(id);
+                    removeAt(position);
+                    break;
+                case 9:
+                    intent = new Intent(getContext(), EditPresetActivity.class);
+                    intent.putExtra("oldIdPreset", id);
+                    getContext().startActivities(new Intent[]{intent});
+                    getContext().stopService(intent);
+                    break;
+                case 10:
+                    intent = new Intent(getContext(), ViewPresetActivity.class);
+                    intent.putExtra("idPreset", listPreset.getPresetId());
+                    getContext().startActivities(new Intent[]{intent});
+                    break;
+                case 11:
+//                intent = new Intent(getContext(), AddEventActivity.class);
+//                intent.putExtra("titlePreset", listPreset.getPresetTitle().split(": ")[1]);
+//                intent.putExtra("detailPreset", listPreset.getPresetDetail().split(": ")[1]);
+//                intent.putExtra("locationPreset", listPreset.getPresetLocation().split(": ")[1]);
+//                getContext().startActivities(new Intent[]{intent});
+
+                    // Sharing the content to facebook
+                    ShareLinkContent content = new ShareLinkContent.Builder()
+                            // Setting the title that will be shared
+                            .setContentTitle("Planning a trip to Dubai?")
+                            // Setting the description that will be shared
+                            .setContentDescription("Make sure you visit unique attractions recommended by the local people!")
+                            // Setting the URL that will be shared
+                            .setContentUrl(Uri.parse("https://justa128.github.io/dubai-tour-guide/landingpage/"))
+                            // Setting the image that will be shared
+                            .setImageUrl(Uri.parse("https://cdn-images-1.medium.com/fit/t/800/240/1*jZ3a6rYqrslI83KJFhdvFg.jpeg"))
+                            .setPlaceId("141887372509674")
+                            .build();
+//                shareButton.setShareContent(content);
+            }
         }
         return super.onContextItemSelected(item);
     }

@@ -5,10 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.EditEventActivity">
+    tools:context=".view.EditEventActivity"
+    android:background="#DADADA"
+    >
 
     <ScrollView
-        android:layout_width="match_parent"
+        android:layout_width="410dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -16,7 +18,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
@@ -27,197 +29,216 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/setNewTitle"
-                android:layout_width="399dp"
-                android:layout_height="63dp"
-                android:layout_marginEnd="8dp"
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/constraintLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="#FFFFFF"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <EditText
+                    android:id="@+id/setNewTitle"
+                    android:layout_width="399dp"
+                    android:layout_height="63dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    android:hint="Title"
+                    android:textColor="#000000"
+                    android:textSize="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.166"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <EditText
+                    android:id="@+id/setNewLocation"
+                    android:layout_width="281dp"
+                    android:layout_height="63dp"
+                    android:layout_marginEnd="8dp"
+                    android:gravity="center"
+                    android:hint="Location"
+                    android:textColor="#000000"
+                    android:textSize="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/setNewTitle"/>
+
+                <EditText
+                    android:id="@+id/setNewDetail"
+                    android:layout_width="399dp"
+                    android:layout_height="72dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:hint="Detail"
+                    android:inputType="textMultiLine"
+                    android:selectAllOnFocus="false"
+                    android:singleLine="false"
+                    android:textColor="#000000"
+                    android:textSize="15dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.166"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/setNewLocation"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <Button
+                    android:id="@+id/PlacePickerUPDATEBTN"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="12dp"
+                    android:onClick="onPlacePicker"
+                    android:text="USE MAP"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.2"
+                    app:layout_constraintStart_toEndOf="@+id/setNewLocation"
+                    app:layout_constraintTop_toTopOf="@+id/setNewLocation" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/constraintLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="226dp"
+                android:layout_marginTop="32dp"
+                android:background="#FFFFFF"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:hint="Title"
-                android:textColor="#000000"
-                android:textSize="15dp"
-                android:gravity="center"/>
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
 
+                <EditText
+                    android:id="@+id/setNewStartDate"
+                    android:layout_width="181dp"
+                    android:layout_height="63dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:hint="Select event start date"
+                    android:inputType="date"
+                    android:textColor="#000000"
+                    android:textSize="15dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
+                <EditText
+                    android:id="@+id/setNewEndDate"
+                    android:layout_width="181dp"
+                    android:layout_height="63dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:hint="Select event end date"
+                    android:inputType="date"
+                    android:textColor="#000000"
+                    android:textSize="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/setNewStartDate"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
-                android:id="@+id/setNewLocation"
-                android:layout_width="399dp"
-                android:layout_height="63dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/setNewTitle"
-                android:hint="Location"
-                android:textColor="#000000"
-                android:textSize="15dp"
-                android:gravity="center"/>
+                <EditText
+                    android:id="@+id/setNewStartTime"
+                    android:layout_width="181dp"
+                    android:layout_height="63dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:hint="Select event start time"
+                    android:inputType="time"
+                    android:textColor="#000000"
+                    android:textSize="15dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/setNewEndDate" />
 
+                <EditText
+                    android:id="@+id/setNewEndTime"
+                    android:layout_width="181dp"
+                    android:layout_height="63dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:hint="Select event end time"
+                    android:inputType="time"
+                    android:textColor="#000000"
+                    android:textSize="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/setNewStartTime"
+                    app:layout_constraintTop_toBottomOf="@+id/setNewEndDate" />
 
+                <EditText
+                    android:id="@+id/setNewAlertDate"
+                    android:layout_width="181dp"
+                    android:layout_height="63dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:hint="Select event alert date"
+                    android:inputType="time"
+                    android:textColor="#000000"
+                    android:textSize="15dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/setNewStartTime"
+                    app:layout_constraintVertical_bias="0.0" />
 
-            <EditText
-                android:id="@+id/setNewStartDate"
-                android:focusable="false"
-                android:layout_width="399dp"
-                android:layout_height="63dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:ems="10"
-                android:hint="Select event start date"
-                android:inputType="date"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/setNewLocation"
-                android:textColor="#000000"
-                android:textSize="15dp"
-                android:gravity="center"/>
+                <EditText
+                    android:id="@+id/setNewAlertTime"
+                    android:layout_width="181dp"
+                    android:layout_height="63dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:hint="Select event alert time"
+                    android:inputType="time"
+                    android:textColor="#000000"
+                    android:textSize="15dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/setNewAlertDate"
+                    app:layout_constraintTop_toBottomOf="@+id/setNewEndTime"
+                    app:layout_constraintVertical_bias="0.111" />
+            </android.support.constraint.ConstraintLayout>
 
-            <EditText
-                android:id="@+id/setNewEndDate"
-                android:focusable="false"
-                android:layout_width="399dp"
-                android:layout_height="63dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="12dp"
-                android:hint="Select event end date"
-                android:inputType="date"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/setNewStartDate"
-                app:layout_constraintVertical_bias="0.0"
-                android:textColor="#000000"
-                android:textSize="15dp"
-                android:gravity="center"/>
-
-            <EditText
-                android:id="@+id/setNewStartTime"
-                android:focusable="false"
-                android:layout_width="399dp"
-                android:layout_height="63dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:hint="Select event start time"
-                android:inputType="time"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/setNewEndDate"
-                app:layout_constraintVertical_bias="0.0"
-                android:textColor="#000000"
-                android:textSize="15dp"
-                android:gravity="center"/>
-
-            <EditText
-                android:id="@+id/setNewEndTime"
-                android:focusable="false"
-                android:layout_width="399dp"
-                android:layout_height="63dp"
-                android:gravity="center"
-                android:hint="Select event end time"
-                android:inputType="time"
-                android:textColor="#000000"
-                android:textSize="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/setNewStartTime"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <EditText
-                android:id="@+id/setNewAlertDate"
-                android:focusable="false"
-                android:layout_width="399dp"
-                android:layout_height="63dp"
-                android:gravity="center"
-                android:hint="Select event alert date"
-                android:inputType="date"
-                android:textColor="#000000"
-                android:textSize="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/setNewEndTime"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <EditText
-                android:id="@+id/setNewAlertTime"
-                android:focusable="false"
-                android:layout_width="399dp"
-                android:layout_height="63dp"
-                android:gravity="center"
-                android:hint="Select event alert time"
-                android:inputType="time"
-                android:textColor="#000000"
-                android:textSize="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/setNewAlertDate"
-                app:layout_constraintVertical_bias="0.0" />
-
-
-            <EditText
-                android:id="@+id/setNewDetail"
-                android:layout_width="399dp"
-                android:layout_height="87dp"
-                android:layout_marginBottom="172dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:gravity="center"
-                android:hint="Detail"
-                android:inputType="textMultiLine"
-                android:selectAllOnFocus="false"
-                android:singleLine="false"
-                android:textColor="#000000"
-                android:textSize="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
 
             <Button
                 android:id="@+id/submitAddEvent"
                 style="@style/Widget.AppCompat.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="128dp"
-                android:layout_marginEnd="196dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="140dp"
+                android:layout_marginTop="8dp"
                 android:onClick="onSubmitEditEvent"
                 android:text="UPDATE Event"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/setDetail"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <Button
-                android:id="@+id/submitAddEvent1"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="124dp"
-                android:layout_marginEnd="36dp"
-                android:onClick="viewdata"
-                android:text="view "
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/setDetail"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <Button
-                android:id="@+id/PlacePickerUPDATEBTN"
-                android:onClick="onPlacePicker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:text="USE MAP"
-                app:layout_constraintBottom_toTopOf="@+id/setNewStartDate"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.969"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/setNewLocation"
-                app:layout_constraintVertical_bias="0.533" />
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+                app:layout_constraintVertical_bias="0.0" />
 
 
         </android.support.constraint.ConstraintLayout>
