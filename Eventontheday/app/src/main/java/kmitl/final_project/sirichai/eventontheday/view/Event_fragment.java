@@ -1,6 +1,7 @@
 package kmitl.final_project.sirichai.eventontheday.view;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,9 @@ import android.widget.TextView;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.share.ShareApi;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,10 +50,8 @@ public class Event_fragment extends Fragment {
         empTv = (TextView) rootView.findViewById(R.id.empTvEvent);
         createRecyclerView();
 
-
         return rootView;
     }
-
     @Override
     public boolean onContextItemSelected(MenuItem item) {
 
@@ -82,15 +84,18 @@ public class Event_fragment extends Fragment {
                 getContext().startActivities(new Intent[]{intent6});
                 break;
             case 7:
-                int position7 = item.getGroupId();
-                ListEvent listEvent7 = listAllEvents.get(position7);
-                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                sharingIntent.setType("text/plain");
-                String shareBody = "I have event : "+listEvent7.getEventTitle() + " , " +listEvent7.getEventLocation();
-                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, listEvent7.getEventTitle());
-                sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
-                startActivity(Intent.createChooser(sharingIntent, "Share via"));
-
+//                int position7 = item.getGroupId();
+//                ListEvent listEvent7 = listAllEvents.get(position7);
+//                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+//                sharingIntent.setType("text/plain");
+//                String shareBody = "I have event : "+listEvent7.getEventTitle() + " , " +listEvent7.getEventLocation();
+//                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, listEvent7.getEventTitle());
+//                sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+//                startActivity(Intent.createChooser(sharingIntent, "Share via"));
+                ShareLinkContent content = new ShareLinkContent.Builder()
+                        .setContentUrl(Uri.parse("https://developers.facebook.com"))
+                        .build();
+                ShareApi.share(content, null);
                 break;
         }
         return super.onContextItemSelected(item);
