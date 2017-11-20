@@ -302,7 +302,7 @@ public class AddEventActivity extends AppCompatActivity {
         if (requestCode==PLACE_PICKER_REQUEST){
             if (resultCode==RESULT_OK){
                 Place place = PlacePicker.getPlace(data, this);
-                setLocation.setText(place.getName() + " : " + place.getAddress() + " : " + place.getId());
+                setLocation.setText(place.getName() + " : " + place.getAddress() + " : "+ place.getLatLng().latitude + " : " + place.getLatLng().longitude);
                 Log.i("map", place.getName() + " : " + place.getAddress() + " : " + place.getId());
             }
         }

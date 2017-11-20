@@ -78,29 +78,24 @@ public class Preset_fragment extends Fragment {
                     getContext().stopService(intent);
                     break;
                 case 10:
-                    intent = new Intent(getContext(), ViewPresetActivity.class);
-                    intent.putExtra("idPreset", listPreset.getPresetId());
-                    getContext().startActivities(new Intent[]{intent});
-                    break;
-                case 11:
-//                intent = new Intent(getContext(), AddEventActivity.class);
-//                intent.putExtra("titlePreset", listPreset.getPresetTitle().split(": ")[1]);
-//                intent.putExtra("detailPreset", listPreset.getPresetDetail().split(": ")[1]);
-//                intent.putExtra("locationPreset", listPreset.getPresetLocation().split(": ")[1]);
-//                getContext().startActivities(new Intent[]{intent});
+                intent = new Intent(getContext(), AddEventActivity.class);
+                intent.putExtra("titlePreset", listPreset.getPresetTitle().split(": ")[1]);
+                intent.putExtra("detailPreset", listPreset.getPresetDetail().split(": ")[1]);
+                intent.putExtra("locationPreset", listPreset.getPresetLocation().split(": ")[1]);
+                getContext().startActivities(new Intent[]{intent});
 
                     // Sharing the content to facebook
-                    ShareLinkContent content = new ShareLinkContent.Builder()
-                            // Setting the title that will be shared
-                            .setContentTitle("Planning a trip to Dubai?")
-                            // Setting the description that will be shared
-                            .setContentDescription("Make sure you visit unique attractions recommended by the local people!")
-                            // Setting the URL that will be shared
-                            .setContentUrl(Uri.parse("https://justa128.github.io/dubai-tour-guide/landingpage/"))
-                            // Setting the image that will be shared
-                            .setImageUrl(Uri.parse("https://cdn-images-1.medium.com/fit/t/800/240/1*jZ3a6rYqrslI83KJFhdvFg.jpeg"))
-                            .setPlaceId("141887372509674")
-                            .build();
+//                    ShareLinkContent content = new ShareLinkContent.Builder()
+//                            // Setting the title that will be shared
+//                            .setContentTitle("Planning a trip to Dubai?")
+//                            // Setting the description that will be shared
+//                            .setContentDescription("Make sure you visit unique attractions recommended by the local people!")
+//                            // Setting the URL that will be shared
+//                            .setContentUrl(Uri.parse("https://justa128.github.io/dubai-tour-guide/landingpage/"))
+//                            // Setting the image that will be shared
+//                            .setImageUrl(Uri.parse("https://cdn-images-1.medium.com/fit/t/800/240/1*jZ3a6rYqrslI83KJFhdvFg.jpeg"))
+//                            .setPlaceId("141887372509674")
+//                            .build();
 //                shareButton.setShareContent(content);
             }
         }

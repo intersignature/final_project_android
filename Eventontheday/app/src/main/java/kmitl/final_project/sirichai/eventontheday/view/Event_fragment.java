@@ -138,7 +138,7 @@ public class Event_fragment extends Fragment {
             ListEvent listEvent = new ListEvent(
                     "Title: "+ eachEvent.get(0),
                     "Date: "+ eachEvent.get(2),
-                    "Location: "+eachEvent.get(1),eachEvent.get(9)
+                    "Location: "+eachEvent.get(1).split(" : ")[0],eachEvent.get(9)
             );
             listAllEvents.add(listEvent);
         }

@@ -89,8 +89,7 @@ public class RecyclerPresetAdapter extends RecyclerView.Adapter<RecyclerPresetAd
             public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
                 menu.add(holder.getAdapterPosition(), 8, 0, "DELETE");
                 menu.add(holder.getAdapterPosition(), 9, 0, "UPDATE");
-                menu.add(holder.getAdapterPosition(), 10, 0, "VIEW");
-                menu.add(holder.getAdapterPosition(), 11, 0, "USE THIS PRESET");
+                menu.add(holder.getAdapterPosition(), 10, 0, "USE THIS PRESET");
 
             }
         });
