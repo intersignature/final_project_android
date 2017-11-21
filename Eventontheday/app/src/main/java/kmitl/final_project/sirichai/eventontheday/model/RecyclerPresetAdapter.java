@@ -1,10 +1,8 @@
 package kmitl.final_project.sirichai.eventontheday.model;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +13,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import kmitl.final_project.sirichai.eventontheday.R;
-import kmitl.final_project.sirichai.eventontheday.view.EditPresetActivity;
-import kmitl.final_project.sirichai.eventontheday.view.ViewPresetActivity;
 
 /**
  * Created by atomiz on 16/11/2560.
@@ -35,13 +31,6 @@ public class RecyclerPresetAdapter extends RecyclerView.Adapter<RecyclerPresetAd
 
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-//        public TextView presetTitle;
-//        public TextView presetDetail;
-//        public TextView presetLocation;
-//        public Button PresetbtnDelete;
-//        public Button PresetbtnUpdate;
-//        public TextView presetId;
-//        public ConstraintLayout infoLayout;
         public TextView presetTitle;
         public TextView presetDetail;
         public TextView presetLocation;
@@ -52,13 +41,6 @@ public class RecyclerPresetAdapter extends RecyclerView.Adapter<RecyclerPresetAd
         public ViewHolder(View itemView) {
             super(itemView);
             context = itemView.getContext();
-//            presetTitle = itemView.findViewById(R.id.PresetTitle);
-//            presetDetail = itemView.findViewById(R.id.PresetDetail);
-//            presetLocation = itemView.findViewById(R.id.PresetLocation);
-//            presetId = itemView.findViewById(R.id.PresetId);
-//            PresetbtnDelete = itemView.findViewById(R.id.PresetDeleteBtn);
-//            PresetbtnUpdate = itemView.findViewById(R.id.PresetUpdateBtn);
-//            infoLayout = itemView.findViewById(R.id.PresetinfoLayout);
             presetTitle = (TextView) itemView.findViewById(R.id.eventTitle);
             presetDetail = (TextView) itemView.findViewById(R.id.eventDate);
             presetLocation = (TextView) itemView.findViewById(R.id.eventLocation);

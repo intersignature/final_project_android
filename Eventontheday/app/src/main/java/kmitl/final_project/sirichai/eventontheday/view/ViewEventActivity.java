@@ -53,16 +53,15 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
         viewEndDate = (TextView) findViewById(R.id.viewEndDate);
         viewAlertDate = (TextView) findViewById(R.id.viewAlertDate);
         viewDetail = (TextView) findViewById(R.id.viewDetail);
-        //viewTitle.setText(getIntent().getStringExtra("title"));
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
         data = databaseAdapter.getEachDataEvent(getIntent().getStringExtra("id"));
         Log.i("viewecent", data.toString());
-        viewTitle.setText("Title is : "+data.get(0));
-        viewLocation.setText("Location is : "+data.get(1).split(" : ")[0]);
-        viewStartDate.setText("Start date is : "+data.get(2) + " AT : " + data.get(4));
-        viewEndDate.setText("End date is : "+data.get(3) + " AT : " + data.get(5));
-        viewAlertDate.setText("Alert date is : " + data.get(6) + " AT : " + data.get(7));
-        viewDetail.setText("Detail is : "+data.get(8));
+        viewTitle.setText(data.get(0));
+        viewLocation.setText("AT : "+data.get(1).split(" : ")[0]);
+        viewStartDate.setText("Start date : "+data.get(2) + " AT : " + data.get(4));
+        viewEndDate.setText("End date : "+data.get(3) + " AT : " + data.get(5));
+        viewAlertDate.setText("Alert date : " + data.get(6) + " AT : " + data.get(7));
+        viewDetail.setText("Detail : "+data.get(8));
         if (googleServicesAvailable()) {
             Log.i("play service", "Perfect!!");
             initMap();
@@ -115,6 +114,7 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mgoogleMap = googleMap;
+        mgoogleMap.getUiSettings().setScrollGesturesEnabled(false);
         double lat;
         double lng;
         try {

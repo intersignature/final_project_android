@@ -25,14 +25,15 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.text.Format;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import kmitl.final_project.sirichai.eventontheday.R;
-import kmitl.final_project.sirichai.eventontheday.google_place_picker.GooglePlacePickerActivity;
 import kmitl.final_project.sirichai.eventontheday.model.DatabaseAdapter;
 import kmitl.final_project.sirichai.eventontheday.model.ListEvent;
 
@@ -229,13 +230,16 @@ public class AddEventActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
     public void onSubmitAddEvent(View view) {
         String title = setTitle.getText().toString();
-        String location = setLocation.getText().toString();
+        String location;
+        try {
+            String lat = setLocation.getText().toString().split(" : ")[1];
+            location = locationToDb;
+            Log.i("addEventnaja", "lat :" + location);
+        }catch (Exception e){
+            location = setLocation.getText().toString();
+        }
         String start_date = strStartDate;
         String end_date = strEndDate;
         String start_time = strStartTime;
@@ -250,6 +254,17 @@ public class AddEventActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"Enter empty field", Toast.LENGTH_SHORT).show();
         }
         else {
+            SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
+            try {
+                Date start = sdf1.parse(start_date + " - " + start_time);
+                Date end = sdf1.parse(end_date + " - " + end_time);
+                if (end.compareTo(start) <= 0){
+                    Toast.makeText(getApplicationContext(),"Wrong start and end event", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             String result = databaseAdapter.insertDataEvent(title,location,start_date,end_date,start_time,end_time,alert_date,alert_time,detail);
             if(!result.equals("success")){
                 Toast.makeText(getApplicationContext(),"Insertion unsucessfull!"+result,Toast.LENGTH_SHORT).show();
@@ -265,24 +280,15 @@ public class AddEventActivity extends AppCompatActivity {
                 setDetail.setText("");
                 setAlertDate.setText("");
                 setAlertTime.setText("");
-//                Intent intent = new Intent(this, MainActivity.class);
-//                startActivity(intent);
                 finish();
             }
         }
 
-//        Toast.makeText(getApplicationContext(), "title:"+title+"\n"+"location:"+location+"\n"+"start_date:"+start_date+"\n"+
-//                "end_date:"+end_date+"\n"+"start_time:"+start_time+"\n"+"end_time:"+end_time+"\n"+"alert:"+alert_time+"\n"+
-//                "detail:"+detail+"\n", Toast.LENGTH_SHORT).show();
     }
 
     public void viewdata(View view) {
-//        int data = databaseAdapter.clearDB();
-//        Log.i("b", Integer.toString(data));
         List<List> datas = databaseAdapter.getDataEvent();
         Log.i("b", datas.toString());
-        //Log.i("a",data);
-        //Toast.makeText(getApplicationContext(),data,Toast.LENGTH_SHORT).show();
     }
 
     public void onPlacePicker(View view) {
@@ -302,8 +308,9 @@ public class AddEventActivity extends AppCompatActivity {
         if (requestCode==PLACE_PICKER_REQUEST){
             if (resultCode==RESULT_OK){
                 Place place = PlacePicker.getPlace(data, this);
-                setLocation.setText(place.getName() + " : " + place.getAddress() + " : "+ place.getLatLng().latitude + " : " + place.getLatLng().longitude);
-                Log.i("map", place.getName() + " : " + place.getAddress() + " : " + place.getId());
+                setLocation.setText(place.getName() + " : " + place.getAddress());
+                locationToDb = place.getName() + " : " + place.getAddress() + " : "+ place.getLatLng().latitude + " : " + place.getLatLng().longitude;
+//                Log.i("map", place.getName() + " : " + place.getAddress() + " : "+ place.getLatLng().latitude + " : " + place.getLatLng().longitude);
             }
         }
     }

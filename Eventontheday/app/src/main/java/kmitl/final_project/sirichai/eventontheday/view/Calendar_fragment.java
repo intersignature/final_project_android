@@ -36,6 +36,7 @@ public class Calendar_fragment extends Fragment {
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     List<ListEvent> listAllEvents;
+    TextView selectDateTV;
     String selectedDay;
     String selectedMonth;
     String selectedYear;
@@ -47,26 +48,24 @@ public class Calendar_fragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_calendar, container, false);
         mCalendarView = (CalendarView) rootView.findViewById(R.id.calendarView);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.showEvent);
+        selectDateTV = (TextView) rootView.findViewById(R.id.selectDateTV);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String selected = sdf.format(new Date(mCalendarView.getDate()));
         selectedDay = selected.split("/")[0];
         selectedMonth = selected.split("/")[1];
         selectedYear = selected.split("/")[2];
+        selectDateTV.setText("Select date is : " + selectedYear +"/" + selectedMonth + "/" + selectedDay);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         databaseAdapter = new DatabaseAdapter(getContext());
         empTv = (TextView) rootView.findViewById(R.id.empTvCalendar);
-//        Calendar calendar = Calendar.getInstance();
-//        String formatter = new SimpleDateFormat("dd/MM/yyyy", new Locale("en", "TH")).format(calendar.getTime());
-//        int currentDay = Integer.parseInt(formatter.split("/")[0]);
-//        int currentMonth = Integer.parseInt(formatter.split("/")[1]);
-//        int currentYear = Integer.parseInt(formatter.split("/")[2]);
         createRecylerView(Integer.parseInt(selectedYear),Integer.parseInt(selectedMonth),Integer.parseInt(selectedDay));
         mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int dayOfMonth) {
                 month +=1;
-                Toast.makeText(calendarView.getContext(), "Year=" + year + " Month=" + month + " Day=" + dayOfMonth, Toast.LENGTH_LONG).show();
+                Toast.makeText(calendarView.getContext(), "Year=" + year + " Month=" + month + " Day=" + dayOfMonth, Toast.LENGTH_SHORT).show();
+                selectDateTV.setText("Select date is : " + year +"/" + month + "/" + dayOfMonth);
                 selectedDay =  String.valueOf(dayOfMonth);
                 selectedMonth = String.valueOf(month);
                 selectedYear = String.valueOf(year);
@@ -156,10 +155,7 @@ public class Calendar_fragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-//        Log.i("b",listAllEvents.toString());
         createRecylerView(Integer.parseInt(selectedYear),Integer.parseInt(selectedMonth),Integer.parseInt(selectedDay));
-//        adapter = new RecyclerEventAdapter(listAllEvents,getContext(),"Cal");
-//        recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
 

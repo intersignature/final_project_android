@@ -24,9 +24,11 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.text.Format;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -52,6 +54,7 @@ public class EditEventActivity extends AppCompatActivity {
     private String strEndTime = "";
     private String strAlertDate = "";
     private String strAlertTime = "";
+    private String locationToDb = "";
     private DatabaseAdapter databaseAdapter;
     private Button delete;
     List<ListEvent> listAllEvents = new ArrayList<>();
@@ -77,8 +80,14 @@ public class EditEventActivity extends AppCompatActivity {
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
         oldId = getIntent().getStringExtra("oldId");
         List<String> data = databaseAdapter.getEachDataEvent(oldId);
+        locationToDb = data.get(1);
         setTitle.setText(data.get(0));
-        setLocation.setText(data.get(1));
+        try {
+            setLocation.setText(data.get(1).split(" : ")[0] + " : " + data.get(1).split(" : ")[1]);
+        }catch (Exception e){
+            setLocation.setText(data.get(1));
+        }
+
         setStartDate.setText("start date is : " + data.get(2));
         setEndDate.setText("end date is : " + data.get(3));
         setStartTime.setText("start time is : " + data.get(4));
@@ -242,13 +251,19 @@ public class EditEventActivity extends AppCompatActivity {
     }
 
     public void viewdata(View view) {
-        //int data = databaseAdapter.clearDB();
         List<List> datas = databaseAdapter.getDataEvent();
         Log.i("b", datas.toString());
     }
+
     public void onSubmitEditEvent(View view) {
         String title = setTitle.getText().toString();
-        String location = setLocation.getText().toString();
+        String location;
+        try {
+            String lat = setLocation.getText().toString().split(" : ")[1];
+            location = locationToDb;
+        }catch (Exception e){
+            location = setLocation.getText().toString();
+        }
         String start_date = strStartDate;
         String end_date = strEndDate;
         String start_time = strStartTime;
@@ -260,15 +275,26 @@ public class EditEventActivity extends AppCompatActivity {
 
         if(title.equals("") || location.equals("")  || start_date.equals("") || end_date.equals("") ||
                 start_time.equals("") || end_time.equals("") || alert_date.equals("") || alert_time.equals("") || detail.equals("") ){
-
             Toast.makeText(getApplicationContext(),"Enter empty field", Toast.LENGTH_SHORT).show();
         }
         else {
+            SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
+            try {
+                Date start = sdf1.parse(start_date + " - " + start_time);
+                Date end = sdf1.parse(end_date + " - " + end_time);
+                if (end.compareTo(start) <= 0){
+                    Toast.makeText(getApplicationContext(),"Wrong start and end event", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             String result = databaseAdapter.updateDataEvent(title, location, start_date, end_date, start_time, end_time,alert_date ,alert_time, detail, oldId);
             if(!result.equals("success")){
                 Toast.makeText(getApplicationContext(),"update unsucessfull!"+result,Toast.LENGTH_SHORT).show();
             }else {
                 Toast.makeText(getApplicationContext(),"update success!!",Toast.LENGTH_SHORT).show();
+                Log.i("editEventnaja", location);
                 finish();
             }
         }
@@ -292,6 +318,7 @@ public class EditEventActivity extends AppCompatActivity {
             if (resultCode==RESULT_OK){
                 Place place = PlacePicker.getPlace(data, this);
                 setLocation.setText(place.getName() + " : " + place.getAddress());
+                locationToDb = place.getName() + " : " + place.getAddress() + " : "+ place.getLatLng().latitude + " : " + place.getLatLng().longitude;
             }
         }
     }
