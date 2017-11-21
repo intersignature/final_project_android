@@ -255,11 +255,18 @@ public class AddEventActivity extends AppCompatActivity {
         }
         else {
             SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
+            Date date = new Date();
             try {
                 Date start = sdf1.parse(start_date + " - " + start_time);
                 Date end = sdf1.parse(end_date + " - " + end_time);
                 if (end.compareTo(start) <= 0){
                     Toast.makeText(getApplicationContext(),"Wrong start and end event", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Date currentDate = sdf1.parse(sdf1.format(date));
+                Date alert = sdf1.parse(alert_date + " - " + alert_time);
+                if (alert.compareTo(currentDate) <= 0){
+                    Toast.makeText(getApplicationContext(),"Wrong alert time", Toast.LENGTH_SHORT).show();
                     return;
                 }
             } catch (ParseException e) {
