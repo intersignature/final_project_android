@@ -65,7 +65,6 @@ public class AddEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
 
-        //set findViewById to all elements
         setTitle = (EditText) findViewById(R.id.setTitle);
         setLocation = (EditText) findViewById(R.id.setLocation);
         setStartDate = (EditText) findViewById(R.id.setStartDate);
@@ -83,7 +82,62 @@ public class AddEventActivity extends AppCompatActivity {
             setLocation.setText(getIntent().getStringExtra("locationPreset"));
         }
         calendar = Calendar.getInstance();
-        //set date start and end
+
+        setDatePart();
+        setTimePart();
+    }
+
+    private void setTimePart(){
+        final TimePickerDialog.OnTimeSetListener time = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int h, int m) {
+                calendar.set(Calendar.HOUR_OF_DAY, h);
+                calendar.set(Calendar.MINUTE, m);
+                updateLabel();
+            }
+        };
+        setStartTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Clickbtn = "setStartTime";
+                if(strStartTime.equals("")){
+                    new TimePickerDialog(AddEventActivity.this, time, calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),true).show();
+                }
+                else{
+                    String[] parts = strStartTime.split(":");
+                    new TimePickerDialog(AddEventActivity.this, time, Integer.parseInt(parts[0]),  Integer.parseInt(parts[1]),true).show();
+                }
+            }
+        });
+        setAlertTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Clickbtn = "setAlertTime";
+                if(strAlertTime.equals("")){
+                    new TimePickerDialog(AddEventActivity.this, time, calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),true).show();
+                }
+                else{
+                    String[] parts = strAlertTime.split(":");
+                    new TimePickerDialog(AddEventActivity.this, time, Integer.parseInt(parts[0]),  Integer.parseInt(parts[1]),true).show();
+                }
+            }
+        });
+        setEndTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Clickbtn = "setEndTime";
+                if(strEndTime.equals("")){
+                    new TimePickerDialog(AddEventActivity.this, time, calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),true).show();
+                }
+                else{
+                    String[] parts = strEndTime.split(":");
+                    new TimePickerDialog(AddEventActivity.this, time, Integer.parseInt(parts[0]),  Integer.parseInt(parts[1]),true).show();
+                }
+            }
+        });
+    }
+
+    private void setDatePart(){
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int y, int m, int d) {
@@ -136,58 +190,8 @@ public class AddEventActivity extends AppCompatActivity {
                 }
             }
         });
-
-        //set time start and end
-
-        final TimePickerDialog.OnTimeSetListener time = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int h, int m) {
-                calendar.set(Calendar.HOUR_OF_DAY, h);
-                calendar.set(Calendar.MINUTE, m);
-                updateLabel();
-            }
-        };
-        setStartTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Clickbtn = "setStartTime";
-                if(strStartTime.equals("")){
-                    new TimePickerDialog(AddEventActivity.this, time, calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),true).show();
-                }
-                else{
-                    String[] parts = strStartTime.split(":");
-                    new TimePickerDialog(AddEventActivity.this, time, Integer.parseInt(parts[0]),  Integer.parseInt(parts[1]),true).show();
-                }
-            }
-        });
-        setAlertTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Clickbtn = "setAlertTime";
-                if(strAlertTime.equals("")){
-                    new TimePickerDialog(AddEventActivity.this, time, calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),true).show();
-                }
-                else{
-                    String[] parts = strAlertTime.split(":");
-                    new TimePickerDialog(AddEventActivity.this, time, Integer.parseInt(parts[0]),  Integer.parseInt(parts[1]),true).show();
-                }
-            }
-        });
-        setEndTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Clickbtn = "setEndTime";
-                if(strEndTime.equals("")){
-                    new TimePickerDialog(AddEventActivity.this, time, calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),true).show();
-                }
-                else{
-                    String[] parts = strEndTime.split(":");
-                    new TimePickerDialog(AddEventActivity.this, time, Integer.parseInt(parts[0]),  Integer.parseInt(parts[1]),true).show();
-                }
-            }
-        });
-
     }
+
     private void updateLabel() {
         if (Clickbtn.equals("setStartDate")) {
             setStartDate.setText("start date is : " + formatTh().format(calendar.getTime()));
@@ -229,14 +233,12 @@ public class AddEventActivity extends AppCompatActivity {
         return null;
     }
 
-
     public void onSubmitAddEvent(View view) {
         String title = setTitle.getText().toString();
         String location;
         try {
             String lat = setLocation.getText().toString().split(" : ")[1];
             location = locationToDb;
-            Log.i("addEventnaja", "lat :" + location);
         }catch (Exception e){
             location = setLocation.getText().toString();
         }
@@ -247,7 +249,6 @@ public class AddEventActivity extends AppCompatActivity {
         String alert_time = strAlertTime;
         String alert_date = strAlertDate;
         String detail = setDetail.getText().toString();
-        Log.i("add",title+" "+location+" "+start_date+" "+end_date+" "+start_time+" "+ end_time+ " "+alert_date+" "+alert_time+" "+detail);
         if(title.equals("") || location.equals("")  || start_date.equals("") || end_date.equals("") ||
                 start_time.equals("") || end_time.equals("") || alert_time.equals("") || detail.equals("") || alert_date.equals(""))
         {
@@ -290,12 +291,10 @@ public class AddEventActivity extends AppCompatActivity {
                 finish();
             }
         }
-
     }
 
     public void viewdata(View view) {
         List<List> datas = databaseAdapter.getDataEvent();
-        Log.i("b", datas.toString());
     }
 
     public void onPlacePicker(View view) {
@@ -317,7 +316,6 @@ public class AddEventActivity extends AppCompatActivity {
                 Place place = PlacePicker.getPlace(data, this);
                 setLocation.setText(place.getName() + " : " + place.getAddress());
                 locationToDb = place.getName() + " : " + place.getAddress() + " : "+ place.getLatLng().latitude + " : " + place.getLatLng().longitude;
-//                Log.i("map", place.getName() + " : " + place.getAddress() + " : "+ place.getLatLng().latitude + " : " + place.getLatLng().longitude);
             }
         }
     }

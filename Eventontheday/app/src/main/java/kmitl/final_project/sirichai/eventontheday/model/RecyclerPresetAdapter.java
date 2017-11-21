@@ -19,7 +19,6 @@ import kmitl.final_project.sirichai.eventontheday.R;
  */
 
 public class RecyclerPresetAdapter extends RecyclerView.Adapter<RecyclerPresetAdapter.ViewHolder> {
-
     private List<ListPreset> listAllPresets;
     private Context context;
     private DatabaseAdapter databaseAdapter;
@@ -29,13 +28,10 @@ public class RecyclerPresetAdapter extends RecyclerView.Adapter<RecyclerPresetAd
         this.context = context;
     }
 
-
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView presetTitle;
         public TextView presetDetail;
         public TextView presetLocation;
-        public Button PresetbtnDelete;
-        public Button PresetbtnUpdate;
         public TextView presetId;
         public ConstraintLayout infoLayout;
         public ViewHolder(View itemView) {
@@ -47,7 +43,6 @@ public class RecyclerPresetAdapter extends RecyclerView.Adapter<RecyclerPresetAd
             presetId = (TextView) itemView.findViewById(R.id.eventId);
             infoLayout = (ConstraintLayout) itemView.findViewById(R.id.infoLayout);
         }
-
     }
 
     @Override
@@ -55,7 +50,6 @@ public class RecyclerPresetAdapter extends RecyclerView.Adapter<RecyclerPresetAd
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_event, parent, false);
         databaseAdapter = new DatabaseAdapter(parent.getContext());
         return new ViewHolder(view);
-
     }
 
     @Override
@@ -72,7 +66,6 @@ public class RecyclerPresetAdapter extends RecyclerView.Adapter<RecyclerPresetAd
                 menu.add(holder.getAdapterPosition(), 8, 0, "DELETE");
                 menu.add(holder.getAdapterPosition(), 9, 0, "UPDATE");
                 menu.add(holder.getAdapterPosition(), 10, 0, "USE THIS PRESET");
-
             }
         });
     }
@@ -82,10 +75,5 @@ public class RecyclerPresetAdapter extends RecyclerView.Adapter<RecyclerPresetAd
         return listAllPresets.size();
     }
 
-    public void removeAt(int position) {
-        listAllPresets.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, listAllPresets.size());
-    }
 
 }

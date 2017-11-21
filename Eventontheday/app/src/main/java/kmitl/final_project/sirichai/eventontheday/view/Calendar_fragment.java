@@ -6,6 +6,7 @@ package kmitl.final_project.sirichai.eventontheday.view;
 
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -20,6 +21,9 @@ import android.widget.CalendarView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.facebook.share.ShareApi;
+import com.facebook.share.model.ShareLinkContent;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -77,7 +81,6 @@ public class Calendar_fragment extends Fragment {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-
         switch (item.getItemId()){
             case 0:
                 int position = item.getGroupId();
@@ -107,6 +110,18 @@ public class Calendar_fragment extends Fragment {
                 getContext().startActivities(new Intent[]{intent2});
                 break;
             case 3:
+                //                int position7 = item.getGroupId();
+//                ListEvent listEvent7 = listAllEvents.get(position7);
+//                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+//                sharingIntent.setType("text/plain");
+//                String shareBody = "I have event : "+listEvent7.getEventTitle() + " , " +listEvent7.getEventLocation();
+//                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, listEvent7.getEventTitle());
+//                sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+//                startActivity(Intent.createChooser(sharingIntent, "Share via"));
+                ShareLinkContent content = new ShareLinkContent.Builder()
+                        .setContentUrl(Uri.parse("https://developers.facebook.com"))
+                        .build();
+                ShareApi.share(content, null);
                 break;
         }
         return super.onContextItemSelected(item);
@@ -161,7 +176,6 @@ public class Calendar_fragment extends Fragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
-
         if(getView()!=null){
             createRecylerView(Integer.parseInt(selectedYear),Integer.parseInt(selectedMonth),Integer.parseInt(selectedDay));
             adapter.notifyDataSetChanged();

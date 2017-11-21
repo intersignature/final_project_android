@@ -34,10 +34,10 @@ import kmitl.final_project.sirichai.eventontheday.model.RecyclerEventAdapter;
 
 public class Event_fragment extends Fragment {
 
-    RecyclerView recyclerView;
-    RecyclerView.Adapter adapter;
-    List<ListEvent> listAllEvents = new ArrayList<>();
-    TextView empTv;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    private List<ListEvent> listAllEvents = new ArrayList<>();
+    private TextView empTv;
     private DatabaseAdapter databaseAdapter;
 
     @Override
@@ -48,8 +48,8 @@ public class Event_fragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         empTv = (TextView) rootView.findViewById(R.id.empTvEvent);
+        databaseAdapter = new DatabaseAdapter(getContext());
         createRecyclerView();
-
         return rootView;
     }
     @Override
@@ -62,7 +62,6 @@ public class Event_fragment extends Fragment {
                 String id4 = listEvent4.getEventId();
                 String result = databaseAdapter.deleteDataEvent(id4);
                 removeAt(position4);
-                Log.i("e1","e1");
                 break;
             case 5:
                 int position5 = item.getGroupId();
@@ -130,7 +129,6 @@ public class Event_fragment extends Fragment {
     }
 
     public void createRecyclerView(){
-        databaseAdapter = new DatabaseAdapter(getContext());
         List<List> datas = databaseAdapter.getDataEvent();
         listAllEvents = new ArrayList<>();
         for (int i=0; i<datas.size();i++){

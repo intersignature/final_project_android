@@ -42,8 +42,6 @@ public class RecyclerEventAdapter extends RecyclerView.Adapter<RecyclerEventAdap
         public TextView eventTitle;
         public TextView eventDate;
         public TextView eventLocation;
-        public Button btnDelete;
-        public Button btnUpdate;
         public TextView eventId;
         public ConstraintLayout infoLayout;
         public ViewHolder(View itemView) {
@@ -55,14 +53,13 @@ public class RecyclerEventAdapter extends RecyclerView.Adapter<RecyclerEventAdap
             eventId = (TextView) itemView.findViewById(R.id.eventId);
             infoLayout = (ConstraintLayout) itemView.findViewById(R.id.infoLayout);
         }
-
     }
+
     @Override
     public RecyclerEventAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_event, parent, false);
         databaseAdapter = new DatabaseAdapter(parent.getContext());
         return new ViewHolder(view);
-
     }
 
     @Override
@@ -78,15 +75,10 @@ public class RecyclerEventAdapter extends RecyclerView.Adapter<RecyclerEventAdap
             Date dateFromDb = sdf1.parse(listEvent.getEventDate().split(": ")[1]);
             Date currentDate = sdf1.parse(sdf1.format(date));
             if (dateFromDb.compareTo(currentDate) > 0) {
-//                System.out.println("red");
-//                Log.i("rorg", "red");
                 holder.eventTitle.setTextColor(Color.GREEN);
                 holder.eventDate.setTextColor(Color.GREEN);
                 holder.eventLocation.setTextColor(Color.GREEN);
-
             } else if (dateFromDb.compareTo(currentDate) < 0) {
-//                System.out.println("green");
-//                Log.i("rorg", "green");
                 holder.eventTitle.setTextColor(Color.RED);
                 holder.eventDate.setTextColor(Color.RED);
                 holder.eventLocation.setTextColor(Color.RED);

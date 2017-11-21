@@ -27,8 +27,8 @@ import kmitl.final_project.sirichai.eventontheday.model.DatabaseAdapter;
 
 public class TimerService extends IntentService{
     private DatabaseAdapter databaseAdapter;
-    List<String> listAllDate;
-    List<List> listAllDates = new ArrayList<>();
+    private List<String> listAllDate;
+    private List<List> listAllDates = new ArrayList<>();
     public TimerService() {
         super("TimerService");
     }
@@ -49,7 +49,6 @@ public class TimerService extends IntentService{
     public  void addDbForNotification(){
         listAllDates.clear();
         final List<List> datas = databaseAdapter.getDataEvent();
-
         for (int i=0; i<datas.size();i++){
             listAllDate = new ArrayList<>();
             List<String> eachEvent = datas.get(i);
@@ -59,9 +58,9 @@ public class TimerService extends IntentService{
             listAllDate.add(eachEvent.get(6));//alertdate
             listAllDate.add(eachEvent.get(7));//alerttime
             listAllDates.add(listAllDate);
+        }
     }
-        Log.i("listAllDates", listAllDates.toString());
-    }
+
     public void createNotification(String id, String title){
          //Sets an ID for the notification, so it can be updated.
                 int notifyID = 1;
@@ -110,21 +109,17 @@ public class TimerService extends IntentService{
     @Override
     protected void onHandleIntent(Intent intent) {
         addDbForNotification();
-
         if(intent == null) {
             addDbForNotification();
             while (true) {
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 Date date = new Date();
-                //Log.i("timer", "(intent is null) = " + dateFormat.format(date));
                 String currentYear = dateFormat.format(date).split(" ")[0].split("/")[0];
                 String currentMonth =dateFormat.format(date).split(" ")[0].split("/")[1];
                 String currentDay =dateFormat.format(date).split(" ")[0].split("/")[2];
                 String currentHour = dateFormat.format(date).split(" ")[1].split(":")[0];
                 String currentMin =dateFormat.format(date).split(" ")[1].split(":")[1];
                 String currentSec =dateFormat.format(date).split(" ")[1].split(":")[2];
-                //Log.i("timer", "current = " + currentYear+" "+currentMonth+" "+currentDay+" "+currentHour+" "+currentMin);
-
                 for (int i = 0; i<listAllDates.size(); i++){
                     String selectYear = listAllDates.get(i).get(3).toString().split("/")[2];
                     String selectMonth = listAllDates.get(i).get(3).toString().split("/")[1];
@@ -133,8 +128,7 @@ public class TimerService extends IntentService{
                     String selectMin = listAllDates.get(i).get(4).toString().split(":")[1];
                     Log.i("timer", "select = " + selectYear+" "+selectMonth+" "+selectDay+" "+selectHour+" "+selectMin);
                     if (currentYear.equals(selectYear) && currentMonth.equals(selectMonth) && currentDay.equals(selectDay) &&
-                        currentHour.equals(selectHour) && currentMin.equals(selectMin) && currentSec.equals("00"))
-                    {
+                        currentHour.equals(selectHour) && currentMin.equals(selectMin) && currentSec.equals("00")) {
                         createNotification(listAllDates.get(i).get(1).toString(), listAllDates.get(i).get(2).toString());
                     }
                 }
@@ -149,9 +143,7 @@ public class TimerService extends IntentService{
                     Log.e("error", e.toString());
                 }
             }
-
         }
-//        ResultReceiver receiver = intent.getParcelableExtra("receiver");
         while (true) {
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = new Date();
@@ -185,9 +177,6 @@ public class TimerService extends IntentService{
                 Log.e("error", e.toString());
             }
         }
-//        Bundle bundle = new Bundle();
-//        bundle.putString("message", "Counting done...");
-//        receiver.send(1234, bundle);
     }
 }
 

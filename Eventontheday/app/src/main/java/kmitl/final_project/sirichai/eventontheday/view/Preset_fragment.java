@@ -31,10 +31,10 @@ import kmitl.final_project.sirichai.eventontheday.model.RecyclerPresetAdapter;
 
 public class Preset_fragment extends Fragment {
 
-    RecyclerView recyclerView;
-    RecyclerView.Adapter adapter;
-    List<ListPreset> listAllPresets = new ArrayList<>();
-    TextView empTv;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    private List<ListPreset> listAllPresets = new ArrayList<>();
+    private TextView empTv;
     private DatabaseAdapter databaseAdapter;
 
     @Override
@@ -46,7 +46,6 @@ public class Preset_fragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         empTv = (TextView) rootView.findViewById(R.id.empTvPreset);
         createRecyclerView();
-
         return rootView;
     }
 
@@ -62,7 +61,6 @@ public class Preset_fragment extends Fragment {
     public boolean onContextItemSelected(MenuItem item) {
         if (item.getItemId()>=8 && item.getItemId()<=11) {
             int position = item.getGroupId();
-            Log.i("groupid", String.valueOf(position));
             ListPreset listPreset = listAllPresets.get(position);
             String id = listPreset.getPresetId();
             Intent intent;
@@ -83,20 +81,6 @@ public class Preset_fragment extends Fragment {
                 intent.putExtra("detailPreset", listPreset.getPresetDetail().split(": ")[1]);
                 intent.putExtra("locationPreset", listPreset.getPresetLocation().split(": ")[1]);
                 getContext().startActivities(new Intent[]{intent});
-
-                    // Sharing the content to facebook
-//                    ShareLinkContent content = new ShareLinkContent.Builder()
-//                            // Setting the title that will be shared
-//                            .setContentTitle("Planning a trip to Dubai?")
-//                            // Setting the description that will be shared
-//                            .setContentDescription("Make sure you visit unique attractions recommended by the local people!")
-//                            // Setting the URL that will be shared
-//                            .setContentUrl(Uri.parse("https://justa128.github.io/dubai-tour-guide/landingpage/"))
-//                            // Setting the image that will be shared
-//                            .setImageUrl(Uri.parse("https://cdn-images-1.medium.com/fit/t/800/240/1*jZ3a6rYqrslI83KJFhdvFg.jpeg"))
-//                            .setPlaceId("141887372509674")
-//                            .build();
-//                shareButton.setShareContent(content);
             }
         }
         return super.onContextItemSelected(item);
@@ -135,7 +119,6 @@ public class Preset_fragment extends Fragment {
             );
             listAllPresets.add(listPreset);
         }
-        Log.i("presetFrag", listAllPresets.toString());
         if (listAllPresets.size()>0){
             empTv.setVisibility(View.INVISIBLE);
         }

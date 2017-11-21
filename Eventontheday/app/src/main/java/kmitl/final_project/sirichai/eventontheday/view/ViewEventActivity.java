@@ -32,21 +32,17 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
     private TextView viewLocation;
     private TextView viewStartDate;
     private TextView viewEndDate;
-    private TextView viewStartTime;
-    private TextView viewEndTime;
     private TextView viewAlertDate;
     private TextView viewDetail;
     private DatabaseAdapter databaseAdapter;
-    GoogleMap mgoogleMap;
-    Marker marker;
-    List<String> data;
-
+    private GoogleMap mgoogleMap;
+    private Marker marker;
+    private List<String> data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_event);
-
         viewTitle = (TextView) findViewById(R.id.viewTitle);
         viewLocation = (TextView) findViewById(R.id.viewLocation);
         viewStartDate = (TextView) findViewById(R.id.viewStartDate);
@@ -55,7 +51,6 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
         viewDetail = (TextView) findViewById(R.id.viewDetail);
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
         data = databaseAdapter.getEachDataEvent(getIntent().getStringExtra("id"));
-        Log.i("viewecent", data.toString());
         viewTitle.setText(data.get(0));
         viewLocation.setText("AT : "+data.get(1).split(" : ")[0]);
         viewStartDate.setText("Start date : "+data.get(2) + " AT : " + data.get(4));
@@ -63,7 +58,6 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
         viewAlertDate.setText("Alert date : " + data.get(6) + " AT : " + data.get(7));
         viewDetail.setText("Detail : "+data.get(8));
         if (googleServicesAvailable()) {
-            Log.i("play service", "Perfect!!");
             initMap();
         }
     }
@@ -106,7 +100,7 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
             Dialog dialog = api.getErrorDialog(this, isAvailable, 0);
             dialog.show();
         } else {
-            Log.i("play service", "cant connect to play service");
+            Toast.makeText(this, "Can't connect to play service", Toast.LENGTH_SHORT);
         }
         return false;
     }
@@ -134,12 +128,11 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
                     setMarker(lat, lng);
                 }
                 else {
-                    // cannot find location in google map
+                    return;
                 }
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
         }
-
     }
 }

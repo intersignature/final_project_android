@@ -1,4 +1,4 @@
-package kmitl.final_project.sirichai.eventontheday;
+package kmitl.final_project.sirichai.eventontheday.controller;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
@@ -18,10 +18,9 @@ import android.widget.CalendarView;
 import java.util.ArrayList;
 import java.util.List;
 
+import kmitl.final_project.sirichai.eventontheday.R;
 import kmitl.final_project.sirichai.eventontheday.model.DatabaseAdapter;
 import kmitl.final_project.sirichai.eventontheday.model.ListDate;
-import kmitl.final_project.sirichai.eventontheday.notification.Message;
-import kmitl.final_project.sirichai.eventontheday.notification.MessageReceiver;
 import kmitl.final_project.sirichai.eventontheday.notification.TimerService;
 import kmitl.final_project.sirichai.eventontheday.view.AddEventActivity;
 import kmitl.final_project.sirichai.eventontheday.view.AddPresetActivity;
@@ -45,9 +44,6 @@ public class MainActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-    private CalendarView mCalendarView;
-    private DatabaseAdapter databaseAdapter;
-    List<ListDate> listAllDates = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,11 +65,7 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-        MessageReceiver receiver = new MessageReceiver(new Message());
-
         Intent intent = new Intent(this, TimerService.class);
-        intent.putExtra("time", true);
-        intent.putExtra("receiver", receiver);
         startService(intent);
     }
 
@@ -99,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
         if(id==R.id.addPreset){
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -119,11 +110,9 @@ public class MainActivity extends AppCompatActivity {
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
-
         @Override
         public Fragment getItem(int position) {
             switch (position){
