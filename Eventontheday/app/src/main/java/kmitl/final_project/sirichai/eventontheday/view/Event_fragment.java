@@ -40,18 +40,23 @@ public class Event_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_event, container, false);
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.showAllEvent);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        empTv = (TextView) rootView.findViewById(R.id.empTvEvent);
-        databaseAdapter = new DatabaseAdapter(getContext());
+
+        initInstances(rootView);
         createRecyclerView();
         return rootView;
     }
+
+    private void initInstances(View rootView) {
+        databaseAdapter = new DatabaseAdapter(getContext());
+        empTv = (TextView) rootView.findViewById(R.id.empTvEvent);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.showAllEvent);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case 4:
                 int position4 = item.getGroupId();
                 ListEvent listEvent4 = listAllEvents.get(position4);
@@ -65,7 +70,7 @@ public class Event_fragment extends Fragment {
                 String id5 = listEvent5.getEventId().split(": ")[1];
                 Intent intent5;
                 intent5 = new Intent(getContext(), EditEventActivity.class);
-                intent5.putExtra("oldId",id5);
+                intent5.putExtra("oldId", id5);
                 getContext().startActivities(new Intent[]{intent5});
                 getContext().stopService(intent5);
                 break;
@@ -96,12 +101,11 @@ public class Event_fragment extends Fragment {
         return super.onContextItemSelected(item);
     }
 
-    public void removeAt(int position) {
+    private void removeAt(int position) {
         listAllEvents.remove(position);
-        if (listAllEvents.size()>0){
+        if (listAllEvents.size() > 0) {
             empTv.setVisibility(View.INVISIBLE);
-        }
-        else {
+        } else {
             empTv.setVisibility(View.VISIBLE);
         }
         adapter.notifyItemRemoved(position);
@@ -118,32 +122,30 @@ public class Event_fragment extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if(getView()!=null){
+        if (getView() != null) {
             createRecyclerView();
             adapter.notifyDataSetChanged();
         }
     }
 
-
-    public void createRecyclerView(){
+    private void createRecyclerView() {
         List<EventInfo> datas = databaseAdapter.getDataEvent();
         listAllEvents = new ArrayList<>();
-        for (int i=0; i<datas.size();i++){
+        for (int i = 0; i < datas.size(); i++) {
             ListEvent listEvent = new ListEvent(
-                    "Title: "+ datas.get(i).getTitle(),
-                    "Date: "+ datas.get(i).getStart_date(),
-                    "Location: "+datas.get(i).getLocation().split(" : ")[0],
+                    "Title: " + datas.get(i).getTitle(),
+                    "Date: " + datas.get(i).getStart_date(),
+                    "Location: " + datas.get(i).getLocation().split(" : ")[0],
                     "id: " + datas.get(i).getId()
             );
             listAllEvents.add(listEvent);
         }
-        if (listAllEvents.size()>0){
+        if (listAllEvents.size() > 0) {
             empTv.setVisibility(View.INVISIBLE);
-        }
-        else {
+        } else {
             empTv.setVisibility(View.VISIBLE);
         }
-        adapter = new RecyclerEventAdapter(listAllEvents,getContext(),"event");
+        adapter = new RecyclerEventAdapter(listAllEvents, getContext(), "event");
         recyclerView.setAdapter(adapter);
     }
 }

@@ -35,12 +35,17 @@ public class Preset_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_preset, container, false);
+
+        initInstances(rootView);
+        createRecyclerView();
+        return rootView;
+    }
+
+    private void initInstances(View rootView) {
+        empTv = (TextView) rootView.findViewById(R.id.empTvPreset);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.showAllPreset);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        empTv = (TextView) rootView.findViewById(R.id.empTvPreset);
-        createRecyclerView();
-        return rootView;
     }
 
     @Override
@@ -53,7 +58,7 @@ public class Preset_fragment extends Fragment {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        if (item.getItemId()>=8 && item.getItemId()<=11) {
+        if (item.getItemId() >= 8 && item.getItemId() <= 11) {
             int position = item.getGroupId();
             ListPreset listPreset = listAllPresets.get(position);
             String id = listPreset.getPresetId().split(": ")[1];
@@ -81,12 +86,11 @@ public class Preset_fragment extends Fragment {
         return super.onContextItemSelected(item);
     }
 
-    public void removeAt(int position) {
+    private void removeAt(int position) {
         listAllPresets.remove(position);
-        if (listAllPresets.size()>0){
+        if (listAllPresets.size() > 0) {
             empTv.setVisibility(View.INVISIBLE);
-        }
-        else {
+        } else {
             empTv.setVisibility(View.VISIBLE);
         }
         adapter.notifyItemRemoved(position);
@@ -96,31 +100,31 @@ public class Preset_fragment extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if(getView()!=null){
+        if (getView() != null) {
             createRecyclerView();
             adapter.notifyDataSetChanged();
         }
     }
-    public void createRecyclerView(){
+
+    private void createRecyclerView() {
         databaseAdapter = new DatabaseAdapter(getContext());
         List<ListPreset> datas = databaseAdapter.getDataPreset();
         listAllPresets = new ArrayList<>();
-        for (int i=0; i<datas.size();i++){
+        for (int i = 0; i < datas.size(); i++) {
             ListPreset listPreset = new ListPreset(
-                    "Title: "+ datas.get(i).getPresetTitle(),
-                    "Location: "+ datas.get(i).getPresetLocation(),
-                    "Detail: "+datas.get(i).getPresetDetail(),
+                    "Title: " + datas.get(i).getPresetTitle(),
+                    "Location: " + datas.get(i).getPresetLocation(),
+                    "Detail: " + datas.get(i).getPresetDetail(),
                     "id: " + datas.get(i).getPresetId()
             );
             listAllPresets.add(listPreset);
         }
-        if (listAllPresets.size()>0){
+        if (listAllPresets.size() > 0) {
             empTv.setVisibility(View.INVISIBLE);
-        }
-        else {
+        } else {
             empTv.setVisibility(View.VISIBLE);
         }
-        adapter = new RecyclerPresetAdapter(listAllPresets,getContext());
+        adapter = new RecyclerPresetAdapter(listAllPresets, getContext());
         recyclerView.setAdapter(adapter);
     }
 }

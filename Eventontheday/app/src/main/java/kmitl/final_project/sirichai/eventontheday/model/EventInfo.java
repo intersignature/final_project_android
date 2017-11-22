@@ -6,7 +6,7 @@ import java.util.List;
  * Created by atomiz on 22/11/2560.
  */
 
-public class EventInfo  {
+public class EventInfo {
     private String title;
     private String location;
     private String start_date;

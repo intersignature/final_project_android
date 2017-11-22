@@ -17,7 +17,7 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 import kmitl.final_project.sirichai.eventontheday.R;
 import kmitl.final_project.sirichai.eventontheday.controller.DatabaseAdapter;
 
-public class AddPresetActivity extends AppCompatActivity implements View.OnClickListener{
+public class AddPresetActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText setTitle;
     private EditText setLocation;
     private EditText setDetail;
@@ -30,6 +30,11 @@ public class AddPresetActivity extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_preset);
+
+        initInstances();
+    }
+
+    private void initInstances() {
         setTitle = (EditText) findViewById(R.id.setTitlePreset);
         setLocation = (EditText) findViewById(R.id.setLocationPreset);
         setDetail = (EditText) findViewById(R.id.setDetailPreset);
@@ -40,16 +45,16 @@ public class AddPresetActivity extends AppCompatActivity implements View.OnClick
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if (requestCode==PLACE_PICKER_REQUEST){
-            if (resultCode==RESULT_OK){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, this);
                 setLocation.setText(place.getName() + " : " + place.getAddress());
             }
         }
     }
 
-    private void startPlacePicker(){
+    private void startPlacePicker() {
         PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
         Intent intent;
         try {
@@ -62,20 +67,18 @@ public class AddPresetActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
-    private void savePreset(){
+    private void savePreset() {
         String title = setTitle.getText().toString();
         String location = setLocation.getText().toString();
         String detail = setDetail.getText().toString();
-        if (title.equals("") || location.equals("") || detail.equals("")){
-            Toast.makeText(getApplicationContext(),"Enter empty field", Toast.LENGTH_SHORT).show();
-        }
-        else {
+        if (title.equals("") || location.equals("") || detail.equals("")) {
+            Toast.makeText(getApplicationContext(), "Enter empty field", Toast.LENGTH_SHORT).show();
+        } else {
             String result = databaseAdapter.insertDataPreset(title, location, detail);
-            if(!result.equals("success")){
-                Toast.makeText(getApplicationContext(),"Insertion unsucessfull!"+result,Toast.LENGTH_SHORT).show();
-            }
-            else {
-                Toast.makeText(getApplicationContext(),"Insertion success!!",Toast.LENGTH_SHORT).show();
+            if (!result.equals("success")) {
+                Toast.makeText(getApplicationContext(), "Insertion unsucessfull!" + result, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Insertion success!!", Toast.LENGTH_SHORT).show();
                 finish();
             }
         }
@@ -83,10 +86,9 @@ public class AddPresetActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.submitAddPreset){
+        if (v.getId() == R.id.submitAddPreset) {
             savePreset();
-        }
-        else if(v.getId() == R.id.PlacePickerBTNPreset){
+        } else if (v.getId() == R.id.PlacePickerBTNPreset) {
             startPlacePicker();
         }
     }

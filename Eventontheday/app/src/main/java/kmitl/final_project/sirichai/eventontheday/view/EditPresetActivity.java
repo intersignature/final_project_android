@@ -19,7 +19,7 @@ import kmitl.final_project.sirichai.eventontheday.R;
 import kmitl.final_project.sirichai.eventontheday.controller.DatabaseAdapter;
 import kmitl.final_project.sirichai.eventontheday.model.ListPreset;
 
-public class EditPresetActivity extends AppCompatActivity implements View.OnClickListener{
+public class EditPresetActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText setTitle;
     private EditText setLocation;
@@ -34,6 +34,20 @@ public class EditPresetActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_preset);
+
+        initInstances();
+        setValues();
+    }
+
+    private void setValues() {
+        oldId = getIntent().getStringExtra("oldIdPreset");
+        ListPreset datas = databaseAdapter.getEachDataPreset(oldId);
+        setTitle.setText(datas.getPresetTitle());
+        setLocation.setText(datas.getPresetLocation());
+        setDetail.setText(datas.getPresetDetail());
+    }
+
+    private void initInstances() {
         setTitle = (EditText) findViewById(R.id.setNewTitlePreset);
         setLocation = (EditText) findViewById(R.id.setNewLocationPreset);
         setDetail = (EditText) findViewById(R.id.setNewDetailPreset);
@@ -42,12 +56,6 @@ public class EditPresetActivity extends AppCompatActivity implements View.OnClic
         placePickerBTNNewPreset = (Button) findViewById(R.id.PlacePickerBTNNewPreset);
         submitEditPreset.setOnClickListener(this);
         placePickerBTNNewPreset.setOnClickListener(this);
-        oldId = getIntent().getStringExtra("oldIdPreset");
-        ListPreset datas = databaseAdapter.getEachDataPreset(oldId);
-        setTitle.setText(datas.getPresetTitle());
-        setLocation.setText(datas.getPresetLocation());
-        setDetail.setText(datas.getPresetDetail());
-
     }
 
     private void startPlacePicker() {
@@ -63,9 +71,9 @@ public class EditPresetActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if (requestCode==PLACE_PICKER_REQUEST){
-            if (resultCode==RESULT_OK){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, this);
                 setLocation.setText(place.getName() + " : " + place.getAddress());
             }
@@ -76,25 +84,24 @@ public class EditPresetActivity extends AppCompatActivity implements View.OnClic
         String title = setTitle.getText().toString();
         String location = setLocation.getText().toString();
         String detail = setDetail.getText().toString();
-        if (title.equals("") || location.equals("") || detail.equals("")){
-            Toast.makeText(getApplicationContext(),"Enter empty field", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            String result = databaseAdapter.updateDataPreset(title,location,detail,oldId);
-            if(!result.equals("success")){
-                Toast.makeText(getApplicationContext(),"Insertion unsucessfull!"+result,Toast.LENGTH_SHORT).show();
-            }
-            else {
-                Toast.makeText(getApplicationContext(),"Insertion success!!",Toast.LENGTH_SHORT).show();
+        if (title.equals("") || location.equals("") || detail.equals("")) {
+            Toast.makeText(getApplicationContext(), "Enter empty field", Toast.LENGTH_SHORT).show();
+        } else {
+            String result = databaseAdapter.updateDataPreset(title, location, detail, oldId);
+            if (!result.equals("success")) {
+                Toast.makeText(getApplicationContext(), "Insertion unsucessfull!" + result, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Insertion success!!", Toast.LENGTH_SHORT).show();
                 finish();
             }
         }
     }
+
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.submitEditPreset){
+        if (v.getId() == R.id.submitEditPreset) {
             editPreset();
-        }else if(v.getId() == R.id.PlacePickerBTNNewPreset){
+        } else if (v.getId() == R.id.PlacePickerBTNNewPreset) {
             startPlacePicker();
         }
     }

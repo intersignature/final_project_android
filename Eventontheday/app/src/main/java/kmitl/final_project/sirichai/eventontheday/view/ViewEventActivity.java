@@ -42,27 +42,36 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_event);
+
+        initInstances();
+        setValues();
+    }
+
+    private void setValues() {
+        data = databaseAdapter.getEachDataEvent(getIntent().getStringExtra("id"));
+        viewTitle.setText(data.getTitle());
+        viewLocation.setText("AT : " + data.getLocation().split(" : ")[0]);
+        viewStartDate.setText("Start date : " + data.getStart_date() + " AT : " + data.getStart_time());
+        viewEndDate.setText("End date : " + data.getEnd_date() + " AT : " + data.getEnd_time());
+        viewAlertDate.setText("Alert date : " + data.getAlert_date() + " AT : " + data.getAlert_time());
+        viewDetail.setText("Detail : " + data.getDetail());
+    }
+
+    private void initInstances() {
+        databaseAdapter = new DatabaseAdapter(getApplicationContext());
         viewTitle = (TextView) findViewById(R.id.viewTitle);
         viewLocation = (TextView) findViewById(R.id.viewLocation);
         viewStartDate = (TextView) findViewById(R.id.viewStartDate);
         viewEndDate = (TextView) findViewById(R.id.viewEndDate);
         viewAlertDate = (TextView) findViewById(R.id.viewAlertDate);
         viewDetail = (TextView) findViewById(R.id.viewDetail);
-        databaseAdapter = new DatabaseAdapter(getApplicationContext());
-        data = databaseAdapter.getEachDataEvent(getIntent().getStringExtra("id"));
-        viewTitle.setText(data.getTitle());
-        viewLocation.setText("AT : "+data.getLocation().split(" : ")[0]);
-        viewStartDate.setText("Start date : "+data.getStart_date() + " AT : " + data.getStart_time());
-        viewEndDate.setText("End date : "+data.getEnd_date() + " AT : " + data.getEnd_time());
-        viewAlertDate.setText("Alert date : " + data.getAlert_date() + " AT : " + data.getAlert_time());
-        viewDetail.setText("Detail : "+data.getDetail());
         if (googleServicesAvailable()) {
             initMap();
         }
     }
 
     private void setMarker(double lat, double lng) {
-        if(marker!=null){
+        if (marker != null) {
             marker.remove();
         }
 
@@ -90,7 +99,7 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
         mapFragment.getMapAsync(this);
     }
 
-    public boolean googleServicesAvailable() {
+    private boolean googleServicesAvailable() {
         GoogleApiAvailability api = GoogleApiAvailability.getInstance();
         int isAvailable = api.isGooglePlayServicesAvailable(this);
         if (isAvailable == ConnectionResult.SUCCESS) {
@@ -120,18 +129,17 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
             lng = Double.parseDouble(data.getLocation().split(" : ")[3]);
             goToLocationZoom(lat, lng, 17.0f);
             setMarker(lat, lng);
-        }catch (Exception e){
+        } catch (Exception e) {
             Geocoder gc = new Geocoder(this);
             try {
                 List<Address> addressList = gc.getFromLocationName(data.getLocation(), 1);
-                if(addressList.size()>0){
+                if (addressList.size() > 0) {
                     Address address = addressList.get(0);
                     lat = address.getLatitude();
                     lng = address.getLongitude();
                     goToLocationZoom(lat, lng, 17.0f);
                     setMarker(lat, lng);
-                }
-                else {
+                } else {
                     Toast.makeText(getApplicationContext(), "Can't find place in google map", Toast.LENGTH_SHORT);
                     return;
                 }

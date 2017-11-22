@@ -37,11 +37,12 @@ public class MainActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.addEvent) {
             return true;
         }
-        if(id==R.id.addPreset){
+        if (id == R.id.addPreset) {
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -106,9 +107,10 @@ public class MainActivity extends AppCompatActivity {
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
+
         @Override
         public Fragment getItem(int position) {
-            switch (position){
+            switch (position) {
                 case 0:
                     Calendar_fragment calendarFragment = new Calendar_fragment();
                     return calendarFragment;
@@ -118,7 +120,8 @@ public class MainActivity extends AppCompatActivity {
                 case 2:
                     Preset_fragment presetFragment = new Preset_fragment();
                     return presetFragment;
-                default: return null;
+                default:
+                    return null;
             }
         }
 
@@ -130,14 +133,15 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position){
+            switch (position) {
                 case 0:
                     return "calendar";
                 case 1:
                     return "preset";
                 case 2:
                     return "event";
-                default: return null;
+                default:
+                    return null;
             }
         }
     }

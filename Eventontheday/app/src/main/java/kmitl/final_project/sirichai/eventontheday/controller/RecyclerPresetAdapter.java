@@ -28,12 +28,13 @@ public class RecyclerPresetAdapter extends RecyclerView.Adapter<RecyclerPresetAd
         this.context = context;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView presetTitle;
         public TextView presetDetail;
         public TextView presetLocation;
         public TextView presetId;
         public ConstraintLayout infoLayout;
+
         public ViewHolder(View itemView) {
             super(itemView);
             context = itemView.getContext();

@@ -22,7 +22,7 @@ import kmitl.final_project.sirichai.eventontheday.model.ListEvent;
  * Created by atomiz on 7/11/2560.
  */
 
-public class RecyclerEventAdapter extends RecyclerView.Adapter<RecyclerEventAdapter.ViewHolder>{
+public class RecyclerEventAdapter extends RecyclerView.Adapter<RecyclerEventAdapter.ViewHolder> {
 
     private List<ListEvent> listAllEvents;
     private Context context;
@@ -36,12 +36,13 @@ public class RecyclerEventAdapter extends RecyclerView.Adapter<RecyclerEventAdap
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView eventTitle;
         public TextView eventDate;
         public TextView eventLocation;
         public TextView eventId;
         public ConstraintLayout infoLayout;
+
         public ViewHolder(View itemView) {
             super(itemView);
             context = itemView.getContext();
@@ -96,8 +97,7 @@ public class RecyclerEventAdapter extends RecyclerView.Adapter<RecyclerEventAdap
                     menu.add(holder.getAdapterPosition(), 3, 0, "SHARE");
                 }
             });
-        }
-        else if(page.equals("event")){
+        } else if (page.equals("event")) {
             holder.itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
                 @Override
                 public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {

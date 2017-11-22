@@ -37,22 +37,22 @@ public class DatabaseAdapter {
     /*
     Event database zone
      */
-    public String deleteDataEvent(String id){
+
+    public String deleteDataEvent(String id) {
         String result = "success";
 
         String DeleteQuery = "DELETE FROM EVENT " + "WHERE ID = '" + id + "';";
         try {
             EventOnTheDayDB.execute(DeleteQuery);
             return result;
-        }catch (Exception e){
+        } catch (Exception e) {
             return e.toString();
         }
-
     }
 
     public String updateDataEvent(String newTitle, String newLocation, String newStart_date, String newEnd_date, String newStart_time, String newEnd_time
             , String newAlertDate, String newAlertTime, String newDetail
-            , String OldId){
+            , String OldId) {
         String result = "success";
         String UpdateQuery = " UPDATE EVENT set "
                 + "TITLE='" + newTitle + "', "
@@ -62,22 +62,22 @@ public class DatabaseAdapter {
                 + "START_TIME='" + newStart_time + "', "
                 + "END_TIME='" + newEnd_time + "', "
                 + "ALERT_DATE='" + newAlertDate + "', "
-                + "ALERT_TIME='" + newAlertTime+ "', "
+                + "ALERT_TIME='" + newAlertTime + "', "
                 + "DETAIL='" + newDetail + "' "
-                + "where ID ='" + OldId+ "' ";
+                + "where ID ='" + OldId + "' ";
         try {
             EventOnTheDayDB.execute(UpdateQuery);
             return result;
-        }catch (Exception e){
+        } catch (Exception e) {
             return e.toString();
         }
     }
 
     public String insertDataEvent(String title, String location, String start_date, String end_date, String start_time, String end_time
-            , String alertDate, String alertTime, String detail){
+            , String alertDate, String alertTime, String detail) {
         String result = "success";
         String insertQuery = "INSERT INTO EVENT VALUES('"
-                + (getLastIdEvent()+2) + "'," + "'"
+                + (getLastIdEvent() + 2) + "'," + "'"
                 + title + "'," + "'"
                 + location + "','"
                 + start_date + "','"
@@ -91,22 +91,20 @@ public class DatabaseAdapter {
         try {
             EventOnTheDayDB.execute(insertQuery);
             return result;
-        }catch (Exception e){
+        } catch (Exception e) {
             return e.toString();
         }
-
     }
 
-    public int getLastIdEvent(){
+    public int getLastIdEvent() {
         String query = "SELECT * FROM EVENT";
         Cursor c1 = EventOnTheDayDB.rawQuery(query);
         c1.moveToLast();
-        if (c1.getCount()==0){
+        if (c1.getCount() == 0) {
             return -1;
-        }
-        else {
+        } else {
             c1.moveToLast();
-            return  Integer.parseInt(c1.getString(c1.getColumnIndex("ID")));
+            return Integer.parseInt(c1.getString(c1.getColumnIndex("ID")));
         }
     }
 
@@ -131,7 +129,6 @@ public class DatabaseAdapter {
             }
         }
         c1.close();
-
         return eventInfo;
     }
 
@@ -140,7 +137,7 @@ public class DatabaseAdapter {
         Cursor c1 = EventOnTheDayDB.rawQuery(query);
         List<EventInfo> datas = new ArrayList<>();
         if (c1 != null && c1.getCount() != 0) {
-            while (c1.moveToNext()){
+            while (c1.moveToNext()) {
                 int id = Integer.parseInt(c1.getString(c1.getColumnIndex("ID")));
                 String title = c1.getString(c1.getColumnIndex("TITLE"));
                 String location = c1.getString(c1.getColumnIndex("LOCATION"));
@@ -164,70 +161,65 @@ public class DatabaseAdapter {
     Preset database zone
      */
 
-    public String deleteDataPreset(String id){
+    public String deleteDataPreset(String id) {
         String result = "success";
-
         String DeleteQuery = "DELETE FROM PRESET " + "WHERE ID = '" + id + "';";
         try {
             EventOnTheDayDB.execute(DeleteQuery);
             return result;
-        }catch (Exception e){
+        } catch (Exception e) {
             return e.toString();
         }
-
     }
 
-    public String updateDataPreset(String newTitle, String newLocation, String newDetail, String OldId){
+    public String updateDataPreset(String newTitle, String newLocation, String newDetail, String OldId) {
         String result = "success";
         String UpdateQuery = " UPDATE PRESET set "
                 + "TITLE='" + newTitle + "', "
                 + "LOCATION='" + newLocation + "', "
                 + "DETAIL='" + newDetail + "' "
-                + "where ID ='" + OldId+ "' ";
+                + "where ID ='" + OldId + "' ";
         try {
             EventOnTheDayDB.execute(UpdateQuery);
             return result;
-        }catch (Exception e){
+        } catch (Exception e) {
             return e.toString();
         }
     }
 
-    public String insertDataPreset(String title, String location, String detail){
+    public String insertDataPreset(String title, String location, String detail) {
         String result = "success";
         String insertQuery = "INSERT INTO PRESET VALUES('"
-                + (getLastIdPreset()+2) + "'," + "'"
+                + (getLastIdPreset() + 2) + "'," + "'"
                 + title + "'," + "'"
                 + location + "','"
                 + detail + "');";
-
         try {
             EventOnTheDayDB.execute(insertQuery);
             return result;
-        }catch (Exception e){
+        } catch (Exception e) {
             return e.toString();
         }
-
     }
 
-    public int getLastIdPreset(){
+    public int getLastIdPreset() {
         String query = "SELECT * FROM PRESET";
         Cursor c1 = EventOnTheDayDB.rawQuery(query);
         c1.moveToLast();
-        if (c1.getCount()==0){
+        if (c1.getCount() == 0) {
             return -1;
-        }
-        else {
+        } else {
             c1.moveToLast();
-            return  Integer.parseInt(c1.getString(c1.getColumnIndex("ID")));
+            return Integer.parseInt(c1.getString(c1.getColumnIndex("ID")));
         }
     }
 
     public ListPreset getEachDataPreset(String selectId) {
-        String query = "SELECT * FROM PRESET WHERE ID = "+selectId;
+        String query = "SELECT * FROM PRESET WHERE ID = " + selectId;
         Cursor c1 = EventOnTheDayDB.rawQuery(query);
         ListPreset listPreset = null;
         if (c1 != null && c1.getCount() != 0) {
-            while (c1.moveToNext()){
+            while (c1.moveToNext()) {
                 int id = Integer.parseInt(c1.getString(c1.getColumnIndex("ID")));
                 String title = c1.getString(c1.getColumnIndex("TITLE"));
                 String location = c1.getString(c1.getColumnIndex("LOCATION"));
@@ -244,7 +236,7 @@ public class DatabaseAdapter {
         Cursor c1 = EventOnTheDayDB.rawQuery(query);
         List<ListPreset> datas = new ArrayList<>();
         if (c1 != null && c1.getCount() != 0) {
-            while (c1.moveToNext()){
+            while (c1.moveToNext()) {
                 int id = Integer.parseInt(c1.getString(c1.getColumnIndex("ID")));
                 String title = c1.getString(c1.getColumnIndex("TITLE"));
                 String location = c1.getString(c1.getColumnIndex("LOCATION"));
@@ -259,6 +251,7 @@ public class DatabaseAdapter {
 
 
     private static final String DB_NAME = "DB_EVENTONTHEDAY.db";
+
     static class EventOnTheDayDB extends SQLiteOpenHelper {
 
         private static SQLiteDatabase sqliteDb;
@@ -268,7 +261,7 @@ public class DatabaseAdapter {
         static Cursor cursor = null;
 
         EventOnTheDayDB(Context context, String name, SQLiteDatabase.CursorFactory factory,
-               int version) {
+                        int version) {
             super(context, name, factory, version);
         }
 
@@ -295,7 +288,7 @@ public class DatabaseAdapter {
         }
 
         public static final EventOnTheDayDB getInstance(Context context,
-                                               String databaseName) {
+                                                        String databaseName) {
             initialize(context, databaseName);
             return instance;
         }
@@ -356,7 +349,7 @@ public class DatabaseAdapter {
                 System.out.println(databaseName + " does not exists");
             }
 
-            return checkDB != null ? true : false;
+            return checkDB != null;
         }
 
         private static String getDatabasePath(Context aContext, String databaseName) {
