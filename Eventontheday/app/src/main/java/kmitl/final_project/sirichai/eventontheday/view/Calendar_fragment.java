@@ -182,7 +182,6 @@ public class Calendar_fragment extends Fragment {
             adapter.notifyDataSetChanged();
         }
         else {
-
         }
     }
 }

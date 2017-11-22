@@ -70,11 +70,12 @@ public class Preset_fragment extends Fragment {
                     getContext().stopService(intent);
                     break;
                 case 10:
-                intent = new Intent(getContext(), AddEventActivity.class);
-                intent.putExtra("titlePreset", listPreset.getPresetTitle().split(": ")[1]);
-                intent.putExtra("detailPreset", listPreset.getPresetDetail().split(": ")[1]);
-                intent.putExtra("locationPreset", listPreset.getPresetLocation().split(": ")[1]);
-                getContext().startActivities(new Intent[]{intent});
+                    intent = new Intent(getContext(), AddEventActivity.class);
+                    intent.putExtra("titlePreset", listPreset.getPresetTitle().split(": ")[1]);
+                    intent.putExtra("detailPreset", listPreset.getPresetDetail().split(": ")[1]);
+                    intent.putExtra("locationPreset", listPreset.getPresetLocation().split(": ")[1]);
+                    getContext().startActivities(new Intent[]{intent});
+                    break;
             }
         }
         return super.onContextItemSelected(item);

@@ -29,7 +29,7 @@ import java.util.Locale;
 import kmitl.final_project.sirichai.eventontheday.R;
 import kmitl.final_project.sirichai.eventontheday.controller.DatabaseAdapter;
 
-public class AddEventActivity extends AppCompatActivity {
+public class AddEventActivity extends AppCompatActivity implements View.OnClickListener{
     private Calendar calendar;
     private EditText setStartDate;
     private EditText setEndDate;
@@ -47,7 +47,8 @@ public class AddEventActivity extends AppCompatActivity {
     private String strEndTime = "";
     private String strAlertTime = "";
     private String strAlertDate = "";
-    private Button PlacePickerBTN;
+    private Button placePickerBTN;
+    private Button submitAddEvent;
     private String locationToDb = "";
     private DatabaseAdapter databaseAdapter;
     private final int PLACE_PICKER_REQUEST = 1;
@@ -66,7 +67,10 @@ public class AddEventActivity extends AppCompatActivity {
         setDetail = (EditText) findViewById(R.id.setDetail);
         setAlertDate = (EditText) findViewById(R.id.setAlertDate);
         setAlertTime = (EditText) findViewById(R.id.setAlertTime);
-        PlacePickerBTN = (Button) findViewById(R.id.PlacePickerBTN);
+        placePickerBTN = (Button) findViewById(R.id.PlacePickerBTN);
+        submitAddEvent = (Button) findViewById(R.id.submitAddEvent);
+        placePickerBTN.setOnClickListener(this);
+        submitAddEvent.setOnClickListener(this);
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
         if(getIntent().getStringExtra("titlePreset") != null && !getIntent().getStringExtra("titlePreset").isEmpty()){
             setTitle.setText(getIntent().getStringExtra("titlePreset"));
@@ -225,7 +229,7 @@ public class AddEventActivity extends AppCompatActivity {
         return null;
     }
 
-    public void onSubmitAddEvent(View view) {
+    private void saveEvent(){
         String title = setTitle.getText().toString();
         String location;
         try {
@@ -285,8 +289,7 @@ public class AddEventActivity extends AppCompatActivity {
         }
     }
 
-
-    public void onPlacePicker(View view) {
+    private void startPlacePicker(){
         PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
         Intent intent;
         try {
@@ -306,6 +309,16 @@ public class AddEventActivity extends AppCompatActivity {
                 setLocation.setText(place.getName() + " : " + place.getAddress());
                 locationToDb = place.getName() + " : " + place.getAddress() + " : "+ place.getLatLng().latitude + " : " + place.getLatLng().longitude;
             }
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.PlacePickerBTN){
+            startPlacePicker();
+        }
+        else if(v.getId() == R.id.submitAddEvent){
+            saveEvent();
         }
     }
 }

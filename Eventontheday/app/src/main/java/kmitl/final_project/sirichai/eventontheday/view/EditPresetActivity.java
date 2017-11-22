@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -18,7 +19,7 @@ import kmitl.final_project.sirichai.eventontheday.R;
 import kmitl.final_project.sirichai.eventontheday.controller.DatabaseAdapter;
 import kmitl.final_project.sirichai.eventontheday.model.ListPreset;
 
-public class EditPresetActivity extends AppCompatActivity {
+public class EditPresetActivity extends AppCompatActivity implements View.OnClickListener{
 
     private EditText setTitle;
     private EditText setLocation;
@@ -26,6 +27,8 @@ public class EditPresetActivity extends AppCompatActivity {
     private DatabaseAdapter databaseAdapter;
     private final int PLACE_PICKER_REQUEST = 1;
     private String oldId;
+    private Button submitEditPreset;
+    private Button placePickerBTNNewPreset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,10 @@ public class EditPresetActivity extends AppCompatActivity {
         setLocation = (EditText) findViewById(R.id.setNewLocationPreset);
         setDetail = (EditText) findViewById(R.id.setNewDetailPreset);
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
+        submitEditPreset = (Button) findViewById(R.id.submitEditPreset);
+        placePickerBTNNewPreset = (Button) findViewById(R.id.PlacePickerBTNNewPreset);
+        submitEditPreset.setOnClickListener(this);
+        placePickerBTNNewPreset.setOnClickListener(this);
         oldId = getIntent().getStringExtra("oldIdPreset");
         ListPreset datas = databaseAdapter.getEachDataPreset(oldId);
         setTitle.setText(datas.getPresetTitle());
@@ -43,7 +50,7 @@ public class EditPresetActivity extends AppCompatActivity {
 
     }
 
-    public void onPlacePicker(View view) {
+    private void startPlacePicker() {
         PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
         Intent intent;
         try {
@@ -65,7 +72,7 @@ public class EditPresetActivity extends AppCompatActivity {
         }
     }
 
-    public void onSubmitAddEvent(View view) {
+    private void editPreset() {
         String title = setTitle.getText().toString();
         String location = setLocation.getText().toString();
         String detail = setDetail.getText().toString();
@@ -81,6 +88,14 @@ public class EditPresetActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"Insertion success!!",Toast.LENGTH_SHORT).show();
                 finish();
             }
+        }
+    }
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.submitEditPreset){
+            editPreset();
+        }else if(v.getId() == R.id.PlacePickerBTNNewPreset){
+            startPlacePicker();
         }
     }
 }

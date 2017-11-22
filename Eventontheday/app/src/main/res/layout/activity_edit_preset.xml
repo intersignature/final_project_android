@@ -40,7 +40,7 @@
                     android:id="@+id/setNewTitlePreset"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Title" />
+                    android:hint="@string/title" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -58,7 +58,7 @@
                     android:id="@+id/setNewLocationPreset"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Location" />
+                    android:hint="@string/location" />
             </android.support.design.widget.TextInputLayout>
 
 
@@ -82,27 +82,21 @@
                     android:id="@+id/setNewDetailPreset"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Detail" />
+                    android:hint="@string/detail" />
             </android.support.design.widget.TextInputLayout>
-
 
 
             <Button
                 android:id="@+id/PlacePickerBTNNewPreset"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:onClick="onPlacePicker"
-                android:text="USE MAP"
-                app:layout_constraintBottom_toBottomOf="@+id/setNewLocationPresetLayout"
+                android:text="@string/use_map"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/setNewLocationPresetLayout"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintStart_toEndOf="@+id/setNewLocationPresetLayout"
+                app:layout_constraintTop_toBottomOf="@+id/setNewTitlePresetLayout" />
 
             <Button
                 android:id="@+id/submitEditPreset"
@@ -111,8 +105,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="164dp"
                 android:layout_marginStart="8dp"
-                android:onClick="onSubmitAddEvent"
-                android:text="Edit Preset"
+                android:text="@string/edit_preset"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
