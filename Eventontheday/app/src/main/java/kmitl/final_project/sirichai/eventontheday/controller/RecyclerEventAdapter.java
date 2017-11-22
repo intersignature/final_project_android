@@ -1,24 +1,22 @@
-package kmitl.final_project.sirichai.eventontheday.model;
+package kmitl.final_project.sirichai.eventontheday.controller;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import kmitl.final_project.sirichai.eventontheday.R;
+import kmitl.final_project.sirichai.eventontheday.model.ListEvent;
 
 /**
  * Created by atomiz on 7/11/2560.

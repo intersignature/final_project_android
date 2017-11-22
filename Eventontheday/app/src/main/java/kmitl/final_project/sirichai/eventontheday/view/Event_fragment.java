@@ -6,27 +6,23 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 import com.facebook.share.ShareApi;
 import com.facebook.share.model.ShareLinkContent;
-import com.facebook.share.widget.ShareButton;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import kmitl.final_project.sirichai.eventontheday.R;
-import kmitl.final_project.sirichai.eventontheday.model.DatabaseAdapter;
+import kmitl.final_project.sirichai.eventontheday.controller.DatabaseAdapter;
+import kmitl.final_project.sirichai.eventontheday.model.EventInfo;
 import kmitl.final_project.sirichai.eventontheday.model.ListEvent;
-import kmitl.final_project.sirichai.eventontheday.model.RecyclerEventAdapter;
+import kmitl.final_project.sirichai.eventontheday.controller.RecyclerEventAdapter;
 
 /**
  * Created by atomiz on 6/11/2560.
@@ -59,14 +55,14 @@ public class Event_fragment extends Fragment {
             case 4:
                 int position4 = item.getGroupId();
                 ListEvent listEvent4 = listAllEvents.get(position4);
-                String id4 = listEvent4.getEventId();
+                String id4 = listEvent4.getEventId().split(": ")[1];
                 String result = databaseAdapter.deleteDataEvent(id4);
                 removeAt(position4);
                 break;
             case 5:
                 int position5 = item.getGroupId();
                 ListEvent listEvent5 = listAllEvents.get(position5);
-                String id5 = listEvent5.getEventId();
+                String id5 = listEvent5.getEventId().split(": ")[1];
                 Intent intent5;
                 intent5 = new Intent(getContext(), EditEventActivity.class);
                 intent5.putExtra("oldId",id5);
@@ -76,7 +72,7 @@ public class Event_fragment extends Fragment {
             case 6:
                 int position6 = item.getGroupId();
                 ListEvent listEvent6 = listAllEvents.get(position6);
-                String id6 = listEvent6.getEventId();
+                String id6 = listEvent6.getEventId().split(": ")[1];
                 Intent intent6;
                 intent6 = new Intent(getContext(), ViewEventActivity.class);
                 intent6.putExtra("id", id6);
@@ -130,14 +126,14 @@ public class Event_fragment extends Fragment {
 
 
     public void createRecyclerView(){
-        List<List> datas = databaseAdapter.getDataEvent();
+        List<EventInfo> datas = databaseAdapter.getDataEvent();
         listAllEvents = new ArrayList<>();
         for (int i=0; i<datas.size();i++){
-            List<String> eachEvent = datas.get(i);
             ListEvent listEvent = new ListEvent(
-                    "Title: "+ eachEvent.get(0),
-                    "Date: "+ eachEvent.get(2),
-                    "Location: "+eachEvent.get(1).split(" : ")[0],eachEvent.get(9)
+                    "Title: "+ datas.get(i).getTitle(),
+                    "Date: "+ datas.get(i).getStart_date(),
+                    "Location: "+datas.get(i).getLocation().split(" : ")[0],
+                    "id: " + datas.get(i).getId()
             );
             listAllEvents.add(listEvent);
         }

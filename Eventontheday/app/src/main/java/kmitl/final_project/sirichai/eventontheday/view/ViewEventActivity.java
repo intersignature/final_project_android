@@ -1,12 +1,10 @@
 package kmitl.final_project.sirichai.eventontheday.view;
 
 import android.app.Dialog;
-import android.app.Fragment;
 import android.location.Address;
 import android.location.Geocoder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +23,8 @@ import java.io.IOException;
 import java.util.List;
 
 import kmitl.final_project.sirichai.eventontheday.R;
-import kmitl.final_project.sirichai.eventontheday.model.DatabaseAdapter;
+import kmitl.final_project.sirichai.eventontheday.controller.DatabaseAdapter;
+import kmitl.final_project.sirichai.eventontheday.model.EventInfo;
 
 public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCallback {
     private TextView viewTitle;
@@ -37,7 +36,7 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
     private DatabaseAdapter databaseAdapter;
     private GoogleMap mgoogleMap;
     private Marker marker;
-    private List<String> data;
+    private EventInfo data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +50,12 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
         viewDetail = (TextView) findViewById(R.id.viewDetail);
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
         data = databaseAdapter.getEachDataEvent(getIntent().getStringExtra("id"));
-        viewTitle.setText(data.get(0));
-        viewLocation.setText("AT : "+data.get(1).split(" : ")[0]);
-        viewStartDate.setText("Start date : "+data.get(2) + " AT : " + data.get(4));
-        viewEndDate.setText("End date : "+data.get(3) + " AT : " + data.get(5));
-        viewAlertDate.setText("Alert date : " + data.get(6) + " AT : " + data.get(7));
-        viewDetail.setText("Detail : "+data.get(8));
+        viewTitle.setText(data.getTitle());
+        viewLocation.setText("AT : "+data.getLocation().split(" : ")[0]);
+        viewStartDate.setText("Start date : "+data.getStart_date() + " AT : " + data.getStart_time());
+        viewEndDate.setText("End date : "+data.getEnd_date() + " AT : " + data.getEnd_time());
+        viewAlertDate.setText("Alert date : " + data.getAlert_date() + " AT : " + data.getAlert_time());
+        viewDetail.setText("Detail : "+data.getDetail());
         if (googleServicesAvailable()) {
             initMap();
         }
@@ -117,14 +116,14 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
         double lat;
         double lng;
         try {
-            lat = Double.parseDouble(data.get(1).split(" : ")[2]);
-            lng = Double.parseDouble(data.get(1).split(" : ")[3]);
+            lat = Double.parseDouble(data.getLocation().split(" : ")[2]);
+            lng = Double.parseDouble(data.getLocation().split(" : ")[3]);
             goToLocationZoom(lat, lng, 17.0f);
             setMarker(lat, lng);
         }catch (Exception e){
             Geocoder gc = new Geocoder(this);
             try {
-                List<Address> addressList = gc.getFromLocationName(data.get(1), 1);
+                List<Address> addressList = gc.getFromLocationName(data.getLocation(), 1);
                 if(addressList.size()>0){
                     Address address = addressList.get(0);
                     lat = address.getLatitude();

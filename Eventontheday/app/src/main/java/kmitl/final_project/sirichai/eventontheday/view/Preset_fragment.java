@@ -1,29 +1,23 @@
 package kmitl.final_project.sirichai.eventontheday.view;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.facebook.share.ShareApi;
-import com.facebook.share.model.ShareLinkContent;
-import com.facebook.share.widget.ShareDialog;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import kmitl.final_project.sirichai.eventontheday.R;
-import kmitl.final_project.sirichai.eventontheday.model.DatabaseAdapter;
+import kmitl.final_project.sirichai.eventontheday.controller.DatabaseAdapter;
 import kmitl.final_project.sirichai.eventontheday.model.ListPreset;
-import kmitl.final_project.sirichai.eventontheday.model.RecyclerPresetAdapter;
+import kmitl.final_project.sirichai.eventontheday.controller.RecyclerPresetAdapter;
 
 /**
  * Created by atomiz on 6/11/2560.
@@ -62,7 +56,7 @@ public class Preset_fragment extends Fragment {
         if (item.getItemId()>=8 && item.getItemId()<=11) {
             int position = item.getGroupId();
             ListPreset listPreset = listAllPresets.get(position);
-            String id = listPreset.getPresetId();
+            String id = listPreset.getPresetId().split(": ")[1];
             Intent intent;
             switch (item.getItemId()) {
                 case 8:
@@ -108,14 +102,14 @@ public class Preset_fragment extends Fragment {
     }
     public void createRecyclerView(){
         databaseAdapter = new DatabaseAdapter(getContext());
-        List<List> datas = databaseAdapter.getDataPreset();
+        List<ListPreset> datas = databaseAdapter.getDataPreset();
         listAllPresets = new ArrayList<>();
         for (int i=0; i<datas.size();i++){
-            List<String> eachPreset = datas.get(i);
             ListPreset listPreset = new ListPreset(
-                    "Title: "+ eachPreset.get(0),
-                    "Location: "+ eachPreset.get(1),
-                    "Detail: "+eachPreset.get(2),eachPreset.get(3)
+                    "Title: "+ datas.get(i).getPresetTitle(),
+                    "Location: "+ datas.get(i).getPresetLocation(),
+                    "Detail: "+datas.get(i).getPresetDetail(),
+                    "id: " + datas.get(i).getPresetId()
             );
             listAllPresets.add(listPreset);
         }

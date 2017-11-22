@@ -1,4 +1,4 @@
-package kmitl.final_project.sirichai.eventontheday.controller;
+package kmitl.final_project.sirichai.eventontheday.view;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
@@ -13,14 +13,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import android.widget.CalendarView;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import kmitl.final_project.sirichai.eventontheday.R;
-import kmitl.final_project.sirichai.eventontheday.model.DatabaseAdapter;
-import kmitl.final_project.sirichai.eventontheday.model.ListDate;
 import kmitl.final_project.sirichai.eventontheday.notification.TimerService;
 import kmitl.final_project.sirichai.eventontheday.view.AddEventActivity;
 import kmitl.final_project.sirichai.eventontheday.view.AddPresetActivity;

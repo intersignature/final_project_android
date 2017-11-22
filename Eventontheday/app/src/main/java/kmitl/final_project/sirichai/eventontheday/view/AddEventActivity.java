@@ -2,20 +2,14 @@ package kmitl.final_project.sirichai.eventontheday.view;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -27,15 +21,13 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import kmitl.final_project.sirichai.eventontheday.R;
-import kmitl.final_project.sirichai.eventontheday.model.DatabaseAdapter;
-import kmitl.final_project.sirichai.eventontheday.model.ListEvent;
+import kmitl.final_project.sirichai.eventontheday.controller.DatabaseAdapter;
 
 public class AddEventActivity extends AppCompatActivity {
     private Calendar calendar;
@@ -293,9 +285,6 @@ public class AddEventActivity extends AppCompatActivity {
         }
     }
 
-    public void viewdata(View view) {
-        List<List> datas = databaseAdapter.getDataEvent();
-    }
 
     public void onPlacePicker(View view) {
         PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();

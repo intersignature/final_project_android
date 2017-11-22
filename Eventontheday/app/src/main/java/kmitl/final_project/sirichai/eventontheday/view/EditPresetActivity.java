@@ -15,7 +15,8 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 import java.util.List;
 
 import kmitl.final_project.sirichai.eventontheday.R;
-import kmitl.final_project.sirichai.eventontheday.model.DatabaseAdapter;
+import kmitl.final_project.sirichai.eventontheday.controller.DatabaseAdapter;
+import kmitl.final_project.sirichai.eventontheday.model.ListPreset;
 
 public class EditPresetActivity extends AppCompatActivity {
 
@@ -35,10 +36,10 @@ public class EditPresetActivity extends AppCompatActivity {
         setDetail = (EditText) findViewById(R.id.setNewDetailPreset);
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
         oldId = getIntent().getStringExtra("oldIdPreset");
-        List<String> datas = databaseAdapter.getEachDataPreset(oldId);
-        setTitle.setText(datas.get(0));
-        setLocation.setText(datas.get(1));
-        setDetail.setText(datas.get(2));
+        ListPreset datas = databaseAdapter.getEachDataPreset(oldId);
+        setTitle.setText(datas.getPresetTitle());
+        setLocation.setText(datas.getPresetLocation());
+        setDetail.setText(datas.getPresetDetail());
 
     }
 

@@ -1,4 +1,4 @@
-package kmitl.final_project.sirichai.eventontheday.model;
+package kmitl.final_project.sirichai.eventontheday.controller;
 
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
@@ -7,12 +7,12 @@ import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
 
 import kmitl.final_project.sirichai.eventontheday.R;
+import kmitl.final_project.sirichai.eventontheday.model.ListPreset;
 
 /**
  * Created by atomiz on 16/11/2560.

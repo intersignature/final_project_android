@@ -31,9 +31,10 @@ import java.util.Date;
 import java.util.List;
 
 import kmitl.final_project.sirichai.eventontheday.R;
-import kmitl.final_project.sirichai.eventontheday.model.DatabaseAdapter;
+import kmitl.final_project.sirichai.eventontheday.controller.DatabaseAdapter;
+import kmitl.final_project.sirichai.eventontheday.model.EventInfo;
 import kmitl.final_project.sirichai.eventontheday.model.ListEvent;
-import kmitl.final_project.sirichai.eventontheday.model.RecyclerEventAdapter;
+import kmitl.final_project.sirichai.eventontheday.controller.RecyclerEventAdapter;
 
 public class Calendar_fragment extends Fragment {
     CalendarView mCalendarView;
@@ -85,7 +86,7 @@ public class Calendar_fragment extends Fragment {
             case 0:
                 int position = item.getGroupId();
                 ListEvent listEvent = listAllEvents.get(position);
-                String id = listEvent.getEventId();
+                String id = listEvent.getEventId().split(": ")[1];
                 String result = databaseAdapter.deleteDataEvent(id);
                 removeAt(position);
                 Log.i("e1","e2");
@@ -93,7 +94,7 @@ public class Calendar_fragment extends Fragment {
             case 1:
                 int position1 = item.getGroupId();
                 ListEvent listEvent1 = listAllEvents.get(position1);
-                String id1 = listEvent1.getEventId();
+                String id1 = listEvent1.getEventId().split(": ")[1];
                 Intent intent1;
                 intent1 = new Intent(getContext(), EditEventActivity.class);
                 intent1.putExtra("oldId",id1);
@@ -103,7 +104,7 @@ public class Calendar_fragment extends Fragment {
             case 2:
                 int position2 = item.getGroupId();
                 ListEvent listEvent2 = listAllEvents.get(position2);
-                String id2 = listEvent2.getEventId();
+                String id2 = listEvent2.getEventId().split(": ")[1];
                 Intent intent2;
                 intent2 = new Intent(getContext(), ViewEventActivity.class);
                 intent2.putExtra("id", id2);
@@ -141,18 +142,18 @@ public class Calendar_fragment extends Fragment {
 
     public void createRecylerView(int year, int month, int dayOfMonth){
         listAllEvents = new ArrayList<>();
-        List<List> datas = databaseAdapter.getDataEvent();
+        List<EventInfo> datas = databaseAdapter.getDataEvent();
         for (int i=0; i<datas.size();i++){
-            List<String> eachEvent = datas.get(i);
-            int eachEventYear = Integer.parseInt(eachEvent.get(2).split("/")[2]);
-            int eachEventMonth = Integer.parseInt(eachEvent.get(2).split("/")[1]);
-            int eachEventDay= Integer.parseInt(eachEvent.get(2).split("/")[0]);
+            int eachEventYear = Integer.parseInt(datas.get(i).getStart_date().split("/")[2]);
+            int eachEventMonth = Integer.parseInt(datas.get(i).getStart_date().split("/")[1]);
+            int eachEventDay= Integer.parseInt(datas.get(i).getStart_date().split("/")[0]);
             Log.i("aaaa",year+" "+month+" "+dayOfMonth + " "+eachEventYear+" " +eachEventMonth+" " +eachEventDay );
             if (year == eachEventYear && month == eachEventMonth && dayOfMonth == eachEventDay){
                 ListEvent listEvent = new ListEvent(
-                        "Title: "+eachEvent.get(0),
-                        "Date: "+ eachEvent.get(2),
-                        "Location: "+eachEvent.get(1).split(" : ")[0], eachEvent.get(9)
+                        "Title: "+datas.get(i).getTitle(),
+                        "Date: "+ datas.get(i).getStart_date(),
+                        "Location: "+datas.get(i).getLocation().split(" : ")[0],
+                        "id: " + datas.get(i).getId()
                 );
                 listAllEvents.add(listEvent);
             }

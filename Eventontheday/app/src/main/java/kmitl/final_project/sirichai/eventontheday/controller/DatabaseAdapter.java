@@ -1,4 +1,4 @@
-package kmitl.final_project.sirichai.eventontheday.model;
+package kmitl.final_project.sirichai.eventontheday.controller;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kmitl.final_project.sirichai.eventontheday.R;
+import kmitl.final_project.sirichai.eventontheday.model.EventInfo;
+import kmitl.final_project.sirichai.eventontheday.model.ListPreset;
 import kmitl.final_project.sirichai.eventontheday.notification.TimerService;
 
 /**
@@ -108,12 +110,12 @@ public class DatabaseAdapter {
         }
     }
 
-    public List<String> getEachDataEvent(String selectId) {
-        String query = "SELECT * FROM EVENT WHERE ID = "+selectId;
+    public EventInfo getEachDataEvent(String selectId) {
+        String query = "SELECT * FROM EVENT WHERE ID = " + selectId;
         Cursor c1 = EventOnTheDayDB.rawQuery(query);
-        List<String> eachData= new ArrayList<String>();
+        EventInfo eventInfo = null;
         if (c1 != null && c1.getCount() != 0) {
-            while (c1.moveToNext()){
+            while (c1.moveToNext()) {
                 int id = Integer.parseInt(c1.getString(c1.getColumnIndex("ID")));
                 String title = c1.getString(c1.getColumnIndex("TITLE"));
                 String location = c1.getString(c1.getColumnIndex("LOCATION"));
@@ -124,30 +126,21 @@ public class DatabaseAdapter {
                 String alert_date = c1.getString(c1.getColumnIndex("ALERT_DATE"));
                 String alert_time = c1.getString(c1.getColumnIndex("ALERT_TIME"));
                 String detail = c1.getString(c1.getColumnIndex("DETAIL"));
-                eachData.add(title);
-                eachData.add(location);
-                eachData.add(start_date);
-                eachData.add(end_date);
-                eachData.add(start_time);
-                eachData.add(end_time);
-                eachData.add(alert_date);
-                eachData.add(alert_time);
-                eachData.add(detail);
-                eachData.add(String.valueOf(id));
+                eventInfo = new EventInfo(title, location, start_date, end_date, start_time, end_time, alert_date, alert_time,
+                        detail, String.valueOf(id));
             }
         }
         c1.close();
 
-        return eachData;
+        return eventInfo;
     }
 
-    public List<List> getDataEvent() {
+    public List<EventInfo> getDataEvent() {
         String query = "SELECT * FROM EVENT";
         Cursor c1 = EventOnTheDayDB.rawQuery(query);
-        List<List> datas = new ArrayList<>();
+        List<EventInfo> datas = new ArrayList<>();
         if (c1 != null && c1.getCount() != 0) {
             while (c1.moveToNext()){
-                List<String> data = new ArrayList<>();
                 int id = Integer.parseInt(c1.getString(c1.getColumnIndex("ID")));
                 String title = c1.getString(c1.getColumnIndex("TITLE"));
                 String location = c1.getString(c1.getColumnIndex("LOCATION"));
@@ -158,17 +151,9 @@ public class DatabaseAdapter {
                 String alert_date = c1.getString(c1.getColumnIndex("ALERT_DATE"));
                 String alert_time = c1.getString(c1.getColumnIndex("ALERT_TIME"));
                 String detail = c1.getString(c1.getColumnIndex("DETAIL"));
-                data.add(title);
-                data.add(location);
-                data.add(start_date);
-                data.add(end_date);
-                data.add(start_time);
-                data.add(end_time);
-                data.add(alert_date);
-                data.add(alert_time);
-                data.add(detail);
-                datas.add(data);
-                data.add(String.valueOf(id));
+                EventInfo eventInfo = new EventInfo(title, location, start_date, end_date, start_time, end_time, alert_date,
+                        alert_time, detail, String.valueOf(id));
+                datas.add(eventInfo);
             }
         }
         c1.close();
@@ -237,43 +222,35 @@ public class DatabaseAdapter {
         }
     }
 
-    public List<String> getEachDataPreset(String selectId) {
+    public ListPreset getEachDataPreset(String selectId) {
         String query = "SELECT * FROM PRESET WHERE ID = "+selectId;
         Cursor c1 = EventOnTheDayDB.rawQuery(query);
-        List<String> eachData= new ArrayList<String>();
+        ListPreset listPreset = null;
         if (c1 != null && c1.getCount() != 0) {
             while (c1.moveToNext()){
                 int id = Integer.parseInt(c1.getString(c1.getColumnIndex("ID")));
                 String title = c1.getString(c1.getColumnIndex("TITLE"));
                 String location = c1.getString(c1.getColumnIndex("LOCATION"));
                 String detail = c1.getString(c1.getColumnIndex("DETAIL"));
-                eachData.add(title);
-                eachData.add(location);
-                eachData.add(detail);
-                eachData.add(String.valueOf(id));
+                listPreset = new ListPreset(title, location, detail, String.valueOf(id));
             }
         }
         c1.close();
-
-        return eachData;
+        return listPreset;
     }
 
-    public List<List> getDataPreset() {
+    public List<ListPreset> getDataPreset() {
         String query = "SELECT * FROM PRESET";
         Cursor c1 = EventOnTheDayDB.rawQuery(query);
-        List<List> datas = new ArrayList<>();
+        List<ListPreset> datas = new ArrayList<>();
         if (c1 != null && c1.getCount() != 0) {
             while (c1.moveToNext()){
-                List<String> data = new ArrayList<>();
                 int id = Integer.parseInt(c1.getString(c1.getColumnIndex("ID")));
                 String title = c1.getString(c1.getColumnIndex("TITLE"));
                 String location = c1.getString(c1.getColumnIndex("LOCATION"));
                 String detail = c1.getString(c1.getColumnIndex("DETAIL"));
-                data.add(title);
-                data.add(location);
-                data.add(detail);
-                data.add(String.valueOf(id));
-                datas.add(data);
+                ListPreset listPreset = new ListPreset(title, location, detail, String.valueOf(id));
+                datas.add(listPreset);
             }
         }
         c1.close();

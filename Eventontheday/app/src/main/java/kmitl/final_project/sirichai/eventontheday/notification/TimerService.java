@@ -1,16 +1,12 @@
 package kmitl.final_project.sirichai.eventontheday.notification;
 
 import android.app.IntentService;
-import android.app.Notification;
 //import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
-import android.os.ResultReceiver;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-
-import com.google.android.gms.common.api.GoogleApi;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -19,7 +15,8 @@ import java.util.Date;
 import java.util.List;
 
 import kmitl.final_project.sirichai.eventontheday.R;
-import kmitl.final_project.sirichai.eventontheday.model.DatabaseAdapter;
+import kmitl.final_project.sirichai.eventontheday.controller.DatabaseAdapter;
+import kmitl.final_project.sirichai.eventontheday.model.EventInfo;
 
 /**
  * Created by atomiz on 12/11/2560.
@@ -48,15 +45,14 @@ public class TimerService extends IntentService{
 
     public  void addDbForNotification(){
         listAllDates.clear();
-        final List<List> datas = databaseAdapter.getDataEvent();
+        final List<EventInfo> datas = databaseAdapter.getDataEvent();
         for (int i=0; i<datas.size();i++){
             listAllDate = new ArrayList<>();
-            List<String> eachEvent = datas.get(i);
-            listAllDate.add(eachEvent.get(2));//start date
-            listAllDate.add(eachEvent.get(9));//id
-            listAllDate.add(eachEvent.get(0));//title
-            listAllDate.add(eachEvent.get(6));//alertdate
-            listAllDate.add(eachEvent.get(7));//alerttime
+            listAllDate.add(datas.get(i).getStart_date());//start date
+            listAllDate.add(datas.get(i).getId());//id
+            listAllDate.add(datas.get(i).getTitle());//title
+            listAllDate.add(datas.get(i).getAlert_date());//alertdate
+            listAllDate.add(datas.get(i).getAlert_time());//alerttime
             listAllDates.add(listAllDate);
         }
     }

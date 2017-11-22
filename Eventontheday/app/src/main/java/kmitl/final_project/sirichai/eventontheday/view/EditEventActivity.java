@@ -3,18 +3,13 @@ package kmitl.final_project.sirichai.eventontheday.view;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -26,16 +21,14 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import kmitl.final_project.sirichai.eventontheday.R;
-import kmitl.final_project.sirichai.eventontheday.model.DatabaseAdapter;
-import kmitl.final_project.sirichai.eventontheday.model.ListEvent;
-import kmitl.final_project.sirichai.eventontheday.notification.TimerService;
+import kmitl.final_project.sirichai.eventontheday.controller.DatabaseAdapter;
+import kmitl.final_project.sirichai.eventontheday.model.EventInfo;
 
 public class EditEventActivity extends AppCompatActivity {
     private Calendar calendar;
@@ -78,27 +71,27 @@ public class EditEventActivity extends AppCompatActivity {
         PlacePickerUPDATEBTN = (Button) findViewById(R.id.PlacePickerUPDATEBTN);
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
         oldId = getIntent().getStringExtra("oldId");
-        List<String> data = databaseAdapter.getEachDataEvent(oldId);
-        locationToDb = data.get(1);
-        setTitle.setText(data.get(0));
+        EventInfo data = databaseAdapter.getEachDataEvent(oldId);
+        locationToDb = data.getLocation();
+        setTitle.setText(data.getTitle());
         try {
-            setLocation.setText(data.get(1).split(" : ")[0] + " : " + data.get(1).split(" : ")[1]);
+            setLocation.setText(data.getLocation().split(" : ")[0] + " : " + data.getLocation().split(" : ")[1]);
         }catch (Exception e){
-            setLocation.setText(data.get(1));
+            setLocation.setText(data.getLocation());
         }
-        setStartDate.setText("start date is : " + data.get(2));
-        setEndDate.setText("end date is : " + data.get(3));
-        setStartTime.setText("start time is : " + data.get(4));
-        setEndTime.setText("end time is : " + data.get(5));
-        setDetail.setText(data.get(8));
-        setAlertDate.setText("alert date is : "+data.get(6));
-        setAlertTime.setText("alert time is : "+data.get(7));
-        strStartDate = data.get(2);
-        strEndDate = data.get(3);
-        strStartTime = data.get(4);
-        strEndTime = data.get(5);
-        strAlertDate = data.get(6);
-        strAlertTime = data.get(7);
+        setStartDate.setText("start date is : " + data.getStart_date());
+        setEndDate.setText("end date is : " + data.getEnd_date());
+        setStartTime.setText("start time is : " + data.getStart_time());
+        setEndTime.setText("end time is : " + data.getEnd_time());
+        setDetail.setText(data.getDetail());
+        setAlertDate.setText("alert date is : "+data.getAlert_date());
+        setAlertTime.setText("alert time is : "+data.getAlert_time());
+        strStartDate = data.getStart_date();
+        strEndDate = data.getEnd_date();
+        strStartTime = data.getStart_time();
+        strEndTime = data.getEnd_time();
+        strAlertDate = data.getAlert_date();
+        strAlertTime = data.getAlert_time();
         calendar = Calendar.getInstance();
 
         setDatePart();
@@ -252,7 +245,7 @@ public class EditEventActivity extends AppCompatActivity {
     }
 
     public void viewdata(View view) {
-        List<List> datas = databaseAdapter.getDataEvent();
+        List<EventInfo> datas = databaseAdapter.getDataEvent();
     }
 
     public void onSubmitEditEvent(View view) {
