@@ -68,7 +68,7 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
         }
 
         MarkerOptions options = new MarkerOptions()
-                .draggable(true)
+                .draggable(false)
                 .position(new LatLng(lat, lng))
                 .snippet("I select here");
         marker = mgoogleMap.addMarker(options);
@@ -108,7 +108,12 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mgoogleMap = googleMap;
-        mgoogleMap.getUiSettings().setScrollGesturesEnabled(false);
+        mgoogleMap.getUiSettings().setAllGesturesEnabled(true);
+
+        mgoogleMap.getUiSettings().setScrollGesturesEnabled(true);
+        mgoogleMap.getUiSettings().setZoomControlsEnabled(true);
+        mgoogleMap.getUiSettings().setMapToolbarEnabled(true);
+        mgoogleMap.getUiSettings().setMyLocationButtonEnabled(true);
         double lat;
         double lng;
         try {
@@ -128,6 +133,7 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
                     setMarker(lat, lng);
                 }
                 else {
+                    Toast.makeText(getApplicationContext(), "Can't find place in google map", Toast.LENGTH_SHORT);
                     return;
                 }
             } catch (IOException e1) {

@@ -128,6 +128,7 @@ public class Event_fragment extends Fragment {
         }
     }
 
+
     public void createRecyclerView(){
         List<List> datas = databaseAdapter.getDataEvent();
         listAllEvents = new ArrayList<>();

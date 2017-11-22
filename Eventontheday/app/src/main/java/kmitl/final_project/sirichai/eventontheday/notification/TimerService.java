@@ -106,6 +106,7 @@ public class TimerService extends IntentService{
                 return;
     }
 
+
     @Override
     protected void onHandleIntent(Intent intent) {
         addDbForNotification();
@@ -114,6 +115,7 @@ public class TimerService extends IntentService{
             while (true) {
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 Date date = new Date();
+                Log.i("timer", "(intent is null) = " + dateFormat.format(date));
                 String currentYear = dateFormat.format(date).split(" ")[0].split("/")[0];
                 String currentMonth =dateFormat.format(date).split(" ")[0].split("/")[1];
                 String currentDay =dateFormat.format(date).split(" ")[0].split("/")[2];

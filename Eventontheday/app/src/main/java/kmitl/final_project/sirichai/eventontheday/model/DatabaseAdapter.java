@@ -2,12 +2,15 @@ package kmitl.final_project.sirichai.eventontheday.model;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
+
+import com.google.android.gms.common.ConnectionResult;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -18,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kmitl.final_project.sirichai.eventontheday.R;
+import kmitl.final_project.sirichai.eventontheday.notification.TimerService;
 
 /**
  * Created by atomiz on 8/11/2560.

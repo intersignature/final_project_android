@@ -29,7 +29,7 @@ public class AddPresetActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_preset);
         setTitle = (EditText) findViewById(R.id.setTitlePreset);
         setLocation = (EditText) findViewById(R.id.setLocationPreset);
-        setDetail = (EditText) findViewById(R.id.setLocationPreset);
+        setDetail = (EditText) findViewById(R.id.setDetailPreset);
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
     }
 

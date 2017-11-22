@@ -35,6 +35,7 @@ import java.util.Locale;
 import kmitl.final_project.sirichai.eventontheday.R;
 import kmitl.final_project.sirichai.eventontheday.model.DatabaseAdapter;
 import kmitl.final_project.sirichai.eventontheday.model.ListEvent;
+import kmitl.final_project.sirichai.eventontheday.notification.TimerService;
 
 public class EditEventActivity extends AppCompatActivity {
     private Calendar calendar;
