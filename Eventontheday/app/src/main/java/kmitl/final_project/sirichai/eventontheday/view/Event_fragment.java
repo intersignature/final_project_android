@@ -92,10 +92,6 @@ public class Event_fragment extends Fragment {
                 sharingIntent.putExtra(Intent.EXTRA_SUBJECT, listEvent7.getEventTitle());
                 sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share via"));
-//                ShareLinkContent content = new ShareLinkContent.Builder()
-//                        .setContentUrl(Uri.parse("https://developers.facebook.com"))
-//                        .build();
-//                ShareApi.share(content, null);
                 break;
         }
         return super.onContextItemSelected(item);

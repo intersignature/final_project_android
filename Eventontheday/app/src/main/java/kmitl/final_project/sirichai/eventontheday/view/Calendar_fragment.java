@@ -98,7 +98,6 @@ public class Calendar_fragment extends Fragment {
                 String id = listEvent.getEventId().split(": ")[1];
                 String result = databaseAdapter.deleteDataEvent(id);
                 removeAt(position);
-                Log.i("e1", "e2");
                 break;
             case 1:
                 int position1 = item.getGroupId();
@@ -155,7 +154,6 @@ public class Calendar_fragment extends Fragment {
             int eachEventYear = Integer.parseInt(datas.get(i).getStart_date().split("/")[2]);
             int eachEventMonth = Integer.parseInt(datas.get(i).getStart_date().split("/")[1]);
             int eachEventDay = Integer.parseInt(datas.get(i).getStart_date().split("/")[0]);
-            Log.i("aaaa", year + " " + month + " " + dayOfMonth + " " + eachEventYear + " " + eachEventMonth + " " + eachEventDay);
             if (year == eachEventYear && month == eachEventMonth && dayOfMonth == eachEventDay) {
                 ListEvent listEvent = new ListEvent(
                         "Title: " + datas.get(i).getTitle(),
