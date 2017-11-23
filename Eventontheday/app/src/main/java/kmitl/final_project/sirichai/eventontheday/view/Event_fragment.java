@@ -84,18 +84,18 @@ public class Event_fragment extends Fragment {
                 getContext().startActivities(new Intent[]{intent6});
                 break;
             case 7:
-//                int position7 = item.getGroupId();
-//                ListEvent listEvent7 = listAllEvents.get(position7);
-//                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-//                sharingIntent.setType("text/plain");
-//                String shareBody = "I have event : "+listEvent7.getEventTitle() + " , " +listEvent7.getEventLocation();
-//                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, listEvent7.getEventTitle());
-//                sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
-//                startActivity(Intent.createChooser(sharingIntent, "Share via"));
-                ShareLinkContent content = new ShareLinkContent.Builder()
-                        .setContentUrl(Uri.parse("https://developers.facebook.com"))
-                        .build();
-                ShareApi.share(content, null);
+                int position7 = item.getGroupId();
+                ListEvent listEvent7 = listAllEvents.get(position7);
+                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                String shareBody = "I have event : "+listEvent7.getEventTitle() + " , " +listEvent7.getEventLocation();
+                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, listEvent7.getEventTitle());
+                sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(sharingIntent, "Share via"));
+//                ShareLinkContent content = new ShareLinkContent.Builder()
+//                        .setContentUrl(Uri.parse("https://developers.facebook.com"))
+//                        .build();
+//                ShareApi.share(content, null);
                 break;
         }
         return super.onContextItemSelected(item);

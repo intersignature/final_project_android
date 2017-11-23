@@ -106,10 +106,11 @@ public class TimerService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        addDbForNotification();
+
         if (intent == null) {
             addDbForNotification();
             while (true) {
+                addDbForNotification();
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 Date date = new Date();
                 Log.i("timer", "(intent is null) = " + dateFormat.format(date));
@@ -124,15 +125,15 @@ public class TimerService extends IntentService {
                     String selectMonth = listAllDates.get(i).get(3).toString().split("/")[1];
                     String selectDay = listAllDates.get(i).get(3).toString().split("/")[0];
                     String selectHour = listAllDates.get(i).get(4).toString().split(":")[0];
-                    String selectMin = listAllDates.get(i).get(4).toString().split(":")[1];
+                    String selectMin = String.valueOf(Integer.parseInt(listAllDates.get(i).get(4).toString().split(":")[1])-1);
                     Log.i("timer", "select = " + selectYear + " " + selectMonth + " " + selectDay + " " + selectHour + " " + selectMin);
                     if (currentYear.equals(selectYear) && currentMonth.equals(selectMonth) && currentDay.equals(selectDay) &&
-                            currentHour.equals(selectHour) && currentMin.equals(selectMin) && currentSec.equals("00")) {
+                            currentHour.equals(selectHour) && currentMin.equals(selectMin) && currentSec.equals("59")) {
                         createNotification(listAllDates.get(i).get(1).toString(), listAllDates.get(i).get(2).toString());
                     }
                 }
                 try {
-                    if (currentSec.equals("00")) {
+                    if (currentSec.equals("59")) {
                         Thread.sleep(60000);
                     } else {
                         Thread.sleep(1000);
@@ -141,36 +142,38 @@ public class TimerService extends IntentService {
                     Log.e("error", e.toString());
                 }
             }
-        }
-        while (true) {
-            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            Date date = new Date();
-            Log.i("timer", "(intent is not null) = " + dateFormat.format(date));
-            String currentYear = dateFormat.format(date).split(" ")[0].split("/")[0];
-            String currentMonth = dateFormat.format(date).split(" ")[0].split("/")[1];
-            String currentDay = dateFormat.format(date).split(" ")[0].split("/")[2];
-            String currentHour = dateFormat.format(date).split(" ")[1].split(":")[0];
-            String currentMin = dateFormat.format(date).split(" ")[1].split(":")[1];
-            String currentSec = dateFormat.format(date).split(" ")[1].split(":")[2];
-            for (int i = 0; i < listAllDates.size(); i++) {
-                String selectYear = listAllDates.get(i).get(3).toString().split("/")[2];
-                String selectMonth = listAllDates.get(i).get(3).toString().split("/")[1];
-                String selectDay = listAllDates.get(i).get(3).toString().split("/")[0];
-                String selectHour = listAllDates.get(i).get(4).toString().split(":")[0];
-                String selectMin = listAllDates.get(i).get(4).toString().split(":")[1];
-                if (currentYear.equals(selectYear) && currentMonth.equals(selectMonth) && currentDay.equals(selectDay) &&
-                        currentHour.equals(selectHour) && currentMin.equals(selectMin) && currentSec.equals("00")) {
-                    createNotification(listAllDates.get(i).get(1).toString(), listAllDates.get(i).get(2).toString());
+        }else {
+            while (true) {
+                addDbForNotification();
+                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                Date date = new Date();
+                Log.i("timer", "(intent is not null) = " + dateFormat.format(date));
+                String currentYear = dateFormat.format(date).split(" ")[0].split("/")[0];
+                String currentMonth = dateFormat.format(date).split(" ")[0].split("/")[1];
+                String currentDay = dateFormat.format(date).split(" ")[0].split("/")[2];
+                String currentHour = dateFormat.format(date).split(" ")[1].split(":")[0];
+                String currentMin = dateFormat.format(date).split(" ")[1].split(":")[1];
+                String currentSec = dateFormat.format(date).split(" ")[1].split(":")[2];
+                for (int i = 0; i < listAllDates.size(); i++) {
+                    String selectYear = listAllDates.get(i).get(3).toString().split("/")[2];
+                    String selectMonth = listAllDates.get(i).get(3).toString().split("/")[1];
+                    String selectDay = listAllDates.get(i).get(3).toString().split("/")[0];
+                    String selectHour = listAllDates.get(i).get(4).toString().split(":")[0];
+                    String selectMin = String.valueOf(Integer.parseInt(listAllDates.get(i).get(4).toString().split(":")[1]) - 1);
+                    if (currentYear.equals(selectYear) && currentMonth.equals(selectMonth) && currentDay.equals(selectDay) &&
+                            currentHour.equals(selectHour) && currentMin.equals(selectMin) && currentSec.equals("59")) {
+                        createNotification(listAllDates.get(i).get(1).toString(), listAllDates.get(i).get(2).toString());
+                    }
                 }
-            }
-            try {
-                if (currentSec.equals("00")) {
-                    Thread.sleep(60000);
-                } else {
-                    Thread.sleep(1000);
+                try {
+                    if (currentSec.equals("59")) {
+                        Thread.sleep(60000);
+                    } else {
+                        Thread.sleep(1000);
+                    }
+                } catch (Exception e) {
+                    Log.e("error", e.toString());
                 }
-            } catch (Exception e) {
-                Log.e("error", e.toString());
             }
         }
     }

@@ -25,6 +25,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import kmitl.final_project.sirichai.eventontheday.R;
 import kmitl.final_project.sirichai.eventontheday.controller.DatabaseAdapter;
@@ -172,7 +174,6 @@ public class EditEventActivity extends AppCompatActivity implements View.OnClick
             public void onClick(View view) {
                 Clickbtn = "setStartDate";
                 if (strStartDate.equals("")) {
-                    Toast.makeText(getApplicationContext(), setStartDate.getText(), Toast.LENGTH_LONG).show();
                     new DatePickerDialog(EditEventActivity.this, date, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
                 } else {
                     String[] parts = strStartDate.split("/");
@@ -243,8 +244,10 @@ public class EditEventActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
-    private void viewdata(View view) {
-        List<EventInfo> datas = databaseAdapter.getDataEvent();
+    private boolean checkTitleString(String title){ //reture true if title don't contain special characters
+        Pattern pattern = Pattern.compile("[a-zA-Z0-9]*");
+        Matcher matcher = pattern.matcher(title);
+        return matcher.matches();
     }
 
     private void editEvent() {
@@ -267,6 +270,10 @@ public class EditEventActivity extends AppCompatActivity implements View.OnClick
         if (title.equals("") || location.equals("") || start_date.equals("") || end_date.equals("") ||
                 start_time.equals("") || end_time.equals("") || alert_date.equals("") || alert_time.equals("") || detail.equals("")) {
             Toast.makeText(getApplicationContext(), "Enter empty field", Toast.LENGTH_SHORT).show();
+            return;
+        } else if(!checkTitleString(title)){
+            Toast.makeText(getApplicationContext(), "Title must not contain special characters", Toast.LENGTH_SHORT).show();
+            return;
         } else {
             SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
             Date date = new Date();
@@ -286,13 +293,13 @@ public class EditEventActivity extends AppCompatActivity implements View.OnClick
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            String result = databaseAdapter.updateDataEvent(title, location, start_date, end_date, start_time, end_time, alert_date, alert_time, detail, oldId);
-            if (!result.equals("success")) {
-                Toast.makeText(getApplicationContext(), "update unsucessfull!" + result, Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getApplicationContext(), "update success!!", Toast.LENGTH_SHORT).show();
-                finish();
-            }
+        }
+        String result = databaseAdapter.updateDataEvent(title, location, start_date, end_date, start_time, end_time, alert_date, alert_time, detail, oldId);
+        if (!result.equals("success")) {
+            Toast.makeText(getApplicationContext(), "update unsuccessful!!" + result, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "update successful!!", Toast.LENGTH_SHORT).show();
+            finish();
         }
     }
 

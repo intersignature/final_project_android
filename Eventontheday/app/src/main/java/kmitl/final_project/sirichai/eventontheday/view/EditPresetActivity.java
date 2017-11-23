@@ -14,6 +14,8 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import kmitl.final_project.sirichai.eventontheday.R;
 import kmitl.final_project.sirichai.eventontheday.controller.DatabaseAdapter;
@@ -80,20 +82,29 @@ public class EditPresetActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
+    private boolean checkTitleString(String title){ //reture true if title don't contain special characters
+        Pattern pattern = Pattern.compile("[a-zA-Z0-9]*");
+        Matcher matcher = pattern.matcher(title);
+        return matcher.matches();
+    }
+
     private void editPreset() {
         String title = setTitle.getText().toString();
         String location = setLocation.getText().toString();
         String detail = setDetail.getText().toString();
         if (title.equals("") || location.equals("") || detail.equals("")) {
             Toast.makeText(getApplicationContext(), "Enter empty field", Toast.LENGTH_SHORT).show();
+            return;
+        } else if(!checkTitleString(title)){
+            Toast.makeText(getApplicationContext(), "Title must not contain special characters", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String result = databaseAdapter.updateDataPreset(title, location, detail, oldId);
+        if (!result.equals("success")) {
+            Toast.makeText(getApplicationContext(), "Update unsuccessful!!" + result, Toast.LENGTH_SHORT).show();
         } else {
-            String result = databaseAdapter.updateDataPreset(title, location, detail, oldId);
-            if (!result.equals("success")) {
-                Toast.makeText(getApplicationContext(), "Insertion unsucessfull!" + result, Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getApplicationContext(), "Insertion success!!", Toast.LENGTH_SHORT).show();
-                finish();
-            }
+            Toast.makeText(getApplicationContext(), "Update successful!!", Toast.LENGTH_SHORT).show();
+            finish();
         }
     }
 
