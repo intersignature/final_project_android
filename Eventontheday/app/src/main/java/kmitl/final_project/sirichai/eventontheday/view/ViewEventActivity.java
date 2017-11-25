@@ -108,7 +108,7 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
             Dialog dialog = api.getErrorDialog(this, isAvailable, 0);
             dialog.show();
         } else {
-            Toast.makeText(this, "Can't connect to play service", Toast.LENGTH_SHORT);
+            Toast.makeText(this, "Can't connect to play service", Toast.LENGTH_SHORT).show();
         }
         return false;
     }

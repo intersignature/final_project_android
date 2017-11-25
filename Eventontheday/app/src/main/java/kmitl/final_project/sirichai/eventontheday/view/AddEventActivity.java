@@ -292,6 +292,8 @@ public class AddEventActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+
+    
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
