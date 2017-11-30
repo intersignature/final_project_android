@@ -110,9 +110,6 @@
                     app:layout_constraintHorizontal_bias="0.2"
                     app:layout_constraintStart_toEndOf="@+id/setLocationLayout"
                     app:layout_constraintTop_toTopOf="@+id/setLocationLayout" />
-
-
-
             </android.support.constraint.ConstraintLayout>
 
             <android.support.constraint.ConstraintLayout
@@ -200,7 +197,7 @@
                     android:focusable="false"
                     android:gravity="center"
                     android:hint="@string/select_event_alert_date"
-                    android:inputType="time"
+                    android:inputType="date"
                     android:textColor="#000000"
                     android:textSize="15dp"
                     app:layout_constraintBottom_toBottomOf="parent"

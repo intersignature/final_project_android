@@ -239,6 +239,7 @@ public class AddEventActivity extends AppCompatActivity implements View.OnClickL
         String detail = setDetail.getText().toString();
         if (title.equals("") || location.equals("") || start_date.equals("") || end_date.equals("") ||
                 start_time.equals("") || end_time.equals("") || alert_time.equals("") || detail.equals("") || alert_date.equals("")) {
+            Log.i("test", start_date+" " + end_date + " " + start_time + " " + end_time + " " + alert_time + " " + alert_date);
             Toast.makeText(getApplicationContext(), "Enter empty field", Toast.LENGTH_SHORT).show();
             return;
         } else if(!checkTitleString(title)){
@@ -291,8 +292,6 @@ public class AddEventActivity extends AppCompatActivity implements View.OnClickL
             e.printStackTrace();
         }
     }
-
-
     
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PLACE_PICKER_REQUEST) {

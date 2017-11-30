@@ -6,7 +6,7 @@
     <item
         android:id="@+id/addEvent"
         android:orderInCategory="100"
-        android:title="ADDEVENT"
+        android:title="@string/addevent"
         app:showAsAction="never"
         android:onClick="onClickAddEventListenet"/>
     <item
