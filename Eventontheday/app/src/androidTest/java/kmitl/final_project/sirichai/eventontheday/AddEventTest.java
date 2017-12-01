@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import kmitl.final_project.sirichai.eventontheday.controller.DatabaseAdapter;
 import kmitl.final_project.sirichai.eventontheday.view.MainActivity;
 
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;
@@ -27,6 +28,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withHint;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.facebook.FacebookSdk.getApplicationContext;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
 
@@ -36,9 +38,13 @@ import static org.hamcrest.core.IsNot.not;
 
 public class AddEventTest {
 
+    private DatabaseAdapter databaseAdapter;
+
     @Before
     public void beforeTest(){
         mActivityTestRule.launchActivity(new Intent());
+        databaseAdapter = new DatabaseAdapter(getApplicationContext());
+        databaseAdapter.clearDataEvent();
     }
 
     @Rule

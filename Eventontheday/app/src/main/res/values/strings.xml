@@ -39,4 +39,5 @@
     <string name="presetlocation">PresetLocation</string>
     <string name="presetdetail">PresetDetail</string>
     <string name="addevent">ADDEVENT</string>
+    <string name="addpreset">ADDPRESET</string>
 </resources>

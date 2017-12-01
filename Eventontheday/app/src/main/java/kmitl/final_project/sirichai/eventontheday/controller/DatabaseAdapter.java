@@ -50,6 +50,15 @@ public class DatabaseAdapter {
         }
     }
 
+    public void clearDataEvent(){
+        String ClearQuery = "DELETE FROM EVENT;";
+        try {
+            EventOnTheDayDB.execute(ClearQuery);
+        }catch (Exception e){
+            return;
+        }
+    }
+
     public String updateDataEvent(String newTitle, String newLocation, String newStart_date, String newEnd_date, String newStart_time, String newEnd_time
             , String newAlertDate, String newAlertTime, String newDetail
             , String OldId) {
@@ -169,6 +178,15 @@ public class DatabaseAdapter {
             return result;
         } catch (Exception e) {
             return e.toString();
+        }
+    }
+
+    public void clearDataPreset(){
+        String ClearQuery = "DELETE FROM PRESET;";
+        try {
+            EventOnTheDayDB.execute(ClearQuery);
+        }catch (Exception e){
+            return;
         }
     }
 

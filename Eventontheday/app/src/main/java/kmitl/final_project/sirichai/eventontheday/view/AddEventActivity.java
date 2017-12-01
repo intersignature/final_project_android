@@ -266,6 +266,7 @@ public class AddEventActivity extends AppCompatActivity implements View.OnClickL
             }
         }
         String result = databaseAdapter.insertDataEvent(title, location, start_date, end_date, start_time, end_time, alert_date, alert_time, detail);
+        Log.i("add",start_date);
         if (!result.equals("success")) {
             Toast.makeText(getApplicationContext(), "Insertion unsuccessful!!" + result, Toast.LENGTH_SHORT).show();
         } else {

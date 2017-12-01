@@ -12,7 +12,7 @@
     <item
         android:id="@+id/addPreset"
         android:orderInCategory="100"
-        android:title="ADDPRESET"
+        android:title="@string/addpreset"
         app:showAsAction="never"
         android:onClick="onClickAddPresetListenet"/>
 </menu>
