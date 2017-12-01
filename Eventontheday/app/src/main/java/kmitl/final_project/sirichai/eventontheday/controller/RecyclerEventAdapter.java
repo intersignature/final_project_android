@@ -74,9 +74,9 @@ public class RecyclerEventAdapter extends RecyclerView.Adapter<RecyclerEventAdap
             Date dateFromDb = sdf1.parse(listEvent.getEventDate().split(": ")[1]);
             Date currentDate = sdf1.parse(sdf1.format(date));
             if (dateFromDb.compareTo(currentDate) >= 0) {
-                holder.eventTitle.setTextColor(Color.GREEN);
-                holder.eventDate.setTextColor(Color.GREEN);
-                holder.eventLocation.setTextColor(Color.GREEN);
+                holder.eventTitle.setTextColor(Color.rgb(80,223,48));
+                holder.eventDate.setTextColor(Color.rgb(80,223,48));
+                holder.eventLocation.setTextColor(Color.rgb(80,223,48));
             } else if (dateFromDb.compareTo(currentDate) < 0) {
                 holder.eventTitle.setTextColor(Color.RED);
                 holder.eventDate.setTextColor(Color.RED);
