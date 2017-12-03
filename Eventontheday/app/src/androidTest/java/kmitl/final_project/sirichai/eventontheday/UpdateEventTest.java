@@ -49,8 +49,8 @@ public class UpdateEventTest {
     }
 
     private void addDataForTest(){
-        databaseAdapter.insertDataEvent("title", "location", "02/12/2017", "03/12/2017",
-                "05:17", "06:17", "02/12/2017", "05:15","detail");
+        databaseAdapter.insertDataEvent("title", "location", "02/12/2018", "03/12/2018",
+                "05:17", "06:17", "02/12/2018", "05:15","detail");
     }
 
     @Rule
