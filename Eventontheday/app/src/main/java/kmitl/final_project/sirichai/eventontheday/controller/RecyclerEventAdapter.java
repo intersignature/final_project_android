@@ -74,9 +74,9 @@ public class RecyclerEventAdapter extends RecyclerView.Adapter<RecyclerEventAdap
             Date dateFromDb = sdf1.parse(listEvent.getEventDate().split(": ")[1]);
             Date currentDate = sdf1.parse(sdf1.format(date));
             if (dateFromDb.compareTo(currentDate) >= 0) {
-                holder.eventTitle.setTextColor(Color.rgb(80,223,48));
-                holder.eventDate.setTextColor(Color.rgb(80,223,48));
-                holder.eventLocation.setTextColor(Color.rgb(80,223,48));
+                holder.eventTitle.setTextColor(Color.rgb(74,201,46));
+                holder.eventDate.setTextColor(Color.rgb(74,201,46));
+                holder.eventLocation.setTextColor(Color.rgb(74,201,46));
             } else if (dateFromDb.compareTo(currentDate) < 0) {
                 holder.eventTitle.setTextColor(Color.RED);
                 holder.eventDate.setTextColor(Color.RED);
@@ -94,7 +94,6 @@ public class RecyclerEventAdapter extends RecyclerView.Adapter<RecyclerEventAdap
                     menu.add(holder.getAdapterPosition(), 0, 0, "DELETE");
                     menu.add(holder.getAdapterPosition(), 1, 0, "UPDATE");
                     menu.add(holder.getAdapterPosition(), 2, 0, "VIEW");
-                    menu.add(holder.getAdapterPosition(), 3, 0, "SHARE");
                 }
             });
         } else if (page.equals("event")) {
@@ -104,7 +103,6 @@ public class RecyclerEventAdapter extends RecyclerView.Adapter<RecyclerEventAdap
                     menu.add(holder.getAdapterPosition(), 4, 0, "DELETE");
                     menu.add(holder.getAdapterPosition(), 5, 0, "UPDATE");
                     menu.add(holder.getAdapterPosition(), 6, 0, "VIEW");
-                    menu.add(holder.getAdapterPosition(), 7, 0, "SHARE");
                 }
             });
         }

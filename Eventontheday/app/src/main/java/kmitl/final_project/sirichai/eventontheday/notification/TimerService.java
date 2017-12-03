@@ -34,7 +34,6 @@ public class TimerService extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.i("timer", "timer is start!!!");
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
     }
 
@@ -59,39 +58,6 @@ public class TimerService extends IntentService {
     }
 
     public void createNotification(String id, String title) {
-        //Sets an ID for the notification, so it can be updated.
-        int notifyID = 1;
-        String CHANNEL_ID = "my_channel_01";// The id of the channel.
-        CharSequence name = "name";// The user-visible name of the channel.
-        int importance = NotificationManager.IMPORTANCE_HIGH;
-//                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-//                    try {
-//                        NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
-//                        Notification notification = new Notification.Builder(getApplicationContext(), CHANNEL_ID)
-//                                .setContentTitle("New Message")
-//                                .setContentText("You've received new messages.")
-//                                .setSmallIcon(R.mipmap.ic_launcher_round)
-//                                .setChannelId(CHANNEL_ID)
-//                                .build();
-//
-//                        NotificationManager mNotificationManager =
-//                                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//                        mNotificationManager.createNotificationChannel(mChannel);
-//
-//                        mNotificationManager.notify(notifyID, notification);
-//                    } catch (Exception e) {
-//                        Log.e("errmes", e.toString());
-//                    }
-//                } else {
-//                    NotificationCompat.Builder nb = new NotificationCompat.Builder(getApplicationContext());
-//                    nb.setDefaults(NotificationCompat.DEFAULT_ALL);
-//                    nb.setContentText("You have event : " + title);
-//                    nb.setContentTitle("Hi");
-//                    nb.setSmallIcon(R.mipmap.ic_launcher);
-//
-//                    NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//                    nm.notify(Integer.parseInt(id), nb.build());
-//                }
         NotificationCompat.Builder nb = new NotificationCompat.Builder(getApplicationContext());
         nb.setDefaults(NotificationCompat.DEFAULT_ALL);
         nb.setContentText("You have event : " + title);
@@ -113,7 +79,6 @@ public class TimerService extends IntentService {
                 addDbForNotification();
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 Date date = new Date();
-                Log.i("timer", "(intent is null) = " + dateFormat.format(date));
                 String currentYear = dateFormat.format(date).split(" ")[0].split("/")[0];
                 String currentMonth = dateFormat.format(date).split(" ")[0].split("/")[1];
                 String currentDay = dateFormat.format(date).split(" ")[0].split("/")[2];
@@ -126,7 +91,6 @@ public class TimerService extends IntentService {
                     String selectDay = listAllDates.get(i).get(3).toString().split("/")[0];
                     String selectHour = listAllDates.get(i).get(4).toString().split(":")[0];
                     String selectMin = String.valueOf(Integer.parseInt(listAllDates.get(i).get(4).toString().split(":")[1])-1);
-                    Log.i("timer", "select = " + selectYear + " " + selectMonth + " " + selectDay + " " + selectHour + " " + selectMin);
                     if (currentYear.equals(selectYear) && currentMonth.equals(selectMonth) && currentDay.equals(selectDay) &&
                             currentHour.equals(selectHour) && currentMin.equals(selectMin) && currentSec.equals("59")) {
                         createNotification(listAllDates.get(i).get(1).toString(), listAllDates.get(i).get(2).toString());

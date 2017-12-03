@@ -43,7 +43,7 @@ public class UpdateEventTest {
     @Before
     public void beforeTest(){
         mActivityTestRule.launchActivity(new Intent());
-        databaseAdapter = new DatabaseAdapter(getApplicationContext());
+        databaseAdapter = new DatabaseAdapter(InstrumentationRegistry.getTargetContext());
         databaseAdapter.clearDataEvent();
         addDataForTest();
     }

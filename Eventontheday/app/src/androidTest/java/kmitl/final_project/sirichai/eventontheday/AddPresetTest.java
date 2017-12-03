@@ -3,6 +3,7 @@ package kmitl.final_project.sirichai.eventontheday;
 import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.NoMatchingViewException;
+import android.support.test.espresso.ViewAssertion;
 import android.support.test.rule.ActivityTestRule;
 
 import org.junit.Before;
@@ -23,6 +24,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.facebook.FacebookSdk.getApplicationContext;
+import static com.facebook.FacebookSdk.isInitialized;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
 
@@ -37,7 +39,7 @@ public class AddPresetTest {
     @Before
     public void beforeTest(){
         mActivityTestRule.launchActivity(new Intent());
-        databaseAdapter = new DatabaseAdapter(getApplicationContext());
+        databaseAdapter = new DatabaseAdapter(InstrumentationRegistry.getTargetContext());
         databaseAdapter.clearDataPreset();
     }
 

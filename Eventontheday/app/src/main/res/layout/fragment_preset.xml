@@ -4,7 +4,8 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="kmitl.final_project.sirichai.eventontheday.view.Preset_fragment">
+    tools:context="kmitl.final_project.sirichai.eventontheday.view.Preset_fragment"
+    android:background="#f7f7f7">
 
     <TextView
         android:id="@+id/empTvPreset"

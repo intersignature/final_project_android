@@ -2,6 +2,7 @@ package kmitl.final_project.sirichai.eventontheday;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 
 import org.junit.Before;
@@ -29,7 +30,7 @@ public class DeletePresetTest {
     @Before
     public void beforeTest(){
         mActivityTestRule.launchActivity(new Intent());
-        databaseAdapter = new DatabaseAdapter(getApplicationContext());
+        databaseAdapter = new DatabaseAdapter(InstrumentationRegistry.getTargetContext());
         databaseAdapter.clearDataPreset();
         addDataForTest();
     }

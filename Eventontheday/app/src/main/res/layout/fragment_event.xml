@@ -4,7 +4,8 @@
     android:id="@+id/event"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="kmitl.final_project.sirichai.eventontheday.view.Event_fragment">
+    tools:context="kmitl.final_project.sirichai.eventontheday.view.Event_fragment"
+    android:background="#f7f7f7">
     <TextView
         android:id="@+id/empTvEvent"
         android:layout_width="395dp"
