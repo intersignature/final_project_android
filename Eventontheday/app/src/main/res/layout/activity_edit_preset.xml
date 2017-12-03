@@ -26,15 +26,13 @@
             android:orientation="vertical">
 
             <android.support.design.widget.TextInputLayout
-                android:layout_width="399dp"
+                android:id="@+id/setNewTitlePresetLayout"
+                android:layout_width="match_parent"
                 android:layout_height="63dp"
-                tools:layout_editor_absoluteX="93dp"
-                tools:layout_editor_absoluteY="14dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.166"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:id="@+id/setNewTitlePresetLayout">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/setNewTitlePreset"
@@ -44,15 +42,13 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                android:layout_width="281dp"
+                android:id="@+id/setNewLocationPresetLayout"
+                android:layout_width="255dp"
                 android:layout_height="63dp"
-                tools:layout_editor_absoluteX="93dp"
-                tools:layout_editor_absoluteY="14dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/setNewTitlePresetLayout"
-                android:id="@+id/setNewLocationPresetLayout">
+                app:layout_constraintTop_toBottomOf="@+id/setNewTitlePresetLayout">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/setNewLocationPreset"
@@ -62,21 +58,18 @@
             </android.support.design.widget.TextInputLayout>
 
 
-
             <android.support.design.widget.TextInputLayout
-                android:layout_width="399dp"
+                android:id="@+id/setNewTDetailPresetLayout"
+                android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
-                tools:layout_editor_absoluteX="93dp"
-                tools:layout_editor_absoluteY="14dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.166"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/setNewLocationPresetLayout"
-                app:layout_constraintVertical_bias="0.0"
-                android:id="@+id/setNewTDetailPresetLayout">
+                app:layout_constraintVertical_bias="0.0">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/setNewDetailPreset"
