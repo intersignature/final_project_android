@@ -1,10 +1,5 @@
 package kmitl.final_project.sirichai.eventontheday.view;
 
-/**
- * Created by atomiz on 6/11/2560.
- */
-
-
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -19,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.TextView;
-
 
 import com.facebook.share.ShareApi;
 import com.facebook.share.model.ShareLinkContent;
@@ -51,7 +45,6 @@ public class Calendar_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_calendar, container, false);
-
         initInstances(rootView);
         getCalendatViewDate();
         createRecylerView(Integer.parseInt(selectedYear), Integer.parseInt(selectedMonth), Integer.parseInt(selectedDay));
@@ -86,7 +79,6 @@ public class Calendar_fragment extends Fragment {
         selectDateTV = (TextView) rootView.findViewById(R.id.selectDateTV);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
     }
 
     @Override
@@ -127,10 +119,6 @@ public class Calendar_fragment extends Fragment {
                 sharingIntent.putExtra(Intent.EXTRA_SUBJECT, listEvent7.getEventTitle());
                 sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share via"));
-//                ShareLinkContent content = new ShareLinkContent.Builder()
-//                        .setContentUrl(Uri.parse("https://developers.facebook.com"))
-//                        .build();
-//                ShareApi.share(content, null);
                 break;
         }
         return super.onContextItemSelected(item);
